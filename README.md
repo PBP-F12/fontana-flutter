@@ -52,4 +52,4 @@ Dikarenakan aplikasi yang kami kembangkan ditujukan pada beberapa jenis pengguna
 # Alur pengintegrasian dengan `web service`
 
 # Tautan berita acara
-## [Berita Acara](ristek.link/BeritaAcaraF12)
+## [Berita Acara](https://ristek.link/BeritaAcaraF12)
