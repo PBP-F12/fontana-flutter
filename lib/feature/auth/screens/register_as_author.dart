@@ -27,7 +27,7 @@ class AuthorRegistrationPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Perform registration logic
-                _performRegistration();
+                _performRegistration(context);
               },
               child: const Text('Register'),
             ),
@@ -57,9 +57,10 @@ class AuthorRegistrationPage extends StatelessWidget {
     );
   }
 
-  void _performRegistration() {
+  void _performRegistration(BuildContext context) {
     // Replace this with your actual registration logic
     // For simplicity, we'll just print a message
     print('Registration logic here');
+    Navigator.pop(context);
   }
 }
