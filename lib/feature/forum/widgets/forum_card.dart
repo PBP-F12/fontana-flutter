@@ -1,6 +1,7 @@
 class ForumItem {
   final String title;
-  final String description;
+  final String bookTopic;
+  final String discussion;
 
-  ForumItem(this.title, this.description);
+  ForumItem(this.title, this.bookTopic, this.discussion);
 }

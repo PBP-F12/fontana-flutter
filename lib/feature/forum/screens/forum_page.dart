@@ -1,20 +1,21 @@
+import 'package:bookshelve_flutter/feature/forum/screens/forum_create_form.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_detail.dart';
 import 'package:bookshelve_flutter/feature/forum/widgets/forum_card.dart';
 import 'package:flutter/material.dart';
 
-class ForumMainPage extends StatelessWidget {
-  final List<ForumItem> forumItems = [
-    ForumItem('Topic 1', 'Description for Topic 1'),
-    ForumItem('Topic 2', 'Description for Topic 2'),
-    ForumItem('Topic 3', 'Description for Topic 3'),
-    // Add more forum items as needed
-  ];
+class ForumMainPage extends StatefulWidget {
+  @override
+  _ForumMainPageState createState() => _ForumMainPageState();
+}
+
+class _ForumMainPageState extends State<ForumMainPage> {
+  List<ForumItem> forumItems = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Forum Main Page'),
+        title: Text('Forum Main Page'),
       ),
       body: ListView.builder(
         itemCount: forumItems.length,
@@ -22,7 +23,7 @@ class ForumMainPage extends StatelessWidget {
           return Card(
             child: ListTile(
               title: Text(forumItems[index].title),
-              subtitle: Text(forumItems[index].description),
+              subtitle: Text(forumItems[index].bookTopic),
               onTap: () {
                 // Navigate to the forum detail page when a card is pressed
                 Navigator.push(
@@ -35,6 +36,25 @@ class ForumMainPage extends StatelessWidget {
             ),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          // Navigate to the forum creation page and wait for the result
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ForumCreationPage(),
+            ),
+          );
+
+          // If the result is not null (user created a forum), add it to the list
+          if (result != null) {
+            setState(() {
+              forumItems.add(result);
+            });
+          }
+        },
+        child: Icon(Icons.add),
       ),
     );
   }

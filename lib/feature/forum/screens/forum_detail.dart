@@ -4,25 +4,27 @@ import 'package:flutter/material.dart';
 class ForumDetailPage extends StatelessWidget {
   final ForumItem forumItem;
 
-  const ForumDetailPage(this.forumItem, {super.key});
+  ForumDetailPage(this.forumItem);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Forum Detail Page'),
+        title: Text('Forum Detail Page'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Topic: ${forumItem.title}',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              'Title: ${forumItem.title}',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8.0),
-            Text('Description: ${forumItem.description}'),
+            SizedBox(height: 8.0),
+            Text('Book Topic: ${forumItem.bookTopic}'),
+            SizedBox(height: 8.0),
+            Text('Discussion: ${forumItem.discussion}'),
             // Add more details or components as needed
           ],
         ),
