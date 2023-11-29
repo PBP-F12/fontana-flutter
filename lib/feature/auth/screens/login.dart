@@ -42,10 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                   // If successful, navigate to the home page
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const HomePage(
-                              title: 'Fontana',
-                            )),
+                    MaterialPageRoute(builder: (context) => const HomePage()),
                   );
                 } else {
                   // Show an error message or handle authentication failure
