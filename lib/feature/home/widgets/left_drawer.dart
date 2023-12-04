@@ -18,7 +18,7 @@ class LeftDrawer extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Shopping List',
+                  'Explore',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
@@ -28,7 +28,7 @@ class LeftDrawer extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.all(10)),
                 Text(
-                  "Catat seluruh keperluan belanjamu di sini!",
+                  "Explore the fontain of knowledge!",
                   // TODO: Tambahkan gaya teks dengan center alignment, font ukuran 15, warna putih, dan weight biasa
                 ),
               ],
@@ -90,7 +90,7 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.add_shopping_cart),
+            leading: const Icon(Icons.auto_stories_outlined),
             title: const Text('My Books'),
             // Bagian redirection ke ShopFormPage
             onTap: () {
