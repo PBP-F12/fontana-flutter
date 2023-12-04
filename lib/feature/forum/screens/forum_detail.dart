@@ -67,9 +67,16 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: comments.map((comment) {
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0),
-          child: Text('- $comment'),
-        );
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: Column(
+              children: [
+                const Text(
+                  'Anonymous',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(comment),
+              ],
+            ));
       }).toList(),
     );
   }
