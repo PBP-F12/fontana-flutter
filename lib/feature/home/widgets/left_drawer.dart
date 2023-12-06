@@ -13,7 +13,7 @@ class LeftDrawer extends StatelessWidget {
           const DrawerHeader(
             // TODO: Bagian drawer header
             decoration: BoxDecoration(
-              color: Colors.indigo,
+              color: Colors.deepPurple,
             ),
             child: Column(
               children: [
