@@ -28,19 +28,19 @@ class _ReaderRegistrationPageState extends State<ReaderRegistrationPage> {
           children: [
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
+              decoration: const InputDecoration(labelText: 'Username'),
             ),
             const SizedBox(height: 16.0),
             TextField(
               controller: _passwordController,
               obscureText: true,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'Password'),
             ),
             const SizedBox(height: 16.0),
             TextField(
               controller: _confirmationPasswordController,
               obscureText: true,
-              decoration: InputDecoration(labelText: 'Confirm Password'),
+              decoration: const InputDecoration(labelText: 'Confirm Password'),
             ),
             const SizedBox(height: 24.0),
             ElevatedButton(
