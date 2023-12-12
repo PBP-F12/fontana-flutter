@@ -1,7 +1,7 @@
 import 'package:bookshelve_flutter/feature/auth/screens/register_as_reader.dart';
 import 'package:bookshelve_flutter/feature/home/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -52,7 +52,8 @@ class _LoginPageState extends State<LoginPage> {
                     // If successful, navigate to the home page
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      MaterialPageRoute(
+                          builder: (context) => HomePage(request)),
                     );
                   } else {
                     print('failed to login');
