@@ -1,5 +1,6 @@
 import 'package:bookshelve_flutter/feature/event/screens/create_event.dart';
 import 'package:bookshelve_flutter/feature/event/screens/event_detail.dart';
+import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -7,13 +8,21 @@ import 'package:bookshelve_flutter/feature/event/models/event.dart';
 import 'package:bookshelve_flutter/feature/home/widgets/left_drawer.dart';
 
 class EventPage extends StatefulWidget {
-  const EventPage({Key? key}) : super(key: key);
+  final CookieRequest request;
+
+  const EventPage(this.request, {Key? key}) : super(key: key);
 
   @override
-  _EventPageState createState() => _EventPageState();
+  _EventPageState createState() => _EventPageState(request);
 }
 
 class _EventPageState extends State<EventPage> {
+  CookieRequest request = CookieRequest();
+
+  _EventPageState(CookieRequest request) {
+    this.request = request;
+  }
+
   Future<List<Event>> fetchEvent() async {
     var url = Uri.parse('http://127.0.0.1:8000/event/json/');
     var response = await http.get(
@@ -37,7 +46,7 @@ class _EventPageState extends State<EventPage> {
       appBar: AppBar(
         title: const Text('Events'),
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer(request),
       body: FutureBuilder(
         future: fetchEvent(),
         builder: (context, AsyncSnapshot snapshot) {
@@ -62,7 +71,8 @@ class _EventPageState extends State<EventPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EventDetailsPage(eventId: event.pk),
+                          builder: (context) =>
+                              EventDetailsPage(eventId: event.pk),
                         ),
                       );
                     },
@@ -97,7 +107,8 @@ class _EventPageState extends State<EventPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CreateEventPage(), // Assuming you have this page
+              builder: (context) =>
+                  CreateEventPage(request), // Assuming you have this page
             ),
           );
         },
