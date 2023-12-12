@@ -1,8 +1,6 @@
 import 'package:bookshelve_flutter/feature/auth/screens/register_as_reader.dart';
 import 'package:bookshelve_flutter/feature/home/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:bookshelve_flutter/utils/cookie.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,7 +15,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login Page'),
@@ -39,25 +36,14 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 24.0),
             ElevatedButton(
-              onPressed: () async {
+              onPressed: () {
                 // Perform login logic (authentication check)
                 if (_performLogin()) {
-                  String username = _usernameController.text;
-                  String password = _passwordController.text;
-
-                  await request.login('http://localhost:8000/auth/api/login',
-                      {'username': username, 'password': password});
-
-                  if (request.loggedIn) {
-                    // If successful, navigate to the home page
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HomePage(request)),
-                    );
-                  } else {
-                    print('failed to login');
-                  }
+                  // If successful, navigate to the home page
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
                 } else {
                   // Show an error message or handle authentication failure
                   _showErrorDialog();

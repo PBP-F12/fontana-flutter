@@ -1,13 +1,9 @@
-import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_page.dart';
 import 'package:bookshelve_flutter/feature/home/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:bookshelve_flutter/utils/cookie.dart';
 
 class LeftDrawer extends StatelessWidget {
-  final CookieRequest request;
-
-  const LeftDrawer(this.request, {super.key});
+  const LeftDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +13,12 @@ class LeftDrawer extends StatelessWidget {
           const DrawerHeader(
             // TODO: Bagian drawer header
             decoration: BoxDecoration(
-              color: Colors.deepPurple,
+              color: Colors.indigo,
             ),
             child: Column(
               children: [
                 Text(
-                  'Explore',
+                  'Shopping List',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
@@ -32,7 +28,7 @@ class LeftDrawer extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.all(10)),
                 Text(
-                  "Explore the fontain of knowledge!",
+                  "Catat seluruh keperluan belanjamu di sini!",
                   // TODO: Tambahkan gaya teks dengan center alignment, font ukuran 15, warna putih, dan weight biasa
                 ),
               ],
@@ -47,12 +43,12 @@ class LeftDrawer extends StatelessWidget {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomePage(request),
+                    builder: (context) => HomePage(),
                   ));
             },
           ),
           ListTile(
-            leading: const Icon(Icons.forum_outlined),
+            leading: const Icon(Icons.add_shopping_cart),
             title: const Text('Forum'),
             // Bagian redirection ke ShopFormPage
             onTap: () {
@@ -66,7 +62,7 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.book_rounded),
+            leading: const Icon(Icons.add_shopping_cart),
             title: const Text('Bookmark'),
             // Bagian redirection ke ShopFormPage
             onTap: () {
@@ -75,7 +71,7 @@ class LeftDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomePage(request),
+                    builder: (context) => HomePage(),
                   ));
             },
           ),
@@ -89,12 +85,12 @@ class LeftDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomePage(request),
+                    builder: (context) => HomePage(),
                   ));
             },
           ),
           ListTile(
-            leading: const Icon(Icons.auto_stories_outlined),
+            leading: const Icon(Icons.add_shopping_cart),
             title: const Text('My Books'),
             // Bagian redirection ke ShopFormPage
             onTap: () {
@@ -103,26 +99,8 @@ class LeftDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomePage(request),
+                    builder: (context) => HomePage(),
                   ));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.logout_outlined),
-            title: const Text('Logout'),
-            onTap: () async {
-              final response =
-                  await request.logout('http://127.0.0.1:8000/auth/api/logout');
-
-              if (response['status'] == 200) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
-                    ));
-              } else {
-                // TODO handle error logout
-              }
             },
           ),
         ],
