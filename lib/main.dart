@@ -1,7 +1,6 @@
 import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
-import 'package:bookshelve_flutter/feature/forum/screens/forum_page.dart';
 import 'package:flutter/material.dart';
-import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:provider/provider.dart';
 
 void main() {
