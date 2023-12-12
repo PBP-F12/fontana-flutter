@@ -1,8 +1,11 @@
 import 'package:bookshelve_flutter/feature/home/widgets/left_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:bookshelve_flutter/utils/cookie.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final CookieRequest request;
+
+  const HomePage(this.request, {super.key});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -16,11 +19,16 @@ class HomePage extends StatefulWidget {
   final String title = 'Fontana';
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState(request);
 }
 
 class _HomePageState extends State<HomePage> {
   int _counter = 0;
+  CookieRequest request = CookieRequest();
+
+  _HomePageState(CookieRequest request) {
+    this.request = request;
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -51,7 +59,7 @@ class _HomePageState extends State<HomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer(request),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
