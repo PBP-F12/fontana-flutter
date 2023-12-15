@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ForumCreationPage extends StatefulWidget {
+  const ForumCreationPage({super.key});
+
   @override
   _ForumCreationPageState createState() => _ForumCreationPageState();
 }
 
 class _ForumCreationPageState extends State<ForumCreationPage> {
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _discussionController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _discussionController = TextEditingController();
 
   late Future<dynamic> books;
 
@@ -34,18 +36,18 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Forum'),
+        title: const Text('Create Forum'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextFormField(
               controller: _titleController,
-              decoration: InputDecoration(labelText: 'Forum Title'),
+              decoration: const InputDecoration(labelText: 'Forum Title'),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             FutureBuilder(
                 future: books,
                 builder: (context, snapshot) {
@@ -90,13 +92,13 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
                     return const Text('error');
                   }
                 }),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextFormField(
               controller: _discussionController,
               maxLines: 4,
-              decoration: InputDecoration(labelText: 'Discussion'),
+              decoration: const InputDecoration(labelText: 'Discussion'),
             ),
-            SizedBox(height: 24.0),
+            const SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: () {
                 // Validate input and create a new forum item
@@ -108,7 +110,7 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
                   _showErrorDialog();
                 }
               },
-              child: Text('Create Forum'),
+              child: const Text('Create Forum'),
             ),
           ],
         ),
@@ -126,12 +128,12 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Error'),
-        content: Text('Please fill in all fields.'),
+        title: const Text('Error'),
+        content: const Text('Please fill in all fields.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       ),
