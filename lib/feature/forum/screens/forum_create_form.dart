@@ -11,6 +11,8 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
   TextEditingController _bookTopicController = TextEditingController();
   TextEditingController _discussionController = TextEditingController();
 
+  String _bookTopicDefaultValue = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,10 +29,34 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
               decoration: InputDecoration(labelText: 'Forum Title'),
             ),
             SizedBox(height: 16.0),
-            TextFormField(
-              controller: _bookTopicController,
-              decoration: InputDecoration(labelText: 'Book Topic'),
-            ),
+            DropdownButton<String>(
+                isExpanded: true,
+                value: _bookTopicDefaultValue,
+                onChanged: (String? value) {
+                  if (value != null) {
+                    setState(() {
+                      _bookTopicDefaultValue = value;
+                    });
+                  }
+                },
+                items: const [
+                  DropdownMenuItem(
+                    value: '',
+                    child: Text('-'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'One',
+                    child: Text('One'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Two',
+                    child: Text('Two'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Three',
+                    child: Text('Three'),
+                  )
+                ]),
             SizedBox(height: 16.0),
             TextFormField(
               controller: _discussionController,
