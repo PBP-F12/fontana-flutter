@@ -12,12 +12,11 @@ class ForumCreationPage extends StatefulWidget {
 
 class _ForumCreationPageState extends State<ForumCreationPage> {
   TextEditingController _titleController = TextEditingController();
-  TextEditingController _bookTopicController = TextEditingController();
   TextEditingController _discussionController = TextEditingController();
 
   late Future<dynamic> books;
 
-  String _bookTopicDefaultValue = '';
+  String _bookTopicController = '';
 
   Future<dynamic> getBooks() async {
     Uri url = Uri.parse('http://127.0.0.1:8000/json/');
@@ -68,11 +67,11 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
 
                     return DropdownButton<String>(
                         isExpanded: true,
-                        value: _bookTopicDefaultValue,
+                        value: _bookTopicController,
                         onChanged: (String? value) {
                           if (value != null) {
                             setState(() {
-                              _bookTopicDefaultValue = value;
+                              _bookTopicController = value;
                             });
                           }
                         },
@@ -106,14 +105,8 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
               onPressed: () {
                 // Validate input and create a new forum item
                 if (_validateInput()) {
-                  final newForumItem = ForumItem(
-                    _titleController.text,
-                    _bookTopicController.text,
-                    _discussionController.text,
-                  );
-
                   // Return the new forum item to the main forum page
-                  Navigator.pop(context, newForumItem);
+                  Navigator.pop(context);
                 } else {
                   // Show an error message or handle invalid input
                   _showErrorDialog();
@@ -129,7 +122,7 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
 
   bool _validateInput() {
     return _titleController.text.isNotEmpty &&
-        _bookTopicController.text.isNotEmpty &&
+        _bookTopicController.isNotEmpty &&
         _discussionController.text.isNotEmpty;
   }
 
