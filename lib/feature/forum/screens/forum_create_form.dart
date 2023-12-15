@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:bookshelve_flutter/feature/event/models/book.dart';
 import 'package:bookshelve_flutter/feature/forum/widgets/forum_card.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class ForumCreationPage extends StatefulWidget {
   @override
@@ -11,7 +15,25 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
   TextEditingController _bookTopicController = TextEditingController();
   TextEditingController _discussionController = TextEditingController();
 
+  late Future<dynamic> books;
+
   String _bookTopicDefaultValue = '';
+
+  Future<dynamic> getBooks() async {
+    Uri url = Uri.parse('http://127.0.0.1:8000/json/');
+    final response = await http.get(url);
+    final body = json.decode(response.body);
+
+    print(body[0]['fields']);
+
+    return body;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    books = getBooks();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,34 +51,50 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
               decoration: InputDecoration(labelText: 'Forum Title'),
             ),
             SizedBox(height: 16.0),
-            DropdownButton<String>(
-                isExpanded: true,
-                value: _bookTopicDefaultValue,
-                onChanged: (String? value) {
-                  if (value != null) {
-                    setState(() {
-                      _bookTopicDefaultValue = value;
-                    });
+            FutureBuilder(
+                future: books,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      return Text(
+                          'Connection done but got error: ${snapshot.error}');
+                    }
+
+                    if (!snapshot.hasData) {
+                      return const Text('Connection done but no data.');
+                    }
+
+                    List<dynamic> books = snapshot.data;
+
+                    return DropdownButton<String>(
+                        isExpanded: true,
+                        value: _bookTopicDefaultValue,
+                        onChanged: (String? value) {
+                          if (value != null) {
+                            setState(() {
+                              _bookTopicDefaultValue = value;
+                            });
+                          }
+                        },
+                        items: [
+                          const DropdownMenuItem(
+                            value: '',
+                            child: Text('-'),
+                          ),
+                          ...books
+                              .map<DropdownMenuItem<String>>((dynamic value) {
+                            return DropdownMenuItem<String>(
+                                value: value['pk'],
+                                child: Text(value['fields']['book_title']));
+                          }).toList()
+                        ]);
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Text('Loading...');
+                  } else {
+                    return const Text('error');
                   }
-                },
-                items: const [
-                  DropdownMenuItem(
-                    value: '',
-                    child: Text('-'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'One',
-                    child: Text('One'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Two',
-                    child: Text('Two'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Three',
-                    child: Text('Three'),
-                  )
-                ]),
+                }),
             SizedBox(height: 16.0),
             TextFormField(
               controller: _discussionController,
