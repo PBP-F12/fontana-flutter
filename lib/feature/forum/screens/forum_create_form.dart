@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:bookshelve_flutter/feature/event/models/book.dart';
-import 'package:bookshelve_flutter/feature/forum/widgets/forum_card.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,8 +20,6 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
     Uri url = Uri.parse('http://127.0.0.1:8000/json/');
     final response = await http.get(url);
     final body = json.decode(response.body);
-
-    print(body[0]['fields']);
 
     return body;
   }
