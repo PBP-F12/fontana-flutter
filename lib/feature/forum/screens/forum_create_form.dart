@@ -29,10 +29,8 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
 
   Future<dynamic> getBooks() async {
     Uri url = Uri.parse('http://127.0.0.1:8000/json/');
-    final response = await http.get(url);
-    final body = json.decode(response.body);
-
-    return body;
+    final response = await request.get('http://127.0.0.1:8000/json/');
+    return response;
   }
 
   @override
