@@ -1,13 +1,16 @@
 import 'dart:convert';
 
+import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ForumCreationPage extends StatefulWidget {
-  const ForumCreationPage({super.key});
+  final CookieRequest request;
+
+  const ForumCreationPage(this.request, {super.key});
 
   @override
-  _ForumCreationPageState createState() => _ForumCreationPageState();
+  _ForumCreationPageState createState() => _ForumCreationPageState(request);
 }
 
 class _ForumCreationPageState extends State<ForumCreationPage> {
@@ -17,6 +20,12 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
   late Future<dynamic> books;
 
   String _bookTopicController = '';
+
+  CookieRequest request = CookieRequest();
+
+  _ForumCreationPageState(CookieRequest request) {
+    this.request = request;
+  }
 
   Future<dynamic> getBooks() async {
     Uri url = Uri.parse('http://127.0.0.1:8000/json/');
@@ -100,11 +109,21 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
             ),
             const SizedBox(height: 24.0),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Validate input and create a new forum item
                 if (_validateInput()) {
-                  // Return the new forum item to the main forum page
-                  Navigator.pop(context);
+                  final response = await request.postJson(
+                      'http://localhost:8000/forum/api/create',
+                      jsonEncode(<String, String>{
+                        'title': _titleController.text,
+                        'bookTopic': _bookTopicController,
+                        'discussion': _discussionController.text
+                      }));
+
+                  if (response['status'] == 200) {
+                    // Return the new forum item to the main forum page
+                    Navigator.pop(context);
+                  }
                 } else {
                   // Show an error message or handle invalid input
                   _showErrorDialog();
