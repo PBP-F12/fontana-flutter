@@ -113,7 +113,7 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Logout'),
             onTap: () async {
               final response =
-                  await request.logout('http://127.0.0.1:8000/auth/api/logout');
+                  await request.logout('http://localhost:8000/auth/api/logout');
 
               if (response['status'] == 200) {
                 Navigator.push(
