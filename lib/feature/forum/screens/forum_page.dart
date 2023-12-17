@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:bookshelve_flutter/feature/forum/screens/forum_create_form.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_detail.dart';
-import 'package:bookshelve_flutter/feature/forum/widgets/forum_card.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class ForumMainPage extends StatefulWidget {
   final CookieRequest request;
