@@ -71,8 +71,8 @@ class _ForumMainPageState extends State<ForumMainPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                ForumDetailPage(forums[index]),
+                            builder: (context) => ForumDetailPage(
+                                request, forums[index]['forumId']),
                           ),
                         );
                       },
