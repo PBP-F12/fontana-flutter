@@ -5,24 +5,6 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:convert';
 
-class Book {
-  final int id;
-  final String title;
-  final String author;
-  final String category;
-  final String rating;
-  final String imageUrl;
-
-  Book({
-    required this.id,
-    required this.title,
-    required this.author,
-    required this.category,
-    required this.rating,
-    required this.imageUrl,
-  });
-}
-
 class MyBookmarkPage extends StatefulWidget {
   final CookieRequest request;
 
@@ -123,27 +105,27 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
             backgroundColor: const Color(0xFF1E8449), // Warna hijau
           ),
           SizedBox(width: 16),
-          FloatingActionButton(
-            heroTag: "btn3",
-            onPressed: () {
-              setState(() {
-                // bookmarkedBooks.add(
-                //   Book(
-                //     id: bookmarkTotal,
-                //     title: 'Book with id$bookmarkTotal',
-                //     author: '-',
-                //     category: '-',
-                //     rating: 'NA/5',
-                //     imageUrl: 'assets/book_placeholder.jpg', // Ganti dengan path gambar yang sesuai
-                //   ),
-                // );
-                // bookmarkTotal++;
-              });
-            },
-            tooltip: 'Bookmark',
-            child: const Icon(Icons.bookmark),
-            backgroundColor: const Color(0xFF1E8449), // Warna hijau
-          ),
+          // FloatingActionButton(
+          //   heroTag: "btn3",
+          //   onPressed: () {
+          //     setState(() {
+          //       // bookmarkedBooks.add(
+          //       //   Book(
+          //       //     id: bookmarkTotal,
+          //       //     title: 'Book with id$bookmarkTotal',
+          //       //     author: '-',
+          //       //     category: '-',
+          //       //     rating: 'NA/5',
+          //       //     imageUrl: 'assets/book_placeholder.jpg', // Ganti dengan path gambar yang sesuai
+          //       //   ),
+          //       // );
+          //       // bookmarkTotal++;
+          //     });
+          //   },
+          //   tooltip: 'Bookmark',
+          //   child: const Icon(Icons.bookmark),
+          //   backgroundColor: const Color(0xFF1E8449), // Warna hijau
+          // ),
         ],
       ),
     );
