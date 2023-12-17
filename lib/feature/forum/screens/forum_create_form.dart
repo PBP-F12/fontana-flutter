@@ -25,7 +25,7 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
   _ForumCreationPageState(this.request);
 
   Future<dynamic> getBooks() async {
-    final response = await request.get('http://127.0.0.1:8000/json/');
+    final response = await request.get('http://localhost:8000/json/');
     return response;
   }
 
@@ -90,7 +90,9 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
                         ]);
                   } else if (snapshot.connectionState ==
                       ConnectionState.waiting) {
-                    return const Text('Loading...');
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   } else {
                     return const Text('error');
                   }
