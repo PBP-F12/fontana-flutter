@@ -90,6 +90,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "btn1",
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),

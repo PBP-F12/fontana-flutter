@@ -1,6 +1,7 @@
 import 'package:bookshelve_flutter/feature/event/screens/event_page.dart';
 import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_page.dart';
+import 'package:bookshelve_flutter/feature/bookmark/screens/bookmark_page.dart';
 import 'package:bookshelve_flutter/feature/home/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
@@ -76,7 +77,7 @@ class LeftDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomePage(request),
+                    builder: (context) => MyBookmarkPage(request),
                   ));
             },
           ),
@@ -113,7 +114,7 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Logout'),
             onTap: () async {
               final response =
-                  await request.logout('http://localhost:8000/auth/api/logout');
+                  await request.logout('http://127.0.0.1:8000/auth/api/logout');
 
               if (response['status'] == 200) {
                 Navigator.push(
