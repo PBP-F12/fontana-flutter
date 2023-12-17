@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class ForumCreationPage extends StatefulWidget {
   final CookieRequest request;
@@ -23,9 +22,7 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
 
   CookieRequest request = CookieRequest();
 
-  _ForumCreationPageState(CookieRequest request) {
-    this.request = request;
-  }
+  _ForumCreationPageState(this.request);
 
   Future<dynamic> getBooks() async {
     Uri url = Uri.parse('http://127.0.0.1:8000/json/');
