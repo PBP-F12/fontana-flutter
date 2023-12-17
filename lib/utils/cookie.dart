@@ -28,6 +28,8 @@ class CookieRequest {
   Map<String, dynamic> jsonData = {};
   final http.Client _client = http.Client();
 
+  String? role;
+
   late SharedPreferences local;
 
   bool loggedIn = false;
@@ -85,6 +87,7 @@ class CookieRequest {
     if (response.statusCode == 200) {
       loggedIn = true;
       jsonData = json.decode(response.body);
+      role = jsonData['role'];
     } else {
       loggedIn = false;
     }
@@ -247,6 +250,7 @@ class CookieRequest {
     if (response.statusCode == 200) {
       loggedIn = false;
       jsonData = {};
+      role = jsonData['role']
     } else {
       loggedIn = true;
     }
@@ -254,5 +258,17 @@ class CookieRequest {
     cookies = {};
 
     return json.decode(response.body);
+  }
+
+  bool isAdmin() {
+    return role == 'ADMIN'
+  }
+
+  bool isReader() {
+    return role == 'READER'
+  }
+
+  bool isAuthor() {
+    return role 'AUTHOR'
   }
 }
