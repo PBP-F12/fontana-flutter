@@ -9,11 +9,9 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Customize the splash screen appearance
+      backgroundColor: const Color(0xffc8ae7d),
       body: Center(
-        child: FlutterLogo(
-          size: 150,
-        ),
+        child: Image.asset('assets/images/logo.png', width: 250),
       ),
     );
   }
