@@ -19,9 +19,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login Page'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
