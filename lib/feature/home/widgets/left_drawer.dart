@@ -1,5 +1,6 @@
 import 'package:bookshelve_flutter/feature/forum/screens/forum_page.dart';
 import 'package:bookshelve_flutter/feature/home/screens/home.dart';
+import 'package:bookshelve_flutter/feature/publish/author_book_page.dart';
 import 'package:flutter/material.dart';
 
 class LeftDrawer extends StatelessWidget {
@@ -90,7 +91,7 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.add_shopping_cart),
+            leading: const Icon(Icons.library_books),
             title: const Text('My Books'),
             // Bagian redirection ke ShopFormPage
             onTap: () {
@@ -99,7 +100,7 @@ class LeftDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomePage(),
+                    builder: (context) => AuthorBookPage(),
                   ));
             },
           ),
