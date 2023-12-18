@@ -250,7 +250,7 @@ class CookieRequest {
     if (response.statusCode == 200) {
       loggedIn = false;
       jsonData = {};
-      role = jsonData['role']
+      role = null;
     } else {
       loggedIn = true;
     }
@@ -261,14 +261,14 @@ class CookieRequest {
   }
 
   bool isAdmin() {
-    return role == 'ADMIN'
+    return role == 'ADMIN';
   }
 
   bool isReader() {
-    return role == 'READER'
+    return role == 'READER';
   }
 
   bool isAuthor() {
-    return role 'AUTHOR'
+    return role == 'AUTHOR';
   }
 }
