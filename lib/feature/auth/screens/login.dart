@@ -18,64 +18,85 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _usernameController,
-              decoration: const InputDecoration(labelText: 'Username'),
+      backgroundColor: const Color.fromARGB(255, 200, 174, 125),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Container(
+              width: screenWidth,
+              decoration: const BoxDecoration(
+                  color: Color(0xFF765827),
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              padding: const EdgeInsets.only(top: 50, bottom: 50),
+              child: Image.asset(
+                'assets/images/readbook-vector.png',
+                height: 275,
+              ),
             ),
-            const SizedBox(height: 16.0),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: 'Password'),
+          ),
+          const SizedBox(height: 16.0),
+          Padding(
+            padding: EdgeInsets.only(left: 16.0, right: 16.0),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _usernameController,
+                  decoration: const InputDecoration(labelText: 'Username'),
+                ),
+                const SizedBox(height: 16.0),
+                TextField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(labelText: 'Password'),
+                ),
+              ],
             ),
-            const SizedBox(height: 24.0),
-            ElevatedButton(
-              onPressed: () async {
-                // Perform login logic (authentication check)
-                if (_performLogin()) {
-                  String username = _usernameController.text;
-                  String password = _passwordController.text;
+          ),
+          const SizedBox(height: 24.0),
+          ElevatedButton(
+            onPressed: () async {
+              // Perform login logic (authentication check)
+              if (_performLogin()) {
+                String username = _usernameController.text;
+                String password = _passwordController.text;
 
-                  await request.login('http://localhost:8000/auth/api/login',
-                      {'username': username, 'password': password});
+                await request.login('http://localhost:8000/auth/api/login',
+                    {'username': username, 'password': password});
 
-                  if (request.loggedIn) {
-                    // If successful, navigate to the home page
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HomePage(request)),
-                    );
-                  } else {
-                    print('failed to login');
-                  }
+                if (request.loggedIn) {
+                  // If successful, navigate to the home page
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage(request)),
+                  );
                 } else {
-                  // Show an error message or handle authentication failure
-                  _showErrorDialog();
+                  print('failed to login');
                 }
-              },
-              child: const Text('Login'),
-            ),
-            const SizedBox(height: 12.0),
-            TextButton(
-              onPressed: () {
-                // Navigate to the registration page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ReaderRegistrationPage()),
-                );
-              },
-              child: const Text('Register'),
-            ),
-          ],
-        ),
+              } else {
+                // Show an error message or handle authentication failure
+                _showErrorDialog();
+              }
+            },
+            child: const Text('Login'),
+          ),
+          const SizedBox(height: 12.0),
+          TextButton(
+            onPressed: () {
+              // Navigate to the registration page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ReaderRegistrationPage()),
+              );
+            },
+            child: const Text('Register'),
+          ),
+        ],
       ),
     );
   }

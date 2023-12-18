@@ -1,4 +1,4 @@
-import 'package:bookshelve_flutter/feature/home/screens/splash_screen.dart';
+import 'package:bookshelve_flutter/feature/onboarding/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:provider/provider.dart';
