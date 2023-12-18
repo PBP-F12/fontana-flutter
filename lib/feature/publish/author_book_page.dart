@@ -1,17 +1,28 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:bookshelve_flutter/feature/publish/publish_form_page.dart';
 import 'package:bookshelve_flutter/utils/publish/fetch_author_book.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AuthorBookPage extends StatefulWidget {
-  const AuthorBookPage({super.key});
+  final CookieRequest request;
+
+
+  const AuthorBookPage(this.request, {super.key});
 
   @override
-  State<AuthorBookPage> createState() => _AuthorBookPageState();
+  State<AuthorBookPage> createState() => _AuthorBookPageState(request);
 }
 
 class _AuthorBookPageState extends State<AuthorBookPage> {
+  CookieRequest request = CookieRequest();
+
+  _AuthorBookPageState(CookieRequest request) {
+    this.request = request;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,20 +39,21 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
       body: FutureBuilder(
         future: fetchAuthorBook(),
         builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.data == null) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (!snapshot.hasData) {
-            return const Column(
-                children: [
-                Text(
+            return Center(
+                child: Text(
                     "You have not published any book yet.",
                     style:
-                        TextStyle(color: Color(0xFF3E2723), fontSize: 20),
+                        TextStyle(
+                          color: Color(0xFF3E2723), 
+                          fontSize: 20,
+                          fontFamily: GoogleFonts.merriweather().fontFamily,
+                        ),
                 ),
-                SizedBox(height: 8),
-                ],
             );
           } else {
             print("something");
@@ -164,7 +176,7 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
           final result = await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PublishFormPage(),
+              builder: (context) => PublishFormPage(request),
             ),
           );
         },

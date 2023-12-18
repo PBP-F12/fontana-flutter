@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
 
   _HomePageState(CookieRequest request) {
     this.request = request;
+  }
 
   static const int pageSize = 30; // Number of items per page
   int currentPage = 0; // Current page index

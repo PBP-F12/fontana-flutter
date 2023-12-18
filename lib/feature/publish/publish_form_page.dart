@@ -1,14 +1,24 @@
 import 'package:bookshelve_flutter/utils/publish/publish_author_book.dart';
 import 'package:flutter/material.dart';
+import 'package:bookshelve_flutter/utils/cookie.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PublishFormPage extends StatefulWidget {
-  PublishFormPage({super.key});
+  final CookieRequest request;
+
+  PublishFormPage(this.request, {super.key});
 
   @override
-  State<PublishFormPage> createState() => _PublishFormPageState();
+  State<PublishFormPage> createState() => _PublishFormPageState(request);
 }
 
 class _PublishFormPageState extends State<PublishFormPage> {
+  CookieRequest request = CookieRequest();
+
+  _PublishFormPageState(CookieRequest request) {
+    this.request = request;
+  }
+
   // controller to get user's input
   TextEditingController _bookTitleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
@@ -37,16 +47,18 @@ class _PublishFormPageState extends State<PublishFormPage> {
                 style: TextStyle(
                   color: Colors.brown.shade900,
                   fontWeight: FontWeight.w700,
-                  fontSize: 30.0,
+                  fontSize: 25.0,
+                  fontFamily: GoogleFonts.merriweather().fontFamily,
                 ),
               ),
-              SizedBox(height: 8.0),
+              SizedBox(height: 10.0),
               Text(
                 'The world awaits your literary masterpiece!',
                 style: TextStyle(
                   color: Colors.brown.shade900.withOpacity(0.8),
                   fontStyle: FontStyle.italic,
-                  fontSize: 18.0,
+                  fontSize: 14.0,
+                  fontFamily: GoogleFonts.merriweather().fontFamily,
                 ),
               ),
               SizedBox(height: 32.0),

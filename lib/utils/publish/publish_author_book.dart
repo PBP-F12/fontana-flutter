@@ -18,7 +18,7 @@ Future<AuthorBook> publishAuthorBook(AuthorBook authorBook) async {
 }
 
 void publishAuthorBook2(request, String book_title, String description, String book_cover_link, BuildContext context, mounted) async {
-  final response = await request.post('https://fontana.my.id/book/publish/', {
+  final response = await request.post('http://127.0.0.1:8000/book/publish/', {
     'book_title': book_title,
     'description': description,
     'book_cover_link': book_cover_link,

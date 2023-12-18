@@ -14,9 +14,6 @@ Future<List<AuthorBook>> fetchAuthorBook() async {
     },
   );
 
-  print('HERE ===========================');
-  print(response);
-
   // Decode response into JSON
   var data = jsonDecode(utf8.decode(response.bodyBytes));
 
