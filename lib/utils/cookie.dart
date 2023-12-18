@@ -153,14 +153,14 @@ class CookieRequest {
       c.withCredentials = true;
     }
 
-    if (data) {
+    if (data != null) {
       http.Response response =
-          await _client.post(Uri.parse(url), body: data, headers: headers);
+          await _client.delete(Uri.parse(url), body: data, headers: headers);
       await _updateCookie(response);
       return json.decode(response.body);
     } else {
       http.Response response =
-          await _client.post(Uri.parse(url), headers: headers);
+          await _client.delete(Uri.parse(url), headers: headers);
       await _updateCookie(response);
       return json.decode(response.body);
     }
