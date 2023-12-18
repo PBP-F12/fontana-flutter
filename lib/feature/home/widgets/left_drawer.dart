@@ -117,7 +117,7 @@ class LeftDrawer extends StatelessWidget {
                   await request.logout('http://127.0.0.1:8000/auth/api/logout');
 
               if (response['status'] == 200) {
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const LoginPage(),
