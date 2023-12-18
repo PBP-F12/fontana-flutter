@@ -146,6 +146,26 @@ class CookieRequest {
     return json.decode(response.body);
   }
 
+  Future<dynamic> delete(String url, [dynamic data]) async {
+    await init();
+    if (kIsWeb) {
+      dynamic c = _client;
+      c.withCredentials = true;
+    }
+
+    if (data != null) {
+      http.Response response =
+          await _client.delete(Uri.parse(url), body: data, headers: headers);
+      await _updateCookie(response);
+      return json.decode(response.body);
+    } else {
+      http.Response response =
+          await _client.delete(Uri.parse(url), headers: headers);
+      await _updateCookie(response);
+      return json.decode(response.body);
+    }
+  }
+
   Future _updateCookie(http.Response response) async {
     await init();
 
