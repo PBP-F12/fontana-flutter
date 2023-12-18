@@ -2,6 +2,7 @@ import 'package:bookshelve_flutter/feature/home/widgets/left_drawer.dart';
 import 'package:bookshelve_flutter/feature/home/models/book.dart';
 import 'package:bookshelve_flutter/feature/details/screens/details.dart';
 import 'package:flutter/material.dart';
+import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:math';
@@ -9,10 +10,10 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final CookieRequest request;
+
+  const HomePage(this.request, {super.key});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -26,10 +27,16 @@ class HomePage extends StatefulWidget {
   final String title = 'Fontana';
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState(request);
 }
 
 class _HomePageState extends State<HomePage> {
+  int _counter = 0;
+  CookieRequest request = CookieRequest();
+
+  _HomePageState(CookieRequest request) {
+    this.request = request;
+
   static const int pageSize = 30; // Number of items per page
   int currentPage = 0; // Current page index
   List<Book> allBooks = []; // List to hold all books
@@ -94,7 +101,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer(request),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
