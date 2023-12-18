@@ -2,27 +2,20 @@ import 'package:bookshelve_flutter/feature/home/widgets/left_drawer.dart';
 import 'package:bookshelve_flutter/feature/home/models/book.dart';
 import 'package:bookshelve_flutter/feature/details/screens/details.dart';
 import 'package:flutter/material.dart';
-import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:math';
 import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:bookshelve_flutter/utils/cookie.dart';
+
+
 
 class HomePage extends StatefulWidget {
   final CookieRequest request;
 
   const HomePage(this.request, {super.key});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title = 'Fontana';
 
@@ -31,11 +24,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
   CookieRequest request = CookieRequest();
 
   _HomePageState(CookieRequest request) {
     this.request = request;
+  }
 
   static const int pageSize = 30; // Number of items per page
   int currentPage = 0; // Current page index
@@ -197,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => BookDetails(book: book),
+                                  builder: (context) => BookDetails(request: request ,book: book),
                                 ),
                               );
                             },
@@ -229,6 +222,7 @@ class _HomePageState extends State<HomePage> {
                                     color: Colors.white,
                                     fontFamily: GoogleFonts.merriweather().fontFamily,
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
                             ),
@@ -327,7 +321,7 @@ class _HomePageState extends State<HomePage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => BookDetails(book: book),
+            builder: (context) => BookDetails(book: book, request: request),
           ),
         );
       },
