@@ -1,14 +1,15 @@
-import 'package:bookshelve_flutter/feature/home/widgets/left_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:bookshelve_flutter/feature/home/widgets/left_drawer.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'dart:async';
 import 'dart:core';
 import 'dart:convert';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyBookmarkPage extends StatefulWidget {
   final CookieRequest request;
 
-  const MyBookmarkPage(this.request, {super.key});
+  const MyBookmarkPage(this.request, {Key? key}) : super(key: key);
 
   final String title = 'My Bookmark';
 
@@ -18,7 +19,7 @@ class MyBookmarkPage extends StatefulWidget {
 
 class _MyBookmarkPageState extends State<MyBookmarkPage> {
   late Future<dynamic> bookmarkedBooks;
-  int bookmarkTotal = 1; // id awal
+  int bookmarkTotal = 1; // initial id
 
   CookieRequest request = CookieRequest();
 
@@ -28,11 +29,6 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
 
   Future<dynamic> getBookmarks() async {
     final response = await request.get('http://localhost:8000/bookmark/ajax');
-
-    // print('here');
-    // print(response);
-    // print(response['bookmarks'][0]);
-
     return response['bookmarks'];
   }
 
@@ -46,86 +42,74 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFE5E5E5), // Warna krem
-        title: Text(widget.title),
+        backgroundColor: const Color.fromARGB(74, 255, 255, 255),
+        flexibleSpace: FlexibleSpaceBar(
+          centerTitle: true,
+          title: Padding(
+            padding: const EdgeInsets.all(0),
+            child: Image.asset(
+              'assets/images/logo.png',
+            ),
+          ),
+        ),
       ),
+      drawer: LeftDrawer(request),
       body: Container(
-        color: const Color(0xFFE5E5E5), // Warna krem
-        child: FutureBuilder(
-          future: bookmarkedBooks,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasError) {
-                return const Center(child: Text('error'));
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/library_bg.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          color: const Color.fromARGB(255, 200, 174, 125),
+          child: FutureBuilder(
+            future: bookmarkedBooks,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return const Center(child: Text('Error'));
+                }
+
+                if (!snapshot.hasData) {
+                  return const Center(child: Text('No data'));
+                }
+
+                List<dynamic> bookmarks = snapshot.data;
+
+                return ListView.builder(
+                  itemCount: bookmarks.length,
+                  itemBuilder: (context, index) {
+                    final bookmark = bookmarks[index];
+                    return _buildBookItem(bookmark);
+                  },
+                );
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return const Center(
+                  child: Text('Failed to fetch'),
+                );
               }
-
-              if (!snapshot.hasData) {
-                return const Center(child: Text('no data'));
-              }
-
-              List<dynamic> bookmarks  = snapshot.data;
-
-              // return Text('success');
-
-              return ListView.builder(
-                itemCount: bookmarks.length,
-                itemBuilder: (context, index) {
-                  final bookmark = bookmarks[index];
-                  return _buildBookItem(bookmark);
-                },
-              );
-            } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              return const Center(
-                child: Text('failed to fetch'),
-              );
-            }
-          }),
-        // child: ListView.builder(
-        //   itemCount: bookmarkedBooks.length,
-        //   itemBuilder: (context, index) {
-        //     final book = bookmarkedBooks[index];
-        //     return _buildBookItem(book);
-        //   },
-        // ),
+            },
+          ),
+        ),
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
-            heroTag: "btn2",
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            tooltip: 'Back to Home',
-            child: const Icon(Icons.home),
-            backgroundColor: const Color(0xFF1E8449), // Warna hijau
-          ),
-          SizedBox(width: 16),
           // FloatingActionButton(
-          //   heroTag: "btn3",
+          //   heroTag: 'btn2',
           //   onPressed: () {
-          //     setState(() {
-          //       // bookmarkedBooks.add(
-          //       //   Book(
-          //       //     id: bookmarkTotal,
-          //       //     title: 'Book with id$bookmarkTotal',
-          //       //     author: '-',
-          //       //     category: '-',
-          //       //     rating: 'NA/5',
-          //       //     imageUrl: 'assets/book_placeholder.jpg', // Ganti dengan path gambar yang sesuai
-          //       //   ),
-          //       // );
-          //       // bookmarkTotal++;
-          //     });
+          //     Navigator.pop(context);
           //   },
-          //   tooltip: 'Bookmark',
-          //   child: const Icon(Icons.bookmark),
-          //   backgroundColor: const Color(0xFF1E8449), // Warna hijau
+          //   tooltip: 'Back to Home',
+          //   child: const Icon(Icons.home),
+          //   backgroundColor: const Color(0xFF1E8449),
           // ),
+          SizedBox(width: 16),
         ],
       ),
     );
@@ -135,10 +119,11 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(8), // Ubah padding card agar lebih kecil
+        width: 350,
+        height: 600,
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.white, // Warna krem untuk latar belakang card
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
@@ -153,32 +138,40 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.network(
-              bookmark['bookCover'], // Ganti dengan path gambar yang sesuai
-              width: 80, // Sesuaikan ukuran gambar sesuai kebutuhan Anda
-              height: 120,
+              bookmark['bookCover'],
+              width: 300,
+              height: 450,
               fit: BoxFit.cover,
             ),
             SizedBox(height: 8),
             Text(
               bookmark['bookTitle'],
               style: TextStyle(
-                fontSize: 16, // Ubah ukuran teks agar lebih kecil
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
+                fontFamily: GoogleFonts.merriweather().fontFamily,
               ),
             ),
             SizedBox(height: 8),
-            Text('Author: ' + bookmark['authorUsername']),
+            Text('Author: ' + bookmark['authorUsername'],
+              style: TextStyle(
+                fontFamily: GoogleFonts.merriweather().fontFamily,
+              ), //textstyle
+            ),//text
             SizedBox(height: 8),
             IconButton(
-              icon: Icon(Icons.bookmark),
-              onPressed: () {
+              icon: Icon(Icons.bookmark, size: 50.0),
+              onPressed: () async {
+                print('deleted ' + bookmark['bookId']);
+                  await request.delete('http://localhost:8000/bookmark/api/delete/' + bookmark['bookId']);
+                
                 setState(() {
-                  // bookmarkedBooks.remove(book);
-                });
+                  bookmarkedBooks = getBookmarks();
+                  });
               },
             ),
-          ],
-        ),
+          ], 
+        ), 
       ),
     );
   }
