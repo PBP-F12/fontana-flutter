@@ -86,10 +86,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     List<Book> booksToShow = getBooksForCurrentPage();
-    List<Book> topBooks = allBooks.take(10).toList(); // Take the first 10 books for the carousel
+    List<Book> topBooks =
+        allBooks.take(10).toList(); // Take the first 10 books for the carousel
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 200,174,125),
+      backgroundColor: const Color.fromARGB(255, 200, 174, 125),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(74, 255, 255, 255),
         flexibleSpace: FlexibleSpaceBar(
@@ -109,70 +110,76 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   // Stack for the library image and text
-                Stack(
-                  children: [
-                    // Background Image
-                    Container(
-                      height: 200, // Set the desired height
-                      width: double.infinity,
-                      child: Image.asset(
-                        'assets/images/library_bg.jpg', // Replace with your image path
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    // Dark overlay for better text readability
-                    Container(
-                      height: 200,
-                      width: double.infinity,
-                      color: Colors.black.withOpacity(0.5), // Adjust opacity as needed
-                    ),
-                    // Text in the dead center of the image
-                    Positioned.fill(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Fontana',
-                              style: TextStyle(
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 234, 198, 150),
-                                fontFamily: GoogleFonts.merriweather().fontFamily,
-                              ),
-                            ),
-                            SizedBox(height: 8), // Adjust the spacing between the two texts
-                            Text(
-                              'The only spring you need',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Color.fromARGB(255, 234, 198, 150),
-                                fontFamily: GoogleFonts.merriweather().fontFamily,
-                              ),
-                            ),
-                          ],
+                  Stack(
+                    children: [
+                      // Background Image
+                      Container(
+                        height: 200, // Set the desired height
+                        width: double.infinity,
+                        child: Image.asset(
+                          'assets/images/library_bg.jpg', // Replace with your image path
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                // Rest of the widgets
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    style: TextStyle(fontFamily: GoogleFonts.merriweather().fontFamily),
-                    decoration: InputDecoration(
-                      hintText: 'Search for books...',
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide.none,
+                      // Dark overlay for better text readability
+                      Container(
+                        height: 200,
+                        width: double.infinity,
+                        color: Colors.black
+                            .withOpacity(0.5), // Adjust opacity as needed
                       ),
-                      filled: true,
-                      fillColor: Color.fromARGB(125, 255, 255, 255),
+                      // Text in the dead center of the image
+                      Positioned.fill(
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Fontana',
+                                style: TextStyle(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 234, 198, 150),
+                                  fontFamily:
+                                      GoogleFonts.merriweather().fontFamily,
+                                ),
+                              ),
+                              SizedBox(
+                                  height:
+                                      8), // Adjust the spacing between the two texts
+                              Text(
+                                'The only spring you need',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color.fromARGB(255, 234, 198, 150),
+                                  fontFamily:
+                                      GoogleFonts.merriweather().fontFamily,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Rest of the widgets
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      style: TextStyle(
+                          fontFamily: GoogleFonts.merriweather().fontFamily),
+                      decoration: InputDecoration(
+                        hintText: 'Search for books...',
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Color.fromARGB(125, 255, 255, 255),
+                      ),
                     ),
                   ),
-                ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 8.0),
                     child: Align(
@@ -203,20 +210,25 @@ class _HomePageState extends State<HomePage> {
                               );
                             },
                             child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 20.0),
                               decoration: BoxDecoration(
-                                color: Colors.white, // Added for better contrast
+                                color:
+                                    Colors.white, // Added for better contrast
                                 borderRadius: BorderRadius.circular(10),
-                                boxShadow: [ // Shadow for each carousel item
+                                boxShadow: [
+                                  // Shadow for each carousel item
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 5,
                                     blurRadius: 7,
-                                    offset: Offset(0, 3), // changes position of shadow
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
                                   ),
                                 ],
                                 image: DecorationImage(
-                                  image: NetworkImage(book.fields.bookCoverLink),
+                                  image:
+                                      NetworkImage(book.fields.bookCoverLink),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -226,9 +238,11 @@ class _HomePageState extends State<HomePage> {
                                   book.fields.bookTitle,
                                   style: TextStyle(
                                     fontSize: 16.0,
-                                    backgroundColor: Colors.black.withOpacity(0.5), // For readability
+                                    backgroundColor: Colors.black
+                                        .withOpacity(0.5), // For readability
                                     color: Colors.white,
-                                    fontFamily: GoogleFonts.merriweather().fontFamily,
+                                    fontFamily:
+                                        GoogleFonts.merriweather().fontFamily,
                                   ),
                                 ),
                               ),
@@ -242,7 +256,8 @@ class _HomePageState extends State<HomePage> {
                       aspectRatio: 2.0,
                       enlargeCenterPage: true,
                       padEnds: false,
-                      viewportFraction: 0.8, // Adjust based on how much of each card should be visible
+                      viewportFraction:
+                          0.8, // Adjust based on how much of each card should be visible
                     ),
                   ),
                   Padding(
@@ -262,7 +277,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                   // GridView.builder for Recommended Books
                   GridView.builder(
-                    physics: NeverScrollableScrollPhysics(), // to disable GridView's scrolling within a SingleChildScrollView
+                    physics:
+                        NeverScrollableScrollPhysics(), // to disable GridView's scrolling within a SingleChildScrollView
                     shrinkWrap: true, // to fit within SingleChildScrollView
                     padding: const EdgeInsets.all(8.0),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -277,48 +293,54 @@ class _HomePageState extends State<HomePage> {
                   ),
                   // Pagination Row
                   Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.chevron_left,
-                        color: currentPage > 0 ? Colors.blue : Colors.grey, // Change color based on availability
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.chevron_left,
+                          color: currentPage > 0
+                              ? Colors.blue
+                              : Colors
+                                  .grey, // Change color based on availability
+                        ),
+                        onPressed: currentPage > 0
+                            ? () {
+                                setState(() {
+                                  currentPage--;
+                                });
+                              }
+                            : null,
                       ),
-                      onPressed: currentPage > 0
-                          ? () {
-                              setState(() {
-                                currentPage--;
-                              });
-                            }
-                          : null,
-                    ),
-                    Text(
-                      'Halaman ${currentPage + 1} dari $totalPage',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey[800],
-                        fontFamily: GoogleFonts.merriweather().fontFamily,
+                      Text(
+                        'Halaman ${currentPage + 1} dari $totalPage',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[800],
+                          fontFamily: GoogleFonts.merriweather().fontFamily,
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.chevron_right,
-                        color: currentPage < totalPage - 1 ? Colors.blue : Colors.grey, // Change color based on availability
+                      IconButton(
+                        icon: Icon(
+                          Icons.chevron_right,
+                          color: currentPage < totalPage - 1
+                              ? Colors.blue
+                              : Colors
+                                  .grey, // Change color based on availability
+                        ),
+                        onPressed: currentPage < totalPage - 1
+                            ? () {
+                                setState(() {
+                                  currentPage++;
+                                });
+                              }
+                            : null,
                       ),
-                      onPressed: currentPage < totalPage - 1
-                          ? () {
-                              setState(() {
-                                currentPage++;
-                              });
-                            }
-                          : null,
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
                 ],
-              ),   
-            ), 
+              ),
+            ),
     );
   }
 
@@ -336,7 +358,7 @@ class _HomePageState extends State<HomePage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        color: const Color.fromARGB(255, 200,174,125),
+        color: const Color.fromARGB(255, 200, 174, 125),
         child: Column(
           children: [
             Expanded(
@@ -355,7 +377,11 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 book.fields.bookTitle,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey[800], fontFamily: GoogleFonts.merriweather().fontFamily),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[800],
+                    fontFamily: GoogleFonts.merriweather().fontFamily),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
