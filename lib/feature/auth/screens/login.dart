@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/feature/auth/screens/register.dart';
 import 'package:bookshelve_flutter/feature/auth/screens/register_as_reader.dart';
 import 'package:bookshelve_flutter/feature/auth/widgets/custom_text_field.dart';
 import 'package:bookshelve_flutter/feature/home/screens/home.dart';
@@ -98,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ReaderRegistrationPage()),
+                            builder: (context) => const RegisterPage()),
                       );
                     }),
               ],
