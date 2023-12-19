@@ -1,6 +1,7 @@
 import 'package:bookshelve_flutter/feature/auth/screens/register.dart';
 import 'package:bookshelve_flutter/feature/auth/screens/register_as_reader.dart';
 import 'package:bookshelve_flutter/feature/auth/widgets/custom_text_field.dart';
+import 'package:bookshelve_flutter/feature/home/screens/base.dart';
 import 'package:bookshelve_flutter/feature/home/screens/home.dart';
 import 'package:bookshelve_flutter/feature/onboarding/widgets/custom_text_button.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomePage(request)),
+                                builder: (context) => const BasePage()),
                           );
                         } else {
                           print('failed to login');

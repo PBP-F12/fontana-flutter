@@ -108,7 +108,6 @@ class _ForumMainPageState extends State<ForumMainPage> {
         },
         child: Icon(Icons.add),
       ),
-      bottomNavigationBar: CustomNavigationBar(1),
     );
   }
 }

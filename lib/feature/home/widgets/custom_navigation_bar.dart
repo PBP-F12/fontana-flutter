@@ -1,80 +1,37 @@
-import 'package:bookshelve_flutter/feature/event/screens/event_page.dart';
-import 'package:bookshelve_flutter/feature/forum/screens/forum_page.dart';
-import 'package:bookshelve_flutter/feature/home/screens/home.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:bookshelve_flutter/feature/home/widgets/admin_navigation_bar.dart';
+import 'package:bookshelve_flutter/feature/home/widgets/author_navigation_bar.dart';
+import 'package:bookshelve_flutter/feature/home/widgets/reader_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:provider/provider.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   final int index;
+  final Function onTap;
 
-  const CustomNavigationBar(this.index, {super.key});
+  CustomNavigationBar({super.key, required this.index, required this.onTap});
 
   @override
-  State<CustomNavigationBar> createState() => _CustomNavigationBarState(index);
+  State<CustomNavigationBar> createState() =>
+      _CustomNavigationBarState(index: index, onTap: onTap);
 }
 
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
-  final int index;
+  int index;
+  Function onTap;
 
-  _CustomNavigationBarState(this.index);
+  _CustomNavigationBarState({required this.index, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     CookieRequest request = context.watch<CookieRequest>();
 
-    return CurvedNavigationBar(
-        index: index,
-        items: const [
-          Icon(Icons.home_filled, color: Color(0xff66461f)),
-          Icon(Icons.forum_outlined, color: Color(0xff66461f)),
-          Icon(Icons.book_rounded, color: Color(0xff66461f)),
-          Icon(Icons.add_shopping_cart, color: Color(0xff66461f)),
-          Icon(Icons.auto_stories_outlined, color: Color(0xff66461f)),
-        ],
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(request),
-                  ));
-              break;
-            case 1:
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ForumMainPage(request),
-                  ));
-              break;
-            case 2:
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(request),
-                  ));
-              break;
-            case 3:
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EventPage(request),
-                  ));
-              break;
-            case 4:
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(request),
-                  ));
-              break;
-          }
-        },
-        color: const Color(0xffeac696),
-        backgroundColor: Colors.transparent,
-        buttonBackgroundColor: const Color(0xfff8ede3),
-        animationDuration: const Duration(milliseconds: 300));
+    if (request.role == 'ADMIN') {
+      return AdminNavigationBar(index: index, onTap: onTap);
+    } else if (request.role == 'AUTHOR') {
+      return AuthorNavigationBar(index: index, onTap: onTap);
+    } else {
+      return ReaderNavigationBar(index: index, onTap: onTap);
+    }
   }
 }
