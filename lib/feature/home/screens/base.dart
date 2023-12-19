@@ -51,6 +51,7 @@ class _BasePageState extends State<BasePage> {
     }
 
     return Scaffold(
+      extendBody: true,
       backgroundColor: const Color.fromARGB(255, 200, 174, 125),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(74, 255, 255, 255),
