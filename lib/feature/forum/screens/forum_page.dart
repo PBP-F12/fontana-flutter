@@ -5,19 +5,23 @@ import 'package:flutter/material.dart';
 
 class ForumMainPage extends StatefulWidget {
   final CookieRequest request;
+  final Function setDisplayPage;
 
-  const ForumMainPage({super.key, required this.request});
+  const ForumMainPage(
+      {super.key, required this.request, required this.setDisplayPage});
 
   @override
-  _ForumMainPageState createState() => _ForumMainPageState(request: request);
+  _ForumMainPageState createState() =>
+      _ForumMainPageState(request: request, setDisplayPage: setDisplayPage);
 }
 
 class _ForumMainPageState extends State<ForumMainPage> {
   late Future<dynamic> forums;
 
-  CookieRequest request;
+  final CookieRequest request;
+  final Function setDisplayPage;
 
-  _ForumMainPageState({required this.request});
+  _ForumMainPageState({required this.request, required this.setDisplayPage});
 
   Future<dynamic> getForums() async {
     final responseBody = await request.get('http://localhost:8000/forum/api');
@@ -63,13 +67,15 @@ class _ForumMainPageState extends State<ForumMainPage> {
                       subtitle: Text(forums[index]['book']['title']),
                       onTap: () {
                         // Navigate to the forum detail page when a card is pressed
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ForumDetailPage(
-                                request, forums[index]['forumId']),
-                          ),
-                        );
+                        setDisplayPage(
+                            ForumDetailPage(request, forums[index]['forumId']));
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => ForumDetailPage(
+                        //         request, forums[index]['forumId']),
+                        //   ),
+                        // );
                       },
                     ),
                   );

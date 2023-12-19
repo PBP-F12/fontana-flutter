@@ -66,7 +66,6 @@ class _CreateEventPageState extends State<CreateEventPage> {
         backgroundColor: Colors.indigo,
         foregroundColor: Colors.white,
       ),
-      drawer: LeftDrawer(request),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(

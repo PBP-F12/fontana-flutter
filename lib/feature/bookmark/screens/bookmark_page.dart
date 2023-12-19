@@ -53,7 +53,6 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
           ),
         ),
       ),
-      drawer: LeftDrawer(request),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -153,25 +152,28 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
               ),
             ),
             SizedBox(height: 8),
-            Text('Author: ' + bookmark['authorUsername'],
+            Text(
+              'Author: ' + bookmark['authorUsername'],
               style: TextStyle(
                 fontFamily: GoogleFonts.merriweather().fontFamily,
               ), //textstyle
-            ),//text
+            ), //text
             SizedBox(height: 8),
             IconButton(
               icon: Icon(Icons.bookmark, size: 50.0),
               onPressed: () async {
                 print('deleted ' + bookmark['bookId']);
-                  await request.delete('http://localhost:8000/bookmark/api/delete/' + bookmark['bookId']);
-                
+                await request.delete(
+                    'http://localhost:8000/bookmark/api/delete/' +
+                        bookmark['bookId']);
+
                 setState(() {
                   bookmarkedBooks = getBookmarks();
-                  });
+                });
               },
             ),
-          ], 
-        ), 
+          ],
+        ),
       ),
     );
   }

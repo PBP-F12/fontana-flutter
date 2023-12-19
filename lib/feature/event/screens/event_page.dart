@@ -46,7 +46,6 @@ class _EventPageState extends State<EventPage> {
       appBar: AppBar(
         title: const Text('Events'),
       ),
-      drawer: LeftDrawer(request),
       body: FutureBuilder(
         future: fetchEvent(),
         builder: (context, AsyncSnapshot snapshot) {

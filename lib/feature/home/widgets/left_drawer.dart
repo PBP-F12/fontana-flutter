@@ -10,8 +10,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class LeftDrawer extends StatelessWidget {
   final CookieRequest request;
+  final Function setDisplayPage;
 
-  const LeftDrawer(this.request, {super.key});
+  const LeftDrawer(
+      {super.key, required this.request, required this.setDisplayPage});
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,8 @@ class LeftDrawer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ForumMainPage(request: request),
+                          builder: (context) => ForumMainPage(
+                              request: request, setDisplayPage: setDisplayPage),
                         ));
                   },
                 )

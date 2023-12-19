@@ -18,6 +18,13 @@ class BasePage extends StatefulWidget {
 
 class _BasePageState extends State<BasePage> {
   int pageIndex = 0;
+  Widget? displayPage;
+
+  void setDisplayPage(Widget newPage) {
+    setState(() {
+      displayPage = newPage;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +34,13 @@ class _BasePageState extends State<BasePage> {
     final List<Widget> authorPages = [
       HomePage(request),
       EventPage(request),
-      ForumMainPage(request: request),
+      ForumMainPage(request: request, setDisplayPage: setDisplayPage),
       AuthorBookPage(request)
     ];
     final List<Widget> readerPages = [
       HomePage(request),
       EventPage(request),
-      ForumMainPage(request: request),
+      ForumMainPage(request: request, setDisplayPage: setDisplayPage),
       MyBookmarkPage(request)
     ];
 
@@ -50,7 +57,10 @@ class _BasePageState extends State<BasePage> {
         break;
     }
 
+    displayPage = displayPage == null ? userPages[pageIndex] : displayPage;
+
     return Scaffold(
+      extendBody: true,
       backgroundColor: const Color.fromARGB(255, 200, 174, 125),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(74, 255, 255, 255),
@@ -64,13 +74,14 @@ class _BasePageState extends State<BasePage> {
           ),
         ),
       ),
-      drawer: LeftDrawer(request),
-      body: userPages[pageIndex],
+      drawer: LeftDrawer(request: request, setDisplayPage: setDisplayPage),
+      body: displayPage,
       bottomNavigationBar: CustomNavigationBar(
           index: pageIndex,
           onTap: (int newValue) {
             setState(() {
               pageIndex = newValue;
+              displayPage = userPages[pageIndex];
             });
           }),
     );
