@@ -1,10 +1,12 @@
 import 'package:bookshelve_flutter/feature/event/screens/event_page.dart';
 import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_page.dart';
+import 'package:bookshelve_flutter/feature/bookmark/screens/bookmark_page.dart';
 import 'package:bookshelve_flutter/feature/home/screens/home.dart';
 import 'package:bookshelve_flutter/feature/publish/screens/author_book_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LeftDrawer extends StatelessWidget {
   final CookieRequest request;
@@ -14,36 +16,48 @@ class LeftDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: const Color(0xff765827),
       child: ListView(
         children: [
-          const DrawerHeader(
-            // TODO: Bagian drawer header
-            decoration: BoxDecoration(
-              color: Colors.deepPurple,
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xff66461f),
+                    Color(0xff765827),
+                  ]),
             ),
-            child: Column(
-              children: [
-                Text(
-                  'Explore',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 8),
+              child: Column(
+                children: [
+                  SizedBox(
+                    child: Image.asset('assets/images/logo.png'),
                   ),
-                ),
-                Padding(padding: EdgeInsets.all(10)),
-                Text(
-                  "Explore the fontain of knowledge!",
-                  // TODO: Tambahkan gaya teks dengan center alignment, font ukuran 15, warna putih, dan weight biasa
-                ),
-              ],
+                  Text(
+                    'Hello, ${request.username}',
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: const Color(0xffeac696),
+                        fontFamily: GoogleFonts.dmSerifDisplay().fontFamily),
+                  ),
+                ],
+              ),
             ),
           ),
           // TODO: Bagian routing
           ListTile(
-            leading: const Icon(Icons.home_outlined),
-            title: const Text('Home'),
+            leading: const Icon(Icons.home_filled, color: Color(0xffeac696)),
+            title: Text(
+              'Home',
+              style: TextStyle(
+                  color: const Color(0xffeac696),
+                  fontSize: 16,
+                  fontFamily: GoogleFonts.merriweather().fontFamily),
+            ),
             // Bagian redirection ke MyHomePage
             onTap: () {
               Navigator.pushReplacement(
@@ -54,8 +68,12 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.forum_outlined),
-            title: const Text('Forum'),
+            leading: const Icon(Icons.forum_outlined, color: Color(0xffeac696)),
+            title: Text('Forum',
+                style: TextStyle(
+                    color: const Color(0xffeac696),
+                    fontSize: 16,
+                    fontFamily: GoogleFonts.merriweather().fontFamily)),
             // Bagian redirection ke ShopFormPage
             onTap: () {
               // TODO: Buatlah routing ke ShopFormPage di sini,
@@ -68,8 +86,12 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.book_rounded),
-            title: const Text('Bookmark'),
+            leading: const Icon(Icons.book_rounded, color: Color(0xffeac696)),
+            title: Text('Bookmark',
+                style: TextStyle(
+                    color: const Color(0xffeac696),
+                    fontSize: 16,
+                    fontFamily: GoogleFonts.merriweather().fontFamily)),
             // Bagian redirection ke ShopFormPage
             onTap: () {
               // TODO: Buatlah routing ke ShopFormPage di sini,
@@ -77,13 +99,18 @@ class LeftDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomePage(request),
+                    builder: (context) => MyBookmarkPage(request),
                   ));
             },
           ),
           ListTile(
-            leading: const Icon(Icons.add_shopping_cart),
-            title: const Text('Event'),
+            leading:
+                const Icon(Icons.add_shopping_cart, color: Color(0xffeac696)),
+            title: Text('Event',
+                style: TextStyle(
+                    color: const Color(0xffeac696),
+                    fontSize: 16,
+                    fontFamily: GoogleFonts.merriweather().fontFamily)),
             // Bagian redirection ke ShopFormPage
             onTap: () {
               // TODO: Buatlah routing ke ShopFormPage di sini,
@@ -96,8 +123,13 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.auto_stories_outlined),
-            title: const Text('My Books'),
+            leading: const Icon(Icons.auto_stories_outlined,
+                color: Color(0xffeac696)),
+            title: Text('My Books',
+                style: TextStyle(
+                    color: const Color(0xffeac696),
+                    fontSize: 16,
+                    fontFamily: GoogleFonts.merriweather().fontFamily)),
             // Bagian redirection ke ShopFormPage
             onTap: () {
               // TODO: Buatlah routing ke ShopFormPage di sini,
@@ -110,11 +142,16 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.logout_outlined),
-            title: const Text('Logout'),
+            leading:
+                const Icon(Icons.logout_outlined, color: Color(0xffeac696)),
+            title: Text('Logout',
+                style: TextStyle(
+                    color: const Color(0xffeac696),
+                    fontSize: 16,
+                    fontFamily: GoogleFonts.merriweather().fontFamily)),
             onTap: () async {
               final response =
-                  await request.logout('http://localhost:8000/auth/api/logout');
+                  await request.logout('http://127.0.0.1:8000/auth/api/logout');
 
               if (response['status'] == 200) {
                 Navigator.pushReplacement(

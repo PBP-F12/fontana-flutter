@@ -1,4 +1,4 @@
-import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
+import 'package:bookshelve_flutter/feature/onboarding/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
           useMaterial3: true,
         ),
-        home: const LoginPage(),
+        home: SplashScreenPage(),
       ),
     );
   }
