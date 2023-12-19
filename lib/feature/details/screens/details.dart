@@ -5,6 +5,7 @@ import 'package:bookshelve_flutter/feature/details/widgets/review_card.dart';
 import 'package:bookshelve_flutter/feature/details/models/review.dart';
 import 'package:bookshelve_flutter/feature/details/widgets/reviewservice.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
+import 'package:bookshelve_flutter/feature/details/screens/add_review.dart';
 
 class BookDetails extends StatelessWidget {
   final Book book;
@@ -128,7 +129,7 @@ class BookDetails extends StatelessWidget {
                   const SizedBox(height: 8),
                   Container(
                     constraints: const BoxConstraints(maxHeight: 300),
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(98, 206, 206, 206),
                       borderRadius: BorderRadius.circular(12),
@@ -175,15 +176,80 @@ class BookDetails extends StatelessWidget {
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else if (snapshot.data != null && snapshot.data!.isEmpty) {
-                    return const Text('No reviews available.');
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'No reviews available.',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 66, 66, 66),
+                            fontFamily: GoogleFonts.merriweather().fontFamily,
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        FloatingActionButton.extended(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                          backgroundColor: const Color(0xFF765827),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context, MaterialPageRoute(
+                                builder: (context) => AddReview(book: book, request: request),
+                                ),
+                            );
+                          },
+                          label: Text(
+                            'Add Review',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontFamily: GoogleFonts.merriweather().fontFamily,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          icon: const Icon(Icons.add, color: Colors.white, size: 24.0,),
+                        ),
+                      ],
+                    );
                   } else {
                     return Column(
-                      children: snapshot.data!
-                          .map((review) => ReviewCard(
-                                reviewerName: review.fields.reviewRating.toString(),
-                                reviewText: review.fields.reviewText,
-                              ))
-                          .toList(),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // List of review cards
+                        ...snapshot.data!
+                            .map((review) => ReviewCard(
+                                  reviewerName: review.fields.userId.toString(),
+                                  reviewText: review.fields.reviewText,
+                                  avgRating: review.fields.reviewRating.toString(),
+                                ))
+                            .toList(),
+
+                        // Add Review button
+                        SizedBox(height: 16),
+                        Center(
+                          child: FloatingActionButton.extended(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            backgroundColor: const Color(0xFF765827),
+                            onPressed: () {
+                              Navigator.push(
+                                context, MaterialPageRoute(
+                                  builder: (context) => AddReview(book: book, request: request),
+                                  ),
+                              );
+                            },
+                            label: Text(
+                              'Add Review',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Color.fromRGBO(255, 255, 255, 1),
+                                fontFamily: GoogleFonts.merriweather().fontFamily,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          icon: const Icon(Icons.add, color: Colors.white, size: 24.0,),
+                          ),
+                        ),
+                      ],
                     );
                   }
                 },

@@ -1,15 +1,13 @@
 import 'package:bookshelve_flutter/feature/home/widgets/left_drawer.dart';
 import 'package:bookshelve_flutter/feature/home/models/book.dart';
-import 'package:bookshelve_flutter/feature/details/screens/details.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:math';
-import 'dart:io';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
-
+import 'package:bookshelve_flutter/feature/home/widgets/recbook_card.dart';
+import 'package:bookshelve_flutter/feature/home/widgets/topbooks.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -19,12 +17,14 @@ class HomePage extends StatefulWidget {
 
   final String title = 'Fontana';
 
+
   @override
   State<HomePage> createState() => _HomePageState(request);
 }
 
 class _HomePageState extends State<HomePage> {
   CookieRequest request = CookieRequest();
+  String searchQuery = '';
 
   _HomePageState(CookieRequest request) {
     this.request = request;
@@ -66,13 +66,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Calculate the total number of pages
-  int get totalPage => (allBooks.length / pageSize).ceil();
+  int get totalPage => (getFilteredBooks().length / pageSize).ceil();
 
-  // Get subset of data for the current page
+  List<Book> getFilteredBooks() {
+    return allBooks.where((book) {
+      final title = book.fields.bookTitle.toLowerCase();
+      return title.contains(searchQuery.toLowerCase());
+    }).toList();
+  }
+
   List<Book> getBooksForCurrentPage() {
     int startIndex = currentPage * pageSize;
-    int endIndex = min(startIndex + pageSize, allBooks.length);
-    return allBooks.sublist(startIndex, endIndex);
+    int endIndex = min(startIndex + pageSize, getFilteredBooks().length);
+
+    // Return the subset of filtered books for the current page
+    return getFilteredBooks().sublist(startIndex, endIndex);
   }
 
   @override
@@ -159,7 +167,16 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(16.0),
                     child: TextField(
                       style: TextStyle(
-                          fontFamily: GoogleFonts.merriweather().fontFamily),
+                        fontFamily: GoogleFonts.merriweather().fontFamily,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          searchQuery = value;
+                        });
+
+                        // Fetch books based on the search query
+                        getBooksForCurrentPage();
+                      },
                       decoration: InputDecoration(
                         hintText: 'Search for books...',
                         prefixIcon: Icon(Icons.search),
@@ -188,70 +205,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   // CarouselSlider for Popular Books
-                  CarouselSlider(
-                    items: topBooks.map((book) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BookDetails(request: request ,book: book),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 20.0),
-                              decoration: BoxDecoration(
-                                color:
-                                    Colors.white, // Added for better contrast
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  // Shadow for each carousel item
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                                image: DecorationImage(
-                                  image:
-                                      NetworkImage(book.fields.bookCoverLink),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Text(
-                                  book.fields.bookTitle,
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    backgroundColor: Colors.black
-                                        .withOpacity(0.5), // For readability
-                                    color: Colors.white,
-                                    fontFamily:
-                                        GoogleFonts.merriweather().fontFamily,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    }).toList(),
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      aspectRatio: 2.0,
-                      enlargeCenterPage: true,
-                      padEnds: false,
-                      viewportFraction:
-                          0.8, // Adjust based on how much of each card should be visible
-                    ),
+                  TopCarousel(
+                    topBooks: topBooks,
+                    request: request,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -270,9 +226,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                   // GridView.builder for Recommended Books
                   GridView.builder(
-                    physics:
-                        NeverScrollableScrollPhysics(), // to disable GridView's scrolling within a SingleChildScrollView
-                    shrinkWrap: true, // to fit within SingleChildScrollView
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
                     padding: const EdgeInsets.all(8.0),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -281,7 +236,7 @@ class _HomePageState extends State<HomePage> {
                     itemCount: booksToShow.length,
                     itemBuilder: (context, index) {
                       var book = booksToShow[index];
-                      return buildRecommendedBookCard(book);
+                      return RecommendedBookCard(book: book, request: request);
                     },
                   ),
                   // Pagination Row
@@ -334,54 +289,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-    );
-  }
-
-  Widget buildRecommendedBookCard(Book book) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BookDetails(book: book, request: request),
-          ),
-        );
-      },
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        color: const Color.fromARGB(255, 200, 174, 125),
-        child: Column(
-          children: [
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-                child: Image.network(
-                  book.fields.bookCoverLink,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                book.fields.bookTitle,
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[800],
-                    fontFamily: GoogleFonts.merriweather().fontFamily),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
