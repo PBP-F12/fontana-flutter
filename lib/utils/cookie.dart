@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/feature/forum/models/forum.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -30,6 +31,7 @@ class CookieRequest {
 
   String? role;
   String? username;
+  final String backendUrl = 'http://localhost:8000';
 
   late SharedPreferences local;
 
@@ -282,6 +284,27 @@ class CookieRequest {
 
     return json.decode(response.body);
   }
+
+  // FETCH AREA =======================================================
+
+  Future<List<Forum>> getForums() async {
+    final responseBody = await get('$backendUrl/forum/api');
+
+    if (responseBody['status'] == 200) {
+      List<Forum> forums = [];
+      for (var forum in responseBody['forums']) {
+        if (forum != null) {
+          forums.add(Forum.fromJson(forum));
+        }
+      }
+
+      return forums;
+    } else {
+      throw 'Failed';
+    }
+  }
+
+  // FETCH AREA =======================================================
 
   bool isAdmin() {
     return role == 'ADMIN';

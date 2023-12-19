@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/feature/forum/models/forum.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_create_form.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_detail.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
@@ -13,26 +14,16 @@ class ForumMainPage extends StatefulWidget {
 }
 
 class _ForumMainPageState extends State<ForumMainPage> {
-  late Future<dynamic> forums;
+  late Future<List<Forum>> forums;
 
   CookieRequest request;
 
   _ForumMainPageState({required this.request});
 
-  Future<dynamic> getForums() async {
-    final responseBody = await request.get('http://localhost:8000/forum/api');
-
-    if (responseBody['status'] == 200) {
-      return responseBody['forums'];
-    } else {
-      throw 'Failed';
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    forums = getForums();
+    forums = request.getForums();
   }
 
   @override
@@ -46,11 +37,11 @@ class _ForumMainPageState extends State<ForumMainPage> {
                 return const Center(child: Text('error'));
               }
 
-              if (!snapshot.hasData) {
+              if (!snapshot.hasData || snapshot.data == null) {
                 return const Center(child: Text('no data'));
               }
 
-              List<dynamic> forums = snapshot.data;
+              List<Forum> forums = snapshot.data!;
 
               // return Text('success');
 
@@ -59,15 +50,15 @@ class _ForumMainPageState extends State<ForumMainPage> {
                 itemBuilder: (context, index) {
                   return Card(
                     child: ListTile(
-                      title: Text(forums[index]['forumTitle']),
-                      subtitle: Text(forums[index]['book']['title']),
+                      title: Text(forums[index].forumTitle),
+                      subtitle: Text(forums[index].book.title),
                       onTap: () {
                         // Navigate to the forum detail page when a card is pressed
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ForumDetailPage(
-                                request, forums[index]['forumId']),
+                            builder: (context) =>
+                                ForumDetailPage(request, forums[index].forumId),
                           ),
                         );
                       },
