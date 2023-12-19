@@ -1,26 +1,23 @@
 import 'package:bookshelve_flutter/feature/forum/screens/forum_create_form.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_detail.dart';
-import 'package:bookshelve_flutter/feature/home/widgets/custom_navigation_bar.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
 
 class ForumMainPage extends StatefulWidget {
   final CookieRequest request;
 
-  const ForumMainPage(this.request, {super.key});
+  const ForumMainPage({super.key, required this.request});
 
   @override
-  _ForumMainPageState createState() => _ForumMainPageState(request);
+  _ForumMainPageState createState() => _ForumMainPageState(request: request);
 }
 
 class _ForumMainPageState extends State<ForumMainPage> {
   late Future<dynamic> forums;
 
-  CookieRequest request = CookieRequest();
+  CookieRequest request;
 
-  _ForumMainPageState(CookieRequest request) {
-    this.request = request;
-  }
+  _ForumMainPageState({required this.request});
 
   Future<dynamic> getForums() async {
     final responseBody = await request.get('http://localhost:8000/forum/api');
@@ -41,9 +38,6 @@ class _ForumMainPageState extends State<ForumMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Forum Main Page'),
-      ),
       body: FutureBuilder(
           future: forums,
           builder: (context, snapshot) {

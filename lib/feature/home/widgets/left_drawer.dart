@@ -83,7 +83,7 @@ class LeftDrawer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ForumMainPage(request),
+                          builder: (context) => ForumMainPage(request: request),
                         ));
                   },
                 )

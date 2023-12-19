@@ -27,13 +27,13 @@ class _BasePageState extends State<BasePage> {
     final List<Widget> authorPages = [
       HomePage(request),
       EventPage(request),
-      ForumMainPage(request),
+      ForumMainPage(request: request),
       AuthorBookPage(request)
     ];
     final List<Widget> readerPages = [
       HomePage(request),
       EventPage(request),
-      ForumMainPage(request),
+      ForumMainPage(request: request),
       MyBookmarkPage(request)
     ];
 
