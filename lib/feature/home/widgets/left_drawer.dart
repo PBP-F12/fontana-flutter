@@ -3,6 +3,7 @@ import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_page.dart';
 import 'package:bookshelve_flutter/feature/bookmark/screens/bookmark_page.dart';
 import 'package:bookshelve_flutter/feature/home/screens/home.dart';
+import 'package:bookshelve_flutter/feature/publish/screens/author_book_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -136,7 +137,7 @@ class LeftDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomePage(request),
+                    builder: (context) => AuthorBookPage(request),
                   ));
             },
           ),
