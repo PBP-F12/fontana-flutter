@@ -1,5 +1,6 @@
 import 'package:bookshelve_flutter/feature/forum/screens/forum_create_form.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_detail.dart';
+import 'package:bookshelve_flutter/feature/home/widgets/custom_navigation_bar.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
 
@@ -107,6 +108,7 @@ class _ForumMainPageState extends State<ForumMainPage> {
         },
         child: Icon(Icons.add),
       ),
+      bottomNavigationBar: CustomNavigationBar(1),
     );
   }
 }
