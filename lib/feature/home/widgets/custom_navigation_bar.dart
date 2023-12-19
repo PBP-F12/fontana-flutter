@@ -43,7 +43,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   ));
               break;
             case 1:
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ForumMainPage(request),
@@ -73,7 +73,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           }
         },
         color: const Color(0xffeac696),
-        backgroundColor: const Color(0xff765827),
+        backgroundColor: Colors.transparent,
         buttonBackgroundColor: const Color(0xfff8ede3),
         animationDuration: const Duration(milliseconds: 300));
   }
