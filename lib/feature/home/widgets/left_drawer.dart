@@ -104,8 +104,7 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading:
-                const Icon(Icons.add_shopping_cart, color: Color(0xffeac696)),
+            leading: const Icon(Icons.event, color: Color(0xffeac696)),
             title: Text('Event',
                 style: TextStyle(
                     color: const Color(0xffeac696),
