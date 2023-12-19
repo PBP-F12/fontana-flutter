@@ -1,16 +1,17 @@
 import 'dart:ui' as ui;
 
+import 'package:bookshelve_flutter/feature/publish/models/author_book.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
-import 'package:bookshelve_flutter/feature/publish/publish_form_page.dart';
-import 'package:bookshelve_flutter/utils/publish/fetch_author_book.dart';
+import 'package:bookshelve_flutter/feature/publish/screens/publish_form_page.dart';
+import 'package:bookshelve_flutter/feature/publish/utils/fetch_author_book.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AuthorBookPage extends StatefulWidget {
   final CookieRequest request;
 
-
-  const AuthorBookPage(this.request, {super.key});
+  AuthorBookPage(this.request, {super.key});
 
   @override
   State<AuthorBookPage> createState() => _AuthorBookPageState(request);
@@ -18,15 +19,22 @@ class AuthorBookPage extends StatefulWidget {
 
 class _AuthorBookPageState extends State<AuthorBookPage> {
   CookieRequest request = CookieRequest();
+  late Future<List<AuthorBook>> authorBooks;
 
   _AuthorBookPageState(CookieRequest request) {
     this.request = request;
   }
 
   @override
+  void initState() {
+    super.initState();
+    authorBooks = fetchAuthorBook(request);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown.shade200,
+      backgroundColor: const Color.fromARGB(255, 200, 174, 125),
       appBar: AppBar(
         title: const Text(
           'My Books',
@@ -34,28 +42,31 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
             fontWeight: FontWeight.w600
           )
         ),
-        backgroundColor: Colors.brown.shade200,
+        backgroundColor: const Color.fromARGB(255, 200, 174, 125),
       ),
       body: FutureBuilder(
-        future: fetchAuthorBook(),
+        future: authorBooks,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (!snapshot.hasData) {
-            return Center(
-                child: Text(
-                    "You have not published any book yet.",
-                    style:
-                        TextStyle(
-                          color: Color(0xFF3E2723), 
-                          fontSize: 20,
-                          fontFamily: GoogleFonts.merriweather().fontFamily,
-                        ),
-                ),
-            );
-          } else {
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            if (!snapshot.hasData) {
+              return Center(
+                  child: Text(
+                      "You have not published any book yet.",
+                      style:
+                          TextStyle(
+                            color: Color(0xFF3E2723), 
+                            fontSize: 14,
+                            fontStyle: FontStyle.italic,
+                            fontFamily: GoogleFonts.merriweather().fontFamily,
+                          ),
+                  ),
+              );
+            }
+
             print("something");
             return ListView.builder(
               itemCount: snapshot.data!.length,
@@ -64,10 +75,11 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
                 // String description = 'a wawaw book sdjajdsnajndsjnsajndjsaas';
                 // double rating = 3.75;
                 // String book_cover_link = 'https://www.gramedia.com/blog/content/images/2021/04/bumi.jpg';
-                String book_title = snapshot.data![index].fields.book_title;
+                String book_title = snapshot.data![index].fields.bookTitle;
                 String description = snapshot.data![index].fields.description;
                 double rating = snapshot.data![index].fields.avgRating;
-                String book_cover_link = snapshot.data![index].fields.book_cover_link;
+                String book_cover_link = snapshot.data![index].fields.bookCoverLink;
+                print(book_cover_link);
                 return Center(
                   child: Card(
                     margin: EdgeInsets.fromLTRB(32.0, 20.0, 25.0, 20.0),
@@ -108,12 +120,12 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
                           child: Row(
                             children: [
                               Expanded(
-                                child: Image.network(
-                                  book_cover_link,
-                                  height: 120,
-                                  width: 90,
-                                  ),
-                                  flex: 2,
+                                child: CachedNetworkImage(
+                                  imageUrl: book_cover_link,
+                                  placeholder: (context, url) => CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                                ),
+                                flex: 2,
                               ),
                               Expanded(
                                 flex: 4,
@@ -167,13 +179,15 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
                 );
               }
             );
+          } else {
+            return const Text('nothing');
           }
         }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
+        onPressed: () {
           // Navigate to the forum creation page and wait for the result
-          final result = await Navigator.push(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => PublishFormPage(request),

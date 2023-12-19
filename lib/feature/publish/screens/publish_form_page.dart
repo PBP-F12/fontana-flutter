@@ -1,7 +1,8 @@
-import 'package:bookshelve_flutter/utils/publish/publish_author_book.dart';
+import 'package:bookshelve_flutter/feature/publish/utils/publish_author_book.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class PublishFormPage extends StatefulWidget {
   final CookieRequest request;
@@ -9,16 +10,10 @@ class PublishFormPage extends StatefulWidget {
   PublishFormPage(this.request, {super.key});
 
   @override
-  State<PublishFormPage> createState() => _PublishFormPageState(request);
+  State<PublishFormPage> createState() => _PublishFormPageState();
 }
 
 class _PublishFormPageState extends State<PublishFormPage> {
-  CookieRequest request = CookieRequest();
-
-  _PublishFormPageState(CookieRequest request) {
-    this.request = request;
-  }
-
   // controller to get user's input
   TextEditingController _bookTitleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
@@ -26,6 +21,10 @@ class _PublishFormPageState extends State<PublishFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    CookieRequest request = context.watch<CookieRequest>();
+    print(request.isAuthor());
+    print(request.role);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -134,11 +133,20 @@ class _PublishFormPageState extends State<PublishFormPage> {
                         String? validationMessage = _validateInputs();
                         if (validationMessage == null) {
                           // All fields are valid
-                          // await publishAuthorBook(
-                          //   _bookCoverLinkController.text,
-                          //   _descriptionController.text,
-                          //   _bookCoverLinkController.text
-                          // )
+                          var response = await publishAuthorBook(
+                            request,
+                            _bookTitleController.text,
+                            _descriptionController.text,
+                            _bookCoverLinkController.text,
+                            context,
+                            mounted
+                          );
+                          
+                          if (response['status'] == 'success') {
+                            print("status sukses");
+                          } else {
+                            print("gagal");
+                          }
                         } else {
                           showDialog(
                             context: context,

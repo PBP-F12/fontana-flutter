@@ -2,7 +2,7 @@ import 'package:bookshelve_flutter/feature/event/screens/event_page.dart';
 import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_page.dart';
 import 'package:bookshelve_flutter/feature/home/screens/home.dart';
-import 'package:bookshelve_flutter/feature/publish/author_book_page.dart';
+import 'package:bookshelve_flutter/feature/publish/screens/author_book_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 
