@@ -1,5 +1,6 @@
 import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
 import 'package:bookshelve_flutter/feature/auth/screens/register_as_reader.dart';
+import 'package:bookshelve_flutter/feature/onboarding/widgets/custom_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -43,7 +44,7 @@ class WelcomePage extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
                       Text(
@@ -66,50 +67,31 @@ class WelcomePage extends StatelessWidget {
                             fontFamily: GoogleFonts.merriweather().fontFamily),
                       ),
                       const SizedBox(height: 40),
-                      TextButton(
+                      CustomTextButton(
+                          buttonText: 'Sign in',
+                          fixedSize:
+                              MaterialStateProperty.all(Size(screenWidth, 60)),
                           onPressed: () {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: ((context) => const LoginPage())));
                           },
-                          style: ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(
-                                  Size(screenWidth, 60)),
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color(0xFF765827))),
-                          child: Text(
-                            'Sign in',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontFamily:
-                                    GoogleFonts.merriweather().fontFamily),
-                          )),
+                          variant: 'primary'),
                       const SizedBox(height: 10),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) =>
-                                        const ReaderRegistrationPage())));
-                          },
-                          style: ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(
-                                  Size(screenWidth, 60)),
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.white)),
-                          child: Text(
-                            'Sign up',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: const Color(0xFF765827),
-                                fontSize: 18,
-                                fontFamily:
-                                    GoogleFonts.merriweather().fontFamily),
-                          ))
+                      CustomTextButton(
+                        buttonText: 'Sign up',
+                        fixedSize:
+                            MaterialStateProperty.all(Size(screenWidth, 60)),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) =>
+                                      const ReaderRegistrationPage())));
+                        },
+                        variant: 'secondary',
+                      )
                     ],
                   )),
             ])));
