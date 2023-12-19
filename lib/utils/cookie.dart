@@ -29,6 +29,7 @@ class CookieRequest {
   final http.Client _client = http.Client();
 
   String? role;
+  String? username;
 
   late SharedPreferences local;
 
@@ -88,6 +89,7 @@ class CookieRequest {
       loggedIn = true;
       jsonData = json.decode(response.body);
       role = jsonData['role'];
+      username = jsonData['username'];
     } else {
       loggedIn = false;
     }
@@ -271,6 +273,7 @@ class CookieRequest {
       loggedIn = false;
       jsonData = {};
       role = null;
+      username = null;
     } else {
       loggedIn = true;
     }
