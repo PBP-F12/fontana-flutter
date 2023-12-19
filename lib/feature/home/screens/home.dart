@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/feature/home/widgets/custom_navigation_bar.dart';
 import 'package:bookshelve_flutter/feature/home/widgets/left_drawer.dart';
 import 'package:bookshelve_flutter/feature/home/models/book.dart';
 import 'package:flutter/material.dart';
@@ -287,6 +288,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+      bottomNavigationBar: const CustomNavigationBar(0),
     );
   }
 }
