@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/feature/details/models/book_details.dart';
 import 'package:bookshelve_flutter/feature/details/screens/details.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/feature/home/models/book.dart';
@@ -7,16 +8,15 @@ import 'dart:convert';
 import 'package:bookshelve_flutter/feature/onboarding/widgets/custom_text_button.dart';
 import 'package:bookshelve_flutter/feature/details/widgets/ratingstars.dart';
 
-
 class AddReview extends StatefulWidget {
-  final Book book;
+  final BookDetail bookDetail;
   final CookieRequest request;
 
-  const AddReview({Key? key, required this.book, required this.request})
+  const AddReview({Key? key, required this.bookDetail, required this.request})
       : super(key: key);
 
   @override
-  _AddReviewState createState() => _AddReviewState(request);
+  _AddReviewState createState() => _AddReviewState(request, bookDetail);
 }
 
 class _AddReviewState extends State<AddReview> {
@@ -24,11 +24,11 @@ class _AddReviewState extends State<AddReview> {
   int _reviewRating = 0;
   String _reviewText = " ";
   final _formKey = GlobalKey<FormState>(); // Add a GlobalKey for the form
-  CookieRequest request = CookieRequest();
 
-  _AddReviewState(CookieRequest request) {
-    this.request = request;
-  }
+  final CookieRequest request;
+  final BookDetail bookDetail;
+
+  _AddReviewState(this.request, this.bookDetail);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _AddReviewState extends State<AddReview> {
       backgroundColor: const Color.fromARGB(255, 200, 174, 125),
       appBar: AppBar(
         title: Text(
-          widget.book.fields.bookTitle,
+          widget.bookDetail.title,
           style: TextStyle(
             fontFamily: GoogleFonts.merriweather().fontFamily,
             color: Colors.grey[800],
@@ -75,7 +75,7 @@ class _AddReviewState extends State<AddReview> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(widget.book.fields.bookCoverLink),
+                          image: NetworkImage(widget.bookDetail.image),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -89,7 +89,7 @@ class _AddReviewState extends State<AddReview> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      widget.book.fields.bookTitle,
+                      widget.bookDetail.title,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -100,7 +100,7 @@ class _AddReviewState extends State<AddReview> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'Author: ${widget.book.fields.authorId}',
+                      'Author: ${widget.bookDetail.author.username}',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[700],
@@ -111,17 +111,20 @@ class _AddReviewState extends State<AddReview> {
                     const SizedBox(height: 36),
                     TextFormField(
                       controller: reviewTextController,
-                      style: TextStyle(fontFamily: GoogleFonts.merriweather().fontFamily),
+                      style: TextStyle(
+                          fontFamily: GoogleFonts.merriweather().fontFamily),
                       decoration: InputDecoration(
                         labelText: "Review Text",
                         hintText: "Review Text",
-                        hintStyle: TextStyle(fontFamily: GoogleFonts.merriweather().fontFamily),
+                        hintStyle: TextStyle(
+                            fontFamily: GoogleFonts.merriweather().fontFamily),
                         labelStyle: TextStyle(
                           color: const Color(0xff765827),
                           fontFamily: GoogleFonts.merriweather().fontFamily,
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF765827), width: 2),
+                          borderSide:
+                              BorderSide(color: Color(0xFF765827), width: 2),
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -165,27 +168,33 @@ class _AddReviewState extends State<AddReview> {
                         if (_formKey.currentState!.validate()) {
                           _reviewText = reviewTextController.text;
                           var response = await request.postJson(
-                            'http://localhost:8000/details/review/addflutter/${widget.book.pk}/',
-                            jsonEncode({
-                              'book_id': widget.book.pk,
-                              'content': _reviewText,
-                              'rating': _reviewRating
-                            }));
+                              'http://localhost:8000/details/review/addflutter/${widget.bookDetail.id}/',
+                              jsonEncode({
+                                'book_id': widget.bookDetail.id,
+                                'content': _reviewText,
+                                'rating': _reviewRating
+                              }));
                           if (response['status'] == 200) {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
                               content: Text("New Review Created!"),
                             ));
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => BookDetails(book: widget.book, request: request)),
+                                  builder: (context) => BookDetails(
+                                      bookId: widget.bookDetail.id,
+                                      request: request)),
                             );
                           } else if (response['status'] == 403) {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                              content: Text("Authors are not allowed to add reviews."),
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text(
+                                  "Authors are not allowed to add reviews."),
                             ));
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
                               content: Text("Error creating review."),
                             ));
                           }

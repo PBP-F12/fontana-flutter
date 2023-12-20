@@ -17,7 +17,8 @@ class RecommendedBookCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => BookDetails(book: book, request: request),
+            builder: (context) =>
+                BookDetails(bookId: book.pk, request: request),
           ),
         );
       },

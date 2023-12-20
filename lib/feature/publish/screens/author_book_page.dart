@@ -38,129 +38,153 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 200, 174, 125),
       appBar: AppBar(
-        title: const Text(
-          'My Books',
-          style: TextStyle(
-            fontWeight: FontWeight.w600
-          )
-        ),
+        title: const Text('My Books',
+            style: TextStyle(fontWeight: FontWeight.w600)),
         backgroundColor: const Color.fromARGB(255, 200, 174, 125),
       ),
       body: FutureBuilder(
-        future: authorBooks,
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            if (!snapshot.hasData) {
-              return Center(
-                  child: Text(
-                      "You have not published any book yet.",
-                      style:
-                          TextStyle(
-                            color: Color(0xFF3E2723), 
-                            fontSize: 14,
-                            fontStyle: FontStyle.italic,
-                            fontFamily: GoogleFonts.merriweather().fontFamily,
-                          ),
-                  ),
+          future: authorBooks,
+          builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
               );
-            }
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (_, index) {
-                String book_title = snapshot.data![index].fields.bookTitle;
-                String description = snapshot.data![index].fields.description;
-                double rating = snapshot.data![index].fields.avgRating;
-                String book_cover_link = snapshot.data![index].fields.bookCoverLink;
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (!snapshot.hasData) {
                 return Center(
-                  child: Card(
-                    margin: EdgeInsets.fromLTRB(32.0, 20.0, 25.0, 20.0),
-                    color: Colors.brown.shade100,
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+                  child: Text(
+                    "You have not published any book yet.",
+                    style: TextStyle(
+                      color: Color(0xFF3E2723),
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                      fontFamily: GoogleFonts.merriweather().fontFamily,
                     ),
-                    child: Stack(
-                      children: [
-                        Container( 
-                          height: 150.0,
-                          decoration: BoxDecoration(
+                  ),
+                );
+              }
+              return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (_, index) {
+                    String book_title = snapshot.data![index].fields.bookTitle;
+                    String description =
+                        snapshot.data![index].fields.description;
+                    double rating = snapshot.data![index].fields.avgRating;
+                    String book_cover_link =
+                        snapshot.data![index].fields.bookCoverLink;
+                    return Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BookDetails(
+                                  bookId: snapshot.data![index].pk,
+                                  request: request),
+                            ),
+                          );
+                        },
+                        child: Card(
+                          margin: EdgeInsets.fromLTRB(32.0, 20.0, 25.0, 20.0),
+                          color: Colors.brown.shade100,
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24),
-                            gradient: LinearGradient(
-                              colors: [Colors.brown.shade300, Colors.brown.shade200],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.brown,
-                                blurRadius: 12,
-                                offset: Offset(0, 6),
-                              ),
-                            ],
                           ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          bottom: 0,
-                          top: 0,
-                          child: CustomPaint(
-                            size: Size(100, 150),
-                            painter: CustomCardShapePainter(10, Colors.brown.shade300, Colors.brown.shade200),
-                          ),
-                        ),
-                        Positioned.fill(
-                          child: Row(
+                          child: Stack(
                             children: [
-                              Expanded(
-                                child: CachedNetworkImage(
-                                  imageUrl: book_cover_link,
-                                  placeholder: (context, url) => CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) => Icon(Icons.error),
-                                ),
-                                flex: 2,
-                              ),
-                              Expanded(
-                                flex: 4,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      book_title,
-                                      style: TextStyle(
-                                        color: Colors.brown.shade700,
-                                        fontWeight: FontWeight.w700),
-                                      overflow: TextOverflow.fade,
-                                      ),
-                                    Text(
-                                      description,
-                                      style: TextStyle(
-                                        color: Colors.brown.withOpacity(0.8),
-                                        fontSize: 13.0,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    SizedBox(height: 20),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.star_rate_rounded,
-                                          color: Colors.yellow.shade100,
-                                          size: 16,
-                                        ),
-                                        SizedBox(width: 8),
-                                        Text(
-                                          rating.toString(),
-                                          style: TextStyle(
-                                            color: Colors.brown,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
+                              Container(
+                                height: 150.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(24),
+                                  gradient: LinearGradient(
+                                      colors: [
+                                        Colors.brown.shade300,
+                                        Colors.brown.shade200
                                       ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.brown,
+                                      blurRadius: 12,
+                                      offset: Offset(0, 6),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Positioned(
+                                right: 0,
+                                bottom: 0,
+                                top: 0,
+                                child: CustomPaint(
+                                  size: Size(100, 150),
+                                  painter: CustomCardShapePainter(
+                                      10,
+                                      Colors.brown.shade300,
+                                      Colors.brown.shade200),
+                                ),
+                              ),
+                              Positioned.fill(
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: CachedNetworkImage(
+                                          imageUrl: book_cover_link,
+                                          placeholder: (context, url) =>
+                                              const CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 4,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            book_title,
+                                            style: TextStyle(
+                                                color: Colors.brown.shade700,
+                                                fontWeight: FontWeight.w700),
+                                            overflow: TextOverflow.fade,
+                                          ),
+                                          Text(
+                                            description,
+                                            style: TextStyle(
+                                              color:
+                                                  Colors.brown.withOpacity(0.8),
+                                              fontSize: 13.0,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          SizedBox(height: 20),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.star_rate_rounded,
+                                                color: Colors.yellow.shade100,
+                                                size: 16,
+                                              ),
+                                              SizedBox(width: 8),
+                                              Text(
+                                                rating.toString(),
+                                                style: TextStyle(
+                                                  color: Colors.brown,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 14.0,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -168,17 +192,13 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                );
-              }
-            );
-          } else {
-            return const Text('nothing');
-          }
-        }
-      ),
+                      ),
+                    );
+                  });
+            } else {
+              return const Text('nothing');
+            }
+          }),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // Navigate to the forum creation page and wait for the result

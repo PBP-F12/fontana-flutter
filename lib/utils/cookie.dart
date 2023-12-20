@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/feature/details/models/book_details.dart';
 import 'package:bookshelve_flutter/feature/forum/models/forum.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -299,6 +300,18 @@ class CookieRequest {
       }
 
       return forums;
+    } else {
+      throw 'Failed';
+    }
+  }
+
+  Future<BookDetail> getDetailBook(String bookId) async {
+    final responseBody = await get('$backendUrl/details/book/$bookId');
+
+    if (responseBody['status'] == 200) {
+      BookDetail book = BookDetail.fromJson(responseBody['book']);
+
+      return book;
     } else {
       throw 'Failed';
     }

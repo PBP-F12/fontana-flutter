@@ -25,13 +25,12 @@ class TopCarousel extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        BookDetails(request: request, book: book),
+                        BookDetails(bookId: book.pk, request: request),
                   ),
                 );
               },
               child: Container(
-                margin:
-                    EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
                 decoration: BoxDecoration(
                   color: Colors.white, // Added for better contrast
                   borderRadius: BorderRadius.circular(10),
