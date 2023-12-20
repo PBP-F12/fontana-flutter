@@ -1,6 +1,5 @@
 import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
 import 'package:bookshelve_flutter/feature/auth/screens/register.dart';
-import 'package:bookshelve_flutter/feature/auth/screens/register_as_reader.dart';
 import 'package:bookshelve_flutter/feature/onboarding/widgets/custom_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
