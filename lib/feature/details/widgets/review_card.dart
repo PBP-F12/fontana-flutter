@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:bookshelve_flutter/feature/details/widgets/usermanager.dart';
 
 class ReviewCard extends StatelessWidget {
-  final String reviewerName;
+  final int reviewerId;
   final String reviewText;
   final String avgRating;
 
-  const ReviewCard(
-      {Key? key, required this.reviewerName, required this.reviewText, required this.avgRating})
-      : super(key: key);
+  const ReviewCard({
+    Key? key,
+    required this.reviewerId,
+    required this.reviewText,
+    required this.avgRating,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +32,48 @@ class ReviewCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    reviewerName,
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: GoogleFonts.merriweather().fontFamily),
+                  FutureBuilder<String>(
+                    future: getUserName(reviewerId), // Using getUserName function
+                    builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text(
+                          'Loading...',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: GoogleFonts.merriweather().fontFamily,
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text(
+                          'Error',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: GoogleFonts.merriweather().fontFamily,
+                          ),
+                        );
+                      } else if (snapshot.hasData) {
+                        return Text(
+                          snapshot.data!, // Display the fetched name
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: GoogleFonts.merriweather().fontFamily,
+                          ),
+                        );
+                      } else {
+                        return Text(
+                          'No reviewer',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: GoogleFonts.merriweather().fontFamily,
+                          ),
+                        );
+                      }
+                    },
                   ),
                   Row(
                     children: [
@@ -57,14 +97,14 @@ class ReviewCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               ConstrainedBox(
-                constraints:
-                    BoxConstraints(maxHeight: 100), // Set the maximum height
+                constraints: BoxConstraints(maxHeight: 100), // Set the maximum height
                 child: SingleChildScrollView(
                   child: Text(
                     reviewText,
                     style: TextStyle(
-                        fontSize: 14,
-                        fontFamily: GoogleFonts.merriweather().fontFamily),
+                      fontSize: 14,
+                      fontFamily: GoogleFonts.merriweather().fontFamily,
+                    ),
                   ),
                 ),
               ),
