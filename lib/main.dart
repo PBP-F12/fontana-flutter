@@ -1,6 +1,7 @@
 import 'package:bookshelve_flutter/feature/onboarding/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+          fontFamily: GoogleFonts.merriweather().fontFamily,
           useMaterial3: true,
         ),
         home: SplashScreenPage(),

@@ -67,45 +67,50 @@ class LeftDrawer extends StatelessWidget {
                   ));
             },
           ),
+          request.isAuthor() || request.isReader()
+              ? ListTile(
+                  leading: const Icon(Icons.forum_outlined,
+                      color: Color(0xffeac696)),
+                  title: Text('Forum',
+                      style: TextStyle(
+                          color: const Color(0xffeac696),
+                          fontSize: 16,
+                          fontFamily: GoogleFonts.merriweather().fontFamily)),
+                  // Bagian redirection ke ShopFormPage
+                  onTap: () {
+                    // TODO: Buatlah routing ke ShopFormPage di sini,
+                    // setelah halaman ShopFormPage sudah dibuat.
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ForumMainPage(request: request),
+                        ));
+                  },
+                )
+              : const SizedBox.shrink(),
+          request.isReader()
+              ? ListTile(
+                  leading:
+                      const Icon(Icons.book_rounded, color: Color(0xffeac696)),
+                  title: Text('Bookmark',
+                      style: TextStyle(
+                          color: const Color(0xffeac696),
+                          fontSize: 16,
+                          fontFamily: GoogleFonts.merriweather().fontFamily)),
+                  // Bagian redirection ke ShopFormPage
+                  onTap: () {
+                    // TODO: Buatlah routing ke ShopFormPage di sini,
+                    // setelah halaman ShopFormPage sudah dibuat.
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyBookmarkPage(request),
+                        ));
+                  },
+                )
+              : const SizedBox.shrink(),
           ListTile(
-            leading: const Icon(Icons.forum_outlined, color: Color(0xffeac696)),
-            title: Text('Forum',
-                style: TextStyle(
-                    color: const Color(0xffeac696),
-                    fontSize: 16,
-                    fontFamily: GoogleFonts.merriweather().fontFamily)),
-            // Bagian redirection ke ShopFormPage
-            onTap: () {
-              // TODO: Buatlah routing ke ShopFormPage di sini,
-              // setelah halaman ShopFormPage sudah dibuat.
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ForumMainPage(request),
-                  ));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.book_rounded, color: Color(0xffeac696)),
-            title: Text('Bookmark',
-                style: TextStyle(
-                    color: const Color(0xffeac696),
-                    fontSize: 16,
-                    fontFamily: GoogleFonts.merriweather().fontFamily)),
-            // Bagian redirection ke ShopFormPage
-            onTap: () {
-              // TODO: Buatlah routing ke ShopFormPage di sini,
-              // setelah halaman ShopFormPage sudah dibuat.
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyBookmarkPage(request),
-                  ));
-            },
-          ),
-          ListTile(
-            leading:
-                const Icon(Icons.add_shopping_cart, color: Color(0xffeac696)),
+            leading: const Icon(Icons.event, color: Color(0xffeac696)),
             title: Text('Event',
                 style: TextStyle(
                     color: const Color(0xffeac696),
@@ -122,25 +127,27 @@ class LeftDrawer extends StatelessWidget {
                   ));
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.auto_stories_outlined,
-                color: Color(0xffeac696)),
-            title: Text('My Books',
-                style: TextStyle(
-                    color: const Color(0xffeac696),
-                    fontSize: 16,
-                    fontFamily: GoogleFonts.merriweather().fontFamily)),
-            // Bagian redirection ke ShopFormPage
-            onTap: () {
-              // TODO: Buatlah routing ke ShopFormPage di sini,
-              // setelah halaman ShopFormPage sudah dibuat.
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AuthorBookPage(request),
-                  ));
-            },
-          ),
+          request.isAuthor()
+              ? ListTile(
+                  leading: const Icon(Icons.auto_stories_outlined,
+                      color: Color(0xffeac696)),
+                  title: Text('My Books',
+                      style: TextStyle(
+                          color: const Color(0xffeac696),
+                          fontSize: 16,
+                          fontFamily: GoogleFonts.merriweather().fontFamily)),
+                  // Bagian redirection ke ShopFormPage
+                  onTap: () {
+                    // TODO: Buatlah routing ke ShopFormPage di sini,
+                    // setelah halaman ShopFormPage sudah dibuat.
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AuthorBookPage(request),
+                        ));
+                  },
+                )
+              : const SizedBox.shrink(),
           ListTile(
             leading:
                 const Icon(Icons.logout_outlined, color: Color(0xffeac696)),

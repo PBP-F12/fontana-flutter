@@ -22,8 +22,19 @@ class _RegisterPageState extends State<RegisterPage> {
       TextEditingController();
 
   int? _sliding = 0;
+  int switchCounter = 0;
   final List<String> roles = ['AUTHOR', 'READER'];
   String selectedRole = 'AUTHOR';
+  Map<int, Widget> roleWidgetsMap = {
+    0: Text('Author',
+        style: TextStyle(
+            color: const Color(0xff333333),
+            fontFamily: GoogleFonts.merriweather().fontFamily)),
+    1: Text('Reader',
+        style: TextStyle(
+            color: const Color(0xff333333),
+            fontFamily: GoogleFonts.merriweather().fontFamily))
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -81,24 +92,29 @@ class _RegisterPageState extends State<RegisterPage> {
                     thumbColor: const Color(0xfff8ede3),
                     backgroundColor: const Color(0xffeac696),
                     padding: const EdgeInsets.all(8),
-                    children: {
-                      0: Text('Author',
-                          style: TextStyle(
-                              color: const Color(0xff333333),
-                              fontFamily:
-                                  GoogleFonts.merriweather().fontFamily)),
-                      1: Text('Reader',
-                          style: TextStyle(
-                              color: const Color(0xff333333),
-                              fontFamily:
-                                  GoogleFonts.merriweather().fontFamily))
-                    },
+                    children: roleWidgetsMap,
                     groupValue: _sliding,
                     onValueChanged: (int? newValue) {
                       setState(() {
+                        switchCounter++;
+                        if (switchCounter == 5) {
+                          roles.add('RAWR');
+                          roleWidgetsMap[2] =
+                              RichText(text: const TextSpan(text: '🦁'));
+                        }
+
                         if (newValue != null) {
-                          _sliding = newValue;
-                          selectedRole = roles[newValue];
+                          if (newValue == 2) {
+                            _sliding = 1;
+                            roles.removeAt(2);
+                            roleWidgetsMap.remove(2);
+                            _showToast('RAWR');
+                          } else {
+                            _sliding = newValue;
+                            selectedRole = roles[newValue];
+                          }
+                        } else {
+                          _sliding = 0;
                         }
                       });
                     }),
@@ -182,5 +198,10 @@ class _RegisterPageState extends State<RegisterPage> {
         ],
       ),
     );
+  }
+
+  void _showToast(String text) {
+    SnackBar snackBar = SnackBar(content: Text(text));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

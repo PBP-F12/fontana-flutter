@@ -1,48 +1,53 @@
+import 'package:bookshelve_flutter/constant/color.dart';
+import 'package:bookshelve_flutter/feature/forum/models/forum.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_create_form.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_detail.dart';
-import 'package:bookshelve_flutter/feature/home/widgets/custom_navigation_bar.dart';
+import 'package:bookshelve_flutter/feature/forum/widgets/forum_card.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
 
 class ForumMainPage extends StatefulWidget {
   final CookieRequest request;
 
-  const ForumMainPage(this.request, {super.key});
+  const ForumMainPage({super.key, required this.request});
 
   @override
-  _ForumMainPageState createState() => _ForumMainPageState(request);
+  _ForumMainPageState createState() => _ForumMainPageState(request: request);
 }
 
 class _ForumMainPageState extends State<ForumMainPage> {
-  late Future<dynamic> forums;
+  late Future<List<Forum>> forums;
 
-  CookieRequest request = CookieRequest();
+  CookieRequest request;
 
-  _ForumMainPageState(CookieRequest request) {
-    this.request = request;
-  }
-
-  Future<dynamic> getForums() async {
-    final responseBody = await request.get('http://localhost:8000/forum/api');
-
-    if (responseBody['status'] == 200) {
-      return responseBody['forums'];
-    } else {
-      throw 'Failed';
-    }
-  }
+  _ForumMainPageState({required this.request});
 
   @override
   void initState() {
     super.initState();
-    forums = getForums();
+    forums = request.getForums();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Forum Main Page'),
+      backgroundColor: const Color(0xffc8ae7d),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: FontanaColor.brown2,
+        onPressed: () async {
+          // Navigate to the forum creation page and wait for the result
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ForumCreationPage(request),
+            ),
+          );
+
+          setState(() {
+            forums = request.getForums();
+          });
+        },
+        child: const Icon(Icons.add, color: FontanaColor.creamy0),
       ),
       body: FutureBuilder(
           future: forums,
@@ -52,33 +57,18 @@ class _ForumMainPageState extends State<ForumMainPage> {
                 return const Center(child: Text('error'));
               }
 
-              if (!snapshot.hasData) {
+              if (!snapshot.hasData || snapshot.data == null) {
                 return const Center(child: Text('no data'));
               }
 
-              List<dynamic> forums = snapshot.data;
+              List<Forum> forums = snapshot.data!;
 
               // return Text('success');
 
               return ListView.builder(
                 itemCount: forums.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(forums[index]['forumTitle']),
-                      subtitle: Text(forums[index]['book']['title']),
-                      onTap: () {
-                        // Navigate to the forum detail page when a card is pressed
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ForumDetailPage(
-                                request, forums[index]['forumId']),
-                          ),
-                        );
-                      },
-                    ),
-                  );
+                  return ForumCard(forum: forums[index], index: index);
                 },
               );
             } else if (snapshot.connectionState == ConnectionState.waiting) {
@@ -91,24 +81,6 @@ class _ForumMainPageState extends State<ForumMainPage> {
               );
             }
           }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // Navigate to the forum creation page and wait for the result
-          final result = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ForumCreationPage(request),
-            ),
-          );
-
-          // If the result is not null (user created a forum), add it to the list
-          if (result != null) {
-            setState(() {});
-          }
-        },
-        child: Icon(Icons.add),
-      ),
-      bottomNavigationBar: CustomNavigationBar(1),
     );
   }
 }
