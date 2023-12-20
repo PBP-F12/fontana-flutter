@@ -83,100 +83,92 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BookDetails(request: request, bookId: snapshot.data![index].pk)),
-                        );
-                      },
-                      child: Stack(
-                        children: [
-                          Container( 
-                            height: 150.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(24),
-                              gradient: LinearGradient(
-                                colors: [Colors.brown.shade300, Colors.brown.shade200],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.brown,
-                                  blurRadius: 12,
-                                  offset: Offset(0, 6),
-                                ),
-                              ],
-                            ),
+                    child: Stack(
+                      children: [
+                        Container( 
+                          height: 150.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            gradient: LinearGradient(
+                              colors: [Colors.brown.shade300, Colors.brown.shade200],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.brown,
+                                blurRadius: 12,
+                                offset: Offset(0, 6),
+                              ),
+                            ],
                           ),
-                          Positioned(
-                            right: 0,
-                            bottom: 0,
-                            top: 0,
-                            child: CustomPaint(
-                              size: Size(100, 150),
-                              painter: CustomCardShapePainter(10, Colors.brown.shade300, Colors.brown.shade200),
-                            ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          bottom: 0,
+                          top: 0,
+                          child: CustomPaint(
+                            size: Size(100, 150),
+                            painter: CustomCardShapePainter(10, Colors.brown.shade300, Colors.brown.shade200),
                           ),
-                          Positioned.fill(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: CachedNetworkImage(
-                                    imageUrl: book_cover_link,
-                                    placeholder: (context, url) => CircularProgressIndicator(),
-                                    errorWidget: (context, url, error) => Icon(Icons.error),
-                                  ),
-                                  flex: 2,
+                        ),
+                        Positioned.fill(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: CachedNetworkImage(
+                                  imageUrl: book_cover_link,
+                                  placeholder: (context, url) => CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
                                 ),
-                                Expanded(
-                                  flex: 4,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        book_title,
-                                        style: TextStyle(
-                                          color: Colors.brown.shade700,
-                                          fontWeight: FontWeight.w700),
-                                        overflow: TextOverflow.fade,
-                                        ),
-                                      Text(
-                                        description,
-                                        style: TextStyle(
-                                          color: Colors.brown.withOpacity(0.8),
-                                          fontSize: 13.0,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
+                                flex: 2,
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      book_title,
+                                      style: TextStyle(
+                                        color: Colors.brown.shade700,
+                                        fontWeight: FontWeight.w700),
+                                      overflow: TextOverflow.fade,
                                       ),
-                                      SizedBox(height: 20),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.star_rate_rounded,
-                                            color: Colors.yellow.shade100,
-                                            size: 16,
-                                          ),
-                                          SizedBox(width: 8),
-                                          Text(
-                                            rating.toString(),
-                                            style: TextStyle(
-                                              color: Colors.brown,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 14.0,
-                                            ),
-                                          ),
-                                        ],
+                                    Text(
+                                      description,
+                                      style: TextStyle(
+                                        color: Colors.brown.withOpacity(0.8),
+                                        fontSize: 13.0,
                                       ),
-                                    ],
-                                  ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    SizedBox(height: 20),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.star_rate_rounded,
+                                          color: Colors.yellow.shade100,
+                                          size: 16,
+                                        ),
+                                        SizedBox(width: 8),
+                                        Text(
+                                          rating.toString(),
+                                          style: TextStyle(
+                                            color: Colors.brown,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 );
