@@ -10,8 +10,9 @@ import 'package:bookshelve_flutter/feature/details/screens/add_review.dart';
 class BookDetails extends StatelessWidget {
   final Book book;
   final CookieRequest request;
+  final String pk;
 
-  const BookDetails({Key? key, required this.book, required this.request}) : super(key: key);  // Modify this line
+  const BookDetails({Key? key, required this.book, required this.request, this.pk = ''}) : super(key: key);  // Modify this line
 
   @override
   Widget build(BuildContext context) {
