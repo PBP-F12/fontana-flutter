@@ -3,6 +3,7 @@ import 'package:bookshelve_flutter/feature/forum/screens/forum_detail.dart';
 import 'package:bookshelve_flutter/feature/forum/widgets/forum_profile.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class ForumCard extends StatelessWidget {
@@ -65,8 +66,14 @@ class ForumCard extends StatelessWidget {
                       child: Column(
                         children: [
                           ForumProfile(username: forum.creatorUsername),
-                          Text(forum.forumTitle),
-                          Text(forum.book.title),
+                          Text(forum.forumTitle,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily:
+                                      GoogleFonts.dmSerifDisplay().fontFamily,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left),
+                          // Text(forum.forumTitle),
                         ],
                       ),
                     ),

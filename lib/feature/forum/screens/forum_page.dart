@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/constant/color.dart';
 import 'package:bookshelve_flutter/feature/forum/models/forum.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_create_form.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_detail.dart';
@@ -31,6 +32,19 @@ class _ForumMainPageState extends State<ForumMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffc8ae7d),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: FontanaColor.brown2,
+        onPressed: () {
+          // Navigate to the forum creation page and wait for the result
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ForumCreationPage(request),
+            ),
+          );
+        },
+        child: const Icon(Icons.add, color: FontanaColor.creamy0),
+      ),
       body: FutureBuilder(
           future: forums,
           builder: (context, snapshot) {
@@ -63,23 +77,6 @@ class _ForumMainPageState extends State<ForumMainPage> {
               );
             }
           }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // Navigate to the forum creation page and wait for the result
-          final result = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ForumCreationPage(request),
-            ),
-          );
-
-          // If the result is not null (user created a forum), add it to the list
-          if (result != null) {
-            setState(() {});
-          }
-        },
-        child: Icon(Icons.add),
-      ),
     );
   }
 }
