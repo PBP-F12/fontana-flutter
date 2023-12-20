@@ -1,6 +1,7 @@
 import 'package:bookshelve_flutter/feature/forum/models/forum.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_create_form.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_detail.dart';
+import 'package:bookshelve_flutter/feature/forum/widgets/forum_card.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
 
@@ -29,6 +30,7 @@ class _ForumMainPageState extends State<ForumMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffc8ae7d),
       body: FutureBuilder(
           future: forums,
           builder: (context, snapshot) {
@@ -48,22 +50,7 @@ class _ForumMainPageState extends State<ForumMainPage> {
               return ListView.builder(
                 itemCount: forums.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(forums[index].forumTitle),
-                      subtitle: Text(forums[index].book.title),
-                      onTap: () {
-                        // Navigate to the forum detail page when a card is pressed
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ForumDetailPage(request, forums[index].forumId),
-                          ),
-                        );
-                      },
-                    ),
-                  );
+                  return ForumCard(forum: forums[index], index: index);
                 },
               );
             } else if (snapshot.connectionState == ConnectionState.waiting) {
