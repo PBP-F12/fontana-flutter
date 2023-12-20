@@ -68,4 +68,4 @@ Dikarenakan aplikasi yang kami kembangkan ditujukan pada beberapa jenis pengguna
 
 # Application Link
 
-https://install.appcenter.ms/orgs/fontana/apps/fontana/distribution_groups/public
+[https://install.appcenter.ms/orgs/fontana/apps/fontana/distribution_groups/public](https://install.appcenter.ms/orgs/Fontana/apps/Fontana/releases/2)https://install.appcenter.ms/orgs/Fontana/apps/Fontana/releases/2
