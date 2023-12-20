@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/feature/auth/screens/register.dart';
 import 'package:bookshelve_flutter/feature/auth/widgets/custom_text_field.dart';
 import 'package:bookshelve_flutter/feature/home/screens/base.dart';
@@ -69,8 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                         String username = _usernameController.text;
                         String password = _passwordController.text;
 
-                        await request.login(
-                            'http://localhost:8000/auth/api/login',
+                        await request.login('${Urls.backendUrl}/auth/api/login',
                             {'username': username, 'password': password});
 
                         if (request.loggedIn) {

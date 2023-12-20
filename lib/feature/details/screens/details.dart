@@ -1,14 +1,11 @@
 import 'package:bookshelve_flutter/feature/details/models/book_details.dart';
-import 'package:bookshelve_flutter/feature/publish/utils/fetch_author_book.dart';
 import 'package:flutter/material.dart';
-import 'package:bookshelve_flutter/feature/home/models/book.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bookshelve_flutter/feature/details/widgets/review_card.dart';
 import 'package:bookshelve_flutter/feature/details/models/review.dart';
 import 'package:bookshelve_flutter/feature/details/widgets/reviewservice.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:bookshelve_flutter/feature/details/screens/add_review.dart';
-import 'package:bookshelve_flutter/feature/details/widgets/usermanager.dart';
 import 'package:bookshelve_flutter/feature/details/widgets/bookmark_button.dart';
 
 class BookDetails extends StatefulWidget {

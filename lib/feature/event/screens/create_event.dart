@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/feature/event/models/book.dart';
 import 'package:bookshelve_flutter/feature/event/screens/event_page.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
   }
 
   Future<dynamic> fetchBooks() async {
-    final response = await request.get('http://localhost:8000/json/');
+    final response = await request.get('${Urls.backendUrl}/json/');
     return response;
   }
 
@@ -44,15 +45,16 @@ class _CreateEventPageState extends State<CreateEventPage> {
     super.initState();
     books = fetchBooks();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffc8ae7d),
       appBar: AppBar(
         title: Text('Create Event',
-            style:
-                TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontFamily: GoogleFonts.merriweather().fontFamily)),
+            style: TextStyle(
+                color: Color.fromARGB(255, 255, 255, 255),
+                fontFamily: GoogleFonts.merriweather().fontFamily)),
         backgroundColor: Color.fromARGB(255, 132, 112, 73),
       ),
       drawer: LeftDrawer(request),
@@ -177,67 +179,65 @@ class _CreateEventPageState extends State<CreateEventPage> {
             ),
           ),
           FutureBuilder(
-            future: books,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  return Text(
-                      'Connection done but got error: ${snapshot.error}');
+              future: books,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return Text(
+                        'Connection done but got error: ${snapshot.error}');
+                  }
+
+                  if (!snapshot.hasData) {
+                    return const Text('Connection done but no data.');
+                  }
+
+                  List<dynamic> books = snapshot.data;
+
+                  return DropdownButton<String>(
+                      isExpanded: true,
+                      value: _bookTopic,
+                      onChanged: (String? value) {
+                        if (value != null) {
+                          setState(() {
+                            _bookTopic = value;
+                          });
+                        }
+                      },
+                      items: [
+                        const DropdownMenuItem(
+                          value: '',
+                          child: Text('-'),
+                        ),
+                        ...books.map<DropdownMenuItem<String>>((dynamic value) {
+                          return DropdownMenuItem<String>(
+                              value: value['pk'],
+                              child: Text(value['fields']['book_title']));
+                        }).toList()
+                      ]);
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return const Text('error');
                 }
-
-                if (!snapshot.hasData) {
-                  return const Text('Connection done but no data.');
-                }
-
-                List<dynamic> books = snapshot.data;
-
-                return DropdownButton<String>(
-                    isExpanded: true,
-                    value: _bookTopic,
-                    onChanged: (String? value) {
-                      if (value != null) {
-                        setState(() {
-                          _bookTopic = value;
-                        });
-                      }
-                    },
-                    items: [
-                      const DropdownMenuItem(
-                        value: '',
-                        child: Text('-'),
-                      ),
-                      ...books
-                          .map<DropdownMenuItem<String>>((dynamic value) {
-                        return DropdownMenuItem<String>(
-                            value: value['pk'],
-                            child: Text(value['fields']['book_title']));
-                      }).toList()
-                    ]);
-              } 
-              else if (snapshot.connectionState ==
-                  ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } 
-              else {
-                return const Text('error');
-              }
-            }),
+              }),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 132, 112, 73)),
+                  backgroundColor: MaterialStateProperty.all(
+                      Color.fromARGB(255, 132, 112, 73)),
                 ),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     // Kirim ke Django dan tunggu respons
 
                     final response = await request.postJson(
-                        "http://localhost:8000/event/api/create",
+                        "${Urls.backendUrl}/event/api/create",
                         jsonEncode(<String, String>{
                           'event_name': _eventName,
                           'location': _location,

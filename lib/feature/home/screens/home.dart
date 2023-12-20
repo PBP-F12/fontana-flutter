@@ -1,5 +1,4 @@
-import 'package:bookshelve_flutter/feature/home/widgets/custom_navigation_bar.dart';
-import 'package:bookshelve_flutter/feature/home/widgets/left_drawer.dart';
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/feature/home/models/book.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -46,7 +45,7 @@ class _HomePageState extends State<HomePage> {
       isLoading = true; // Show loading spinner
     });
 
-    var url = Uri.parse('http://localhost:8000/api/book/flutter');
+    var url = Uri.parse('${Urls.backendUrl}/api/book/flutter');
     var response =
         await http.get(url, headers: {"Content-Type": "application/json"});
 

@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/feature/details/models/book_details.dart';
 import 'package:bookshelve_flutter/feature/forum/models/forum.dart';
 import 'package:http/http.dart' as http;
@@ -32,7 +33,7 @@ class CookieRequest {
 
   String? role;
   String? username;
-  final String backendUrl = 'http://localhost:8000';
+  final String backendUrl = '${Urls.backendUrl}';
 
   late SharedPreferences local;
 

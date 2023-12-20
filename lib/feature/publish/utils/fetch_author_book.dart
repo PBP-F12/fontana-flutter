@@ -1,13 +1,12 @@
 import 'dart:convert';
 
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/feature/event/models/book.dart';
-import 'package:bookshelve_flutter/feature/publish/models/author_book.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
-import 'package:http/http.dart' as http;
 
 Future<List<Book>> fetchAuthorBook(CookieRequest request) async {
   var response = await request.get(
-    'http://localhost:8000/book/author/json/flutter/',
+    '${Urls.backendUrl}/book/author/json/flutter/',
   );
 
   // Decode response into JSON

@@ -1,9 +1,9 @@
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/feature/home/widgets/left_drawer.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'dart:async';
 import 'dart:core';
-import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyBookmarkPage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
   }
 
   Future<dynamic> getBookmarks() async {
-    final response = await request.get('http://localhost:8000/bookmark/ajax');
+    final response = await request.get('${Urls.backendUrl}/bookmark/ajax');
     return response['bookmarks'];
   }
 
@@ -211,9 +211,8 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
               icon: Icon(Icons.bookmark, size: 50.0),
               onPressed: () async {
                 print('deleted ' + bookmark['bookId']);
-                await request.delete(
-                    'http://localhost:8000/bookmark/api/delete/' +
-                        bookmark['bookId']);
+                await request.delete('${Urls.backendUrl}/bookmark/api/delete/' +
+                    bookmark['bookId']);
 
                 setState(() {
                   bookmarkedBooks = getBookmarks();

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
   _ForumCreationPageState(this.request);
 
   Future<dynamic> getBooks() async {
-    final response = await request.get('http://localhost:8000/json/');
+    final response = await request.get('${Urls.backendUrl}/json/');
     return response;
   }
 
@@ -109,7 +110,7 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
                 // Validate input and create a new forum item
                 if (_validateInput()) {
                   final response = await request.postJson(
-                      'http://localhost:8000/forum/api/create',
+                      '${Urls.backendUrl}/forum/api/create',
                       jsonEncode(<String, String>{
                         'title': _titleController.text,
                         'bookTopic': _bookTopicController,

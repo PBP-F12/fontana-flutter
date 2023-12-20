@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
 
   Future<dynamic> getForumDetail() async {
     final responseBody =
-        await request.get('http://localhost:8000/forum/api/$forumId');
+        await request.get('${Urls.backendUrl}/forum/api/$forumId');
 
     // print(responseBody);
 
@@ -100,7 +101,7 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
                       ElevatedButton(
                         onPressed: () async {
                           final requestBody = await request.postJson(
-                              'http://localhost:8000/forum/api/reply/$forumId',
+                              '${Urls.backendUrl}/forum/api/reply/$forumId',
                               jsonEncode(<String, String>{
                                 'comment': _commentController.text
                               }));

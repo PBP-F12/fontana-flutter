@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -25,20 +26,21 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
   }
 
   Future<Event> fetchEvent() async {
-    var url = Uri.parse('http://localhost:8000/event/json/${widget.eventId}/');
+    var url = Uri.parse('${Urls.backendUrl}/event/json/${widget.eventId}/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
     );
 
     var data = jsonDecode(utf8.decode(response.bodyBytes));
-    Event event = Event.fromJson(data[0]); // Assuming the response is a list with one item
+    Event event = Event.fromJson(
+        data[0]); // Assuming the response is a list with one item
     bookFuture = fetchBook(event.fields.bookId); // Fetch book details
     return event;
   }
 
   Future<Book> fetchBook(String bookId) async {
-    var url = Uri.parse('http://localhost:8000/json/$bookId/');
+    var url = Uri.parse('${Urls.backendUrl}/json/$bookId/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -49,57 +51,57 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
   }
 
   Widget _detailBox(String title, String content, {String? imageUrl}) {
-  return Container(
-    padding: EdgeInsets.all(12),
-    margin: EdgeInsets.only(bottom: 10),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(10),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.5),
-          spreadRadius: 2,
-          blurRadius: 5,
-          offset: Offset(0, 3),
-        ),
-      ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          title,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 8),
-        if (imageUrl != null)
-          Center(
-            child: SizedBox(
-              height: 200, // Set your desired height
-              width: 150, // Set your desired width
-              child: Image.network(
-                imageUrl,
-                fit: BoxFit.cover,
+    return Container(
+      padding: EdgeInsets.all(12),
+      margin: EdgeInsets.only(bottom: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 8),
+          if (imageUrl != null)
+            Center(
+              child: SizedBox(
+                height: 200, // Set your desired height
+                width: 150, // Set your desired width
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-        SizedBox(height: 8),
-        Text(content),
-      ],
-    ),
-  );
-}
+          SizedBox(height: 8),
+          Text(content),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffc8ae7d),
       appBar: AppBar(
-        title: Text('Event Details',
-            style:
-                TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontFamily: GoogleFonts.merriweather().fontFamily)),
-        backgroundColor: Color.fromARGB(255, 132, 112, 73)
-      ),
+          title: Text('Event Details',
+              style: TextStyle(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  fontFamily: GoogleFonts.merriweather().fontFamily)),
+          backgroundColor: Color.fromARGB(255, 132, 112, 73)),
       body: FutureBuilder<Event>(
         future: eventFuture,
         builder: (context, eventSnapshot) {
@@ -118,7 +120,8 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                           height: 200, // Set the desired height
                           width: double.infinity,
                           child: Image.network(
-                            eventSnapshot.data!.fields.posterLink, // Replace with your image path
+                            eventSnapshot.data!.fields
+                                .posterLink, // Replace with your image path
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -126,7 +129,8 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                         Container(
                           height: 200,
                           width: double.infinity,
-                          color: Colors.black.withOpacity(0.5), // Adjust opacity as needed
+                          color: Colors.black
+                              .withOpacity(0.5), // Adjust opacity as needed
                         ),
                         // Text in the center of the image
                         Positioned.fill(
@@ -140,7 +144,8 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
-                                    fontFamily: GoogleFonts.merriweather().fontFamily,
+                                    fontFamily:
+                                        GoogleFonts.merriweather().fontFamily,
                                   ),
                                 ),
                               ],

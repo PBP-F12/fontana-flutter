@@ -2,7 +2,6 @@ import 'dart:ui' as ui;
 
 import 'package:bookshelve_flutter/feature/details/screens/details.dart';
 import 'package:bookshelve_flutter/feature/event/models/book.dart';
-import 'package:bookshelve_flutter/feature/publish/models/author_book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';

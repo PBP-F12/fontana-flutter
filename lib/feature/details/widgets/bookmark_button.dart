@@ -1,4 +1,5 @@
 // bookmark_button.dart
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart'; // Import the CookieRequest
 
@@ -21,8 +22,8 @@ class _BookmarkButtonState extends State<BookmarkButton> {
 
   Future<void> _toggleBookmark() async {
     final url = isBookmarked
-        ? 'http://localhost:8000/bookmark/api/delete/${widget.bookId}'
-        : 'http://localhost:8000/bookmark/api/add/${widget.bookId}';
+        ? '${Urls.backendUrl}/bookmark/api/delete/${widget.bookId}'
+        : '${Urls.backendUrl}/bookmark/api/add/${widget.bookId}';
 
     try {
       final response = isBookmarked

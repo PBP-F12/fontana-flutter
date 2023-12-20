@@ -1,7 +1,7 @@
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/feature/details/models/book_details.dart';
 import 'package:bookshelve_flutter/feature/details/screens/details.dart';
 import 'package:flutter/material.dart';
-import 'package:bookshelve_flutter/feature/home/models/book.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'dart:convert';
@@ -168,7 +168,7 @@ class _AddReviewState extends State<AddReview> {
                         if (_formKey.currentState!.validate()) {
                           _reviewText = reviewTextController.text;
                           var response = await request.postJson(
-                              'http://localhost:8000/details/review/addflutter/${widget.bookDetail.id}/',
+                              '${Urls.backendUrl}/details/review/addflutter/${widget.bookDetail.id}/',
                               jsonEncode({
                                 'book_id': widget.bookDetail.id,
                                 'content': _reviewText,

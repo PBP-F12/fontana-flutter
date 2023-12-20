@@ -1,6 +1,3 @@
-import 'package:bookshelve_flutter/feature/event/screens/event_page.dart';
-import 'package:bookshelve_flutter/feature/forum/screens/forum_page.dart';
-import 'package:bookshelve_flutter/feature/home/screens/home.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
 import 'package:bookshelve_flutter/feature/auth/widgets/custom_text_field.dart';
 import 'package:bookshelve_flutter/feature/onboarding/widgets/custom_text_button.dart';
@@ -38,7 +39,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    final request = context.watch<CookieRequest>();
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -172,8 +172,8 @@ class _RegisterPageState extends State<RegisterPage> {
     };
 
     final uri = selectedRole == 'AUTHOR'
-        ? Uri.parse("http://localhost:8000/auth/api/register/author")
-        : Uri.parse("http://localhost:8000/auth/api/register/reader");
+        ? Uri.parse("${Urls.backendUrl}/auth/api/register/author")
+        : Uri.parse("${Urls.backendUrl}/auth/api/register/reader");
     final response = await http.post(uri, body: request);
 
     if (response.statusCode == 200) {

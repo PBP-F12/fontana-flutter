@@ -1,7 +1,6 @@
 import 'package:bookshelve_flutter/constant/color.dart';
 import 'package:bookshelve_flutter/feature/forum/models/forum.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_create_form.dart';
-import 'package:bookshelve_flutter/feature/forum/screens/forum_detail.dart';
 import 'package:bookshelve_flutter/feature/forum/widgets/forum_card.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';

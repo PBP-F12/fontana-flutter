@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +24,7 @@ class _EventPageState extends State<EventPage> {
   _EventPageState(this.request);
 
   Future<List<Event>> fetchEvent() async {
-    var url = Uri.parse('http://localhost:8000/event/json/');
+    var url = Uri.parse('${Urls.backendUrl}/event/json/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -44,11 +45,11 @@ class _EventPageState extends State<EventPage> {
     return Scaffold(
       backgroundColor: Color(0xffc8ae7d),
       appBar: AppBar(
-        title: Text('Events',
-            style:
-                TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontFamily: GoogleFonts.merriweather().fontFamily)),
-        backgroundColor: Color.fromARGB(255, 132, 112, 73)
-      ),
+          title: Text('Events',
+              style: TextStyle(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  fontFamily: GoogleFonts.merriweather().fontFamily)),
+          backgroundColor: Color.fromARGB(255, 132, 112, 73)),
       drawer: LeftDrawer(request),
       body: Column(
         children: [
@@ -179,17 +180,19 @@ class _EventPageState extends State<EventPage> {
           ),
         ],
       ),
-      floatingActionButton: request.isAdmin() ? FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CreateEventPage(request),
-            ),
-          );
-        },
-        child: const Icon(Icons.add),
-      ) : SizedBox(height: 0),
+      floatingActionButton: request.isAdmin()
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreateEventPage(request),
+                  ),
+                );
+              },
+              child: const Icon(Icons.add),
+            )
+          : SizedBox(height: 0),
     );
   }
 }
