@@ -28,17 +28,19 @@ class _AdminNavigationBarState extends State<AdminNavigationBar> {
     CookieRequest request = context.watch<CookieRequest>();
 
     return CurvedNavigationBar(
-        index: index,
-        items: const [
-          Icon(Icons.home_filled, color: Color(0xff66461f)),
-          Icon(Icons.event, color: Color(0xff66461f)),
-        ],
-        onTap: (int index) {
-          onTap(index);
-        },
-        color: const Color(0xffeac696),
-        backgroundColor: Colors.transparent,
-        buttonBackgroundColor: const Color(0xfff8ede3),
-        animationDuration: const Duration(milliseconds: 300));
+      index: index,
+      items: const [
+        Icon(Icons.home_filled, color: Color(0xff66461f)),
+        Icon(Icons.event, color: Color(0xff66461f)),
+      ],
+      onTap: (int index) {
+        onTap(index);
+      },
+      color: const Color(0xffeac696),
+      backgroundColor: Colors.transparent,
+      buttonBackgroundColor: const Color(0xfff8ede3),
+      animationDuration: const Duration(milliseconds: 300),
+      height: 50,
+    );
   }
 }
