@@ -34,14 +34,18 @@ class _ForumMainPageState extends State<ForumMainPage> {
       backgroundColor: const Color(0xffc8ae7d),
       floatingActionButton: FloatingActionButton(
         backgroundColor: FontanaColor.brown2,
-        onPressed: () {
+        onPressed: () async {
           // Navigate to the forum creation page and wait for the result
-          Navigator.push(
+          await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => ForumCreationPage(request),
             ),
           );
+
+          setState(() {
+            forums = request.getForums();
+          });
         },
         child: const Icon(Icons.add, color: FontanaColor.creamy0),
       ),
