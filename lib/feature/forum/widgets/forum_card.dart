@@ -1,5 +1,6 @@
 import 'package:bookshelve_flutter/feature/forum/models/forum.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_detail.dart';
+import 'package:bookshelve_flutter/feature/forum/widgets/forum_profile.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,14 @@ class ForumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CookieRequest request = context.watch<CookieRequest>();
+
+    List<Widget> forumBookWidgets = [
+      ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.network(forum.book.cover, width: 100)),
+      const SizedBox(width: 6),
+      Flexible(child: Text(forum.book.title, textAlign: TextAlign.left))
+    ];
 
     return Align(
       alignment: index.isEven ? Alignment.centerLeft : Alignment.centerRight,
@@ -37,20 +46,29 @@ class ForumCard extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(forum.book.cover, width: 100)),
+                  child: Row(
+                    mainAxisAlignment: index.isEven
+                        ? MainAxisAlignment.start
+                        : MainAxisAlignment.end,
+                    children: index.isEven
+                        ? forumBookWidgets
+                        : forumBookWidgets.reversed.toList(),
+                  ),
                 ),
                 const SizedBox(height: 0),
                 SizedBox(
                   width: 300,
                   child: Card(
-                    color: Colors.redAccent,
-                    child: Column(
-                      children: [
-                        Text(forum.forumTitle),
-                        Text(forum.book.title),
-                      ],
+                    color: const Color(0xfff8ede3),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          ForumProfile(username: forum.creatorUsername),
+                          Text(forum.forumTitle),
+                          Text(forum.book.title),
+                        ],
+                      ),
                     ),
                   ),
                 ),
