@@ -52,17 +52,20 @@ Dikarenakan aplikasi yang kami kembangkan ditujukan pada beberapa jenis pengguna
 # Alur pengintegrasian dengan `web service`
 
 1. Mendefinisikan model yang akan dipakai saat pemanggilan layanan web, method `toJson()`, dan `fromJson()`.
-2. Menambahkan dependensi http dan potongan kode sehingga  memungkinkan akses internet pada aplikasi Flutter dalam berkas `android/app/src/main/AndroidManifest.xml`.
+2. Menambahkan dependensi http dan potongan kode sehingga memungkinkan akses internet pada aplikasi Flutter dalam berkas `android/app/src/main/AndroidManifest.xml`.
 3. Melakukan _fetch data_ dengan hit endpoint API menggunakan method POST, GET, DELETE, PUT, dan lain-lain yang disediakan dependensi http.
 4. _Decode_ data yang sudah di-_fetch_ ke bentuk `JSON`.
 5. Konversi data dalam bentuk `JSON` menjadi data dalam bentuk sebuah model.
 6. Kemudian, tampilkan data dalam bentuk model tersebut pada aplikasi Flutter.
 
 # Tautan berita acara
+
 ## [Berita Acara](https://ristek.link/BeritaAcaraF12)
 
 # Link App Center
+
 [![Build status](https://build.appcenter.ms/v0.1/apps/0f5e14c8-351b-4a0e-b8b0-0d7e8f0a3053/branches/main/badge)](https://appcenter.ms)
 
 # Application Link
+
 https://install.appcenter.ms/orgs/fontana/apps/fontana/distribution_groups/public
