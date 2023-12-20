@@ -63,3 +63,6 @@ Dikarenakan aplikasi yang kami kembangkan ditujukan pada beberapa jenis pengguna
 
 # Link App Center
 [![Build status](https://build.appcenter.ms/v0.1/apps/0f5e14c8-351b-4a0e-b8b0-0d7e8f0a3053/branches/main/badge)](https://appcenter.ms)
+
+# Application Link
+https://install.appcenter.ms/orgs/fontana/apps/fontana/distribution_groups/public
