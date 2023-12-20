@@ -42,7 +42,6 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 200, 174, 125),
-
       drawer: LeftDrawer(request),
       body: SingleChildScrollView(
         child: Column(
@@ -54,7 +53,7 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
                   height: 200, // Set the desired height
                   width: double.infinity,
                   child: Image.asset(
-                    'assets/images/bookshelve.png', // Replace with your image path
+                    'images/bookshelve.png', // Replace with your image path
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -62,8 +61,8 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
                 Container(
                   height: 200,
                   width: double.infinity,
-                  color: Colors.black
-                      .withOpacity(0.5), // Adjust opacity as needed
+                  color:
+                      Colors.black.withOpacity(0.5), // Adjust opacity as needed
                 ),
                 // Text in the dead center of the image
                 Positioned.fill(
@@ -77,8 +76,7 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
                             fontSize: 40,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 234, 198, 150),
-                            fontFamily:
-                                GoogleFonts.merriweather().fontFamily,
+                            fontFamily: GoogleFonts.merriweather().fontFamily,
                           ),
                         ),
                         SizedBox(
@@ -89,8 +87,7 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
                           style: TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 234, 198, 150),
-                            fontFamily:
-                                GoogleFonts.merriweather().fontFamily,
+                            fontFamily: GoogleFonts.merriweather().fontFamily,
                           ),
                         ),
                       ],
@@ -102,7 +99,7 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
             Container(
               child: Container(
                 color: Color.fromARGB(255, 200, 174, 125),
-                 // Warna latar belakang body
+                // Warna latar belakang body
                 child: FutureBuilder(
                   future: bookmarkedBooks,
                   builder: (context, snapshot) {
@@ -110,18 +107,16 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
                       if (snapshot.hasError) {
                         return const Center(child: Text('Error'));
                       }
-      
+
                       if (!snapshot.hasData) {
                         return const Center(child: Text('No data'));
                       }
-      
+
                       List<dynamic> bookmarks = snapshot.data;
-      
-                      return 
-                        Column(
-                          children: [
-                            for (var bookmark in bookmarks ) _buildBookItem(bookmark)
-                          ] 
+
+                      return Column(children: [
+                        for (var bookmark in bookmarks) _buildBookItem(bookmark)
+                      ]
                           // [
                           //   ListView.builder(
                           //       itemCount: bookmarks.length,
@@ -131,9 +126,9 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
                           //       },
                           //   ),
                           // ],
-                        );
-                    
-                    } else if (snapshot.connectionState == ConnectionState.waiting) {
+                          );
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
@@ -174,7 +169,8 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
         width: 350,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Color.fromARGB(74, 255, 255, 255), // Warna latar belakang kartu
+          color:
+              Color.fromARGB(74, 255, 255, 255), // Warna latar belakang kartu
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
@@ -215,7 +211,9 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
               icon: Icon(Icons.bookmark, size: 50.0),
               onPressed: () async {
                 print('deleted ' + bookmark['bookId']);
-                await request.delete('http://localhost:8000/bookmark/api/delete/' + bookmark['bookId']);
+                await request.delete(
+                    'http://localhost:8000/bookmark/api/delete/' +
+                        bookmark['bookId']);
 
                 setState(() {
                   bookmarkedBooks = getBookmarks();
