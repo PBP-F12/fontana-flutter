@@ -1,3 +1,5 @@
+import 'package:bookshelve_flutter/feature/auth/widgets/custom_text_field.dart';
+import 'package:bookshelve_flutter/feature/event/models/book.dart';
 import 'package:bookshelve_flutter/feature/publish/utils/publish_author_book.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
@@ -22,8 +24,6 @@ class _PublishFormPageState extends State<PublishFormPage> {
   @override
   Widget build(BuildContext context) {
     CookieRequest request = context.watch<CookieRequest>();
-    print(request.isAuthor());
-    print(request.role);
 
     return Scaffold(
       appBar: AppBar(
@@ -33,9 +33,9 @@ class _PublishFormPageState extends State<PublishFormPage> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        backgroundColor: Colors.brown.shade200,
+        backgroundColor: Color.fromARGB(255, 200, 174, 125),
       ),
-      backgroundColor: Colors.brown.shade200,
+      backgroundColor:  Color.fromARGB(255, 200, 174, 125),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -43,20 +43,22 @@ class _PublishFormPageState extends State<PublishFormPage> {
             children: [
               Text(
                 'Start your journey with Fontana',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.brown.shade900,
                   fontWeight: FontWeight.w700,
-                  fontSize: 25.0,
-                  fontFamily: GoogleFonts.merriweather().fontFamily,
+                  fontSize: 36,
+                  fontFamily: GoogleFonts.dmSerifDisplay().fontFamily,
                 ),
               ),
               SizedBox(height: 10.0),
               Text(
                 'The world awaits your literary masterpiece!',
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.brown.shade900.withOpacity(0.8),
+                  color: Color(0xFF333333),
                   fontStyle: FontStyle.italic,
-                  fontSize: 14.0,
+                  fontSize: 18.0,
                   fontFamily: GoogleFonts.merriweather().fontFamily,
                 ),
               ),
@@ -80,52 +82,23 @@ class _PublishFormPageState extends State<PublishFormPage> {
                 ),
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: _bookTitleController,
-                      decoration: const InputDecoration(
-                        hintText: 'Type your book title here',
-                        labelText: 'Book Title',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF3E2723)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF4E342E)),
-                        ),
-                        // suffixIcon: IconButton(
-                        //   onPressed: () {
-                        //     _bookTitleController.clear();
-                        //   },
-                        //   icon: Icon(Icons.clear),
-                        // ),
-                      ),
+                    CustomTextField(
+                      _bookTitleController,
+                      'Book Title',
+                      const Icon(Icons.history_edu),
+                      hintText: 'Type your book title here'),
+                    SizedBox(height: 16.0),
+                    CustomTextField(
+                      _descriptionController,
+                      'Description',
+                      const Icon(Icons.title),
+                      hintText: 'Share a glimpse of your book\'s storyline',
                     ),
                     SizedBox(height: 16.0),
-                    TextFormField(
-                      controller: _descriptionController,
-                      decoration: const InputDecoration(
-                        hintText: 'Share a glimpse of your book\'s storyline or theme',
-                        labelText: 'Description',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF3E2723)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF4E342E)),
-                        ),
-                      ),
-                      maxLines: 4,
-                    ),
-                    SizedBox(height: 16.0),TextFormField(
-                      controller: _bookCoverLinkController,
-                      decoration: const InputDecoration(
-                        hintText: 'Paste the URL of your book\'s cover image here',
-                        labelText: 'Book Cover Link',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF3E2723)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF4E342E)),
-                        ),
-                      ),
+                    CustomTextField(
+                      _bookCoverLinkController,
+                      'Book Cover Link',
+                      const Icon(Icons.link),
                     ),
                     SizedBox(height: 20.0),
                     ElevatedButton(
@@ -143,9 +116,19 @@ class _PublishFormPageState extends State<PublishFormPage> {
                           );
                           
                           if (response['status'] == 'success') {
-                            print("status sukses");
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: const Text('Book published successfully!'),
+                              ),
+                            );
+                            Navigator.pop(context);
                           } else {
-                            print("gagal");
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: const Text('Failed to publish :('),
+                              ),
+                            );
+                            Navigator.pop(context);
                           }
                         } else {
                           showDialog(
@@ -170,6 +153,7 @@ class _PublishFormPageState extends State<PublishFormPage> {
                         'Publish',
                         style: TextStyle(
                           color: Colors.brown.shade50,
+                          fontFamily: GoogleFonts.merriweather().fontFamily,
                         ),
                       ),
                     ),

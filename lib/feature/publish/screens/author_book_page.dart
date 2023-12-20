@@ -1,5 +1,7 @@
 import 'dart:ui' as ui;
 
+import 'package:bookshelve_flutter/feature/details/screens/details.dart';
+import 'package:bookshelve_flutter/feature/event/models/book.dart';
 import 'package:bookshelve_flutter/feature/publish/models/author_book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,7 @@ class AuthorBookPage extends StatefulWidget {
 
 class _AuthorBookPageState extends State<AuthorBookPage> {
   CookieRequest request = CookieRequest();
-  late Future<List<AuthorBook>> authorBooks;
+  late Future<List<Book>> authorBooks;
 
   _AuthorBookPageState(CookieRequest request) {
     this.request = request;
@@ -66,20 +68,13 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
                   ),
               );
             }
-
-            print("something");
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (_, index) {
-                // String book_title = 'WAWAWAAWAWAAWWWWWWWWWWWWWWWWWWWWWW';
-                // String description = 'a wawaw book sdjajdsnajndsjnsajndjsaas';
-                // double rating = 3.75;
-                // String book_cover_link = 'https://www.gramedia.com/blog/content/images/2021/04/bumi.jpg';
                 String book_title = snapshot.data![index].fields.bookTitle;
                 String description = snapshot.data![index].fields.description;
                 double rating = snapshot.data![index].fields.avgRating;
                 String book_cover_link = snapshot.data![index].fields.bookCoverLink;
-                print(book_cover_link);
                 return Center(
                   child: Card(
                     margin: EdgeInsets.fromLTRB(32.0, 20.0, 25.0, 20.0),
@@ -185,14 +180,18 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
         }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           // Navigate to the forum creation page and wait for the result
-          Navigator.push(
+          await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => PublishFormPage(request),
             ),
           );
+
+          setState(() {
+            authorBooks = fetchAuthorBook(request);
+          });
         },
         child: Icon(
           Icons.add,
