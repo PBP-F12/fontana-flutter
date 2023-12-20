@@ -117,7 +117,7 @@ class CookieRequest {
     return json.decode(response.body);
   }
 
-  Future<dynamic> post(String url, dynamic data) async {
+  Future<dynamic> post(String url, {dynamic data}) async {
     await init();
     if (kIsWeb) {
       dynamic c = _client;
