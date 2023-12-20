@@ -41,60 +41,112 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(74, 255, 255, 255),
-        flexibleSpace: FlexibleSpaceBar(
-          centerTitle: true,
-          title: Padding(
-            padding: const EdgeInsets.all(0),
-            child: Image.asset(
-              'assets/images/logo.png',
-            ),
-          ),
-        ),
-      ),
+      backgroundColor: const Color.fromARGB(255, 200, 174, 125),
+
       drawer: LeftDrawer(request),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/library_bg.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Container(
-          color: const Color.fromARGB(255, 200, 174, 125),
-          child: FutureBuilder(
-            future: bookmarkedBooks,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  return const Center(child: Text('Error'));
-                }
-
-                if (!snapshot.hasData) {
-                  return const Center(child: Text('No data'));
-                }
-
-                List<dynamic> bookmarks = snapshot.data;
-
-                return ListView.builder(
-                  itemCount: bookmarks.length,
-                  itemBuilder: (context, index) {
-                    final bookmark = bookmarks[index];
-                    return _buildBookItem(bookmark);
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                // Background Image
+                Container(
+                  height: 200, // Set the desired height
+                  width: double.infinity,
+                  child: Image.asset(
+                    'assets/images/bookshelve.png', // Replace with your image path
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                // Dark overlay for better text readability
+                Container(
+                  height: 200,
+                  width: double.infinity,
+                  color: Colors.black
+                      .withOpacity(0.5), // Adjust opacity as needed
+                ),
+                // Text in the dead center of the image
+                Positioned.fill(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Bookmarks',
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 234, 198, 150),
+                            fontFamily:
+                                GoogleFonts.merriweather().fontFamily,
+                          ),
+                        ),
+                        SizedBox(
+                            height:
+                                8), // Adjust the spacing between the two texts
+                        Text(
+                          'Save books. Read later.',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 234, 198, 150),
+                            fontFamily:
+                                GoogleFonts.merriweather().fontFamily,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              child: Container(
+                color: Color.fromARGB(255, 200, 174, 125),
+                 // Warna latar belakang body
+                child: FutureBuilder(
+                  future: bookmarkedBooks,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasError) {
+                        return const Center(child: Text('Error'));
+                      }
+      
+                      if (!snapshot.hasData) {
+                        return const Center(child: Text('No data'));
+                      }
+      
+                      List<dynamic> bookmarks = snapshot.data;
+      
+                      return 
+                        Column(
+                          children: [
+                            for (var bookmark in bookmarks ) _buildBookItem(bookmark)
+                          ] 
+                          // [
+                          //   ListView.builder(
+                          //       itemCount: bookmarks.length,
+                          //       itemBuilder: (context, index) {
+                          //         final bookmark = bookmarks[index];
+                          //         return _buildBookItem(bookmark);
+                          //       },
+                          //   ),
+                          // ],
+                        );
+                    
+                    } else if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return const Center(
+                        child: Text('Failed to fetch'),
+                      );
+                    }
                   },
-                );
-              } else if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                return const Center(
-                  child: Text('Failed to fetch'),
-                );
-              }
-            },
-          ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: Row(
@@ -120,10 +172,9 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         width: 350,
-        height: 600,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Color.fromARGB(74, 255, 255, 255), // Warna latar belakang kartu
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
@@ -153,25 +204,26 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
               ),
             ),
             SizedBox(height: 8),
-            Text('Author: ' + bookmark['authorUsername'],
+            Text(
+              'Author: ' + bookmark['authorUsername'],
               style: TextStyle(
                 fontFamily: GoogleFonts.merriweather().fontFamily,
-              ), //textstyle
-            ),//text
+              ),
+            ),
             SizedBox(height: 8),
             IconButton(
               icon: Icon(Icons.bookmark, size: 50.0),
               onPressed: () async {
                 print('deleted ' + bookmark['bookId']);
-                  await request.delete('http://localhost:8000/bookmark/api/delete/' + bookmark['bookId']);
-                
+                await request.delete('http://localhost:8000/bookmark/api/delete/' + bookmark['bookId']);
+
                 setState(() {
                   bookmarkedBooks = getBookmarks();
-                  });
+                });
               },
             ),
-          ], 
-        ), 
+          ],
+        ),
       ),
     );
   }
