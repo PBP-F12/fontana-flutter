@@ -48,25 +48,6 @@ class LeftDrawer extends StatelessWidget {
               ),
             ),
           ),
-          // TODO: Bagian routing
-          ListTile(
-            leading: const Icon(Icons.home_filled, color: Color(0xffeac696)),
-            title: Text(
-              'Home',
-              style: TextStyle(
-                  color: const Color(0xffeac696),
-                  fontSize: 16,
-                  fontFamily: GoogleFonts.merriweather().fontFamily),
-            ),
-            // Bagian redirection ke MyHomePage
-            onTap: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(request),
-                  ));
-            },
-          ),
           request.isAuthor() || request.isReader()
               ? ListTile(
                   leading: const Icon(Icons.forum_outlined,
