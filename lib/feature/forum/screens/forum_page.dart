@@ -31,22 +31,25 @@ class _ForumMainPageState extends State<ForumMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffc8ae7d),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: FontanaColor.brown2,
-        onPressed: () async {
-          // Navigate to the forum creation page and wait for the result
-          await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ForumCreationPage(request),
-            ),
-          );
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 40),
+        child: FloatingActionButton(
+          backgroundColor: FontanaColor.brown2,
+          onPressed: () async {
+            // Navigate to the forum creation page and wait for the result
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ForumCreationPage(request),
+              ),
+            );
 
-          setState(() {
-            forums = request.getForums();
-          });
-        },
-        child: const Icon(Icons.add, color: FontanaColor.creamy0),
+            setState(() {
+              forums = request.getForums();
+            });
+          },
+          child: const Icon(Icons.add, color: FontanaColor.creamy0),
+        ),
       ),
       body: FutureBuilder(
           future: forums,
