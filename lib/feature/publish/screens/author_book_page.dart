@@ -37,151 +37,212 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: FontanaColor.creamy2,
-      appBar: AppBar(
-        title: const Text('My Books',
-            style: TextStyle(fontWeight: FontWeight.w600)),
-        backgroundColor: FontanaColor.creamy0,
-      ),
-      body: FutureBuilder(
-          future: authorBooks,
-          builder: (context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.connectionState == ConnectionState.done) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: Text(
-                    "You have not published any book yet.",
-                    style: TextStyle(
-                      color: Color(0xFF3E2723),
-                      fontSize: 14,
-                      fontStyle: FontStyle.italic,
-                      fontFamily: GoogleFonts.merriweather().fontFamily,
-                    ),
+      body: Column(
+        children: [
+          Stack(
+            children: [
+              // Background Image
+              Container(
+                height: 200, // Set the desired height
+                width: double.infinity,
+                child: Image.asset(
+                  'images/book_collection_bg.jpg', // Replace with your image path
+                  fit: BoxFit.cover,
+                ),
+              ),
+              // Dark overlay for better text readability
+              Container(
+                height: 200,
+                width: double.infinity,
+                color:
+                    Colors.black.withOpacity(0.5), // Adjust opacity as needed
+              ),
+              // Text in the dead center of the image
+              Positioned.fill(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Your Books',
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 234, 198, 150),
+                          fontFamily: GoogleFonts.dmSerifDisplay().fontFamily,
+                        ),
+                      ),
+                      SizedBox(
+                          height:
+                              8), // Adjust the spacing between the two texts
+                      Text(
+                        'Marks you have left in your journey',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 234, 198, 150),
+                          fontFamily: GoogleFonts.merriweather().fontFamily,
+                        ),
+                      ),
+                    ],
                   ),
-                );
-              }
-              return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (_, index) {
-                    String book_title = snapshot.data![index].fields.bookTitle;
-                    String description =
-                        snapshot.data![index].fields.description;
-                    double rating = snapshot.data![index].fields.avgRating;
-                    String book_cover_link =
-                        snapshot.data![index].fields.bookCoverLink;
+                ),
+              ),
+            ],
+          ),
+          FutureBuilder(
+              future: authorBooks,
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  if (!snapshot.hasData) {
                     return Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BookDetails(
-                                  bookId: snapshot.data![index].pk,
-                                  request: request),
-                            ),
-                          );
-                        },
-                        child: Card(
-                          margin: EdgeInsets.fromLTRB(32.0, 20.0, 25.0, 20.0),
-                          color: Colors.brown.shade100,
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24),
-                          ),
-                          child: Stack(
-                            children: [
-                              Container(
-                                height: 150.0,
-                                decoration: BoxDecoration(
+                      child: Text(
+                        "You have not published any book yet.",
+                        style: TextStyle(
+                          color: Color(0xFF3E2723),
+                          fontSize: 14,
+                          fontStyle: FontStyle.italic,
+                          fontFamily: GoogleFonts.merriweather().fontFamily,
+                        ),
+                      ),
+                    );
+                  }
+                  return Expanded(
+                    child: ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (_, index) {
+                          String book_title =
+                              snapshot.data![index].fields.bookTitle;
+                          String description =
+                              snapshot.data![index].fields.description;
+                          double rating =
+                              snapshot.data![index].fields.avgRating;
+                          String book_cover_link =
+                              snapshot.data![index].fields.bookCoverLink;
+                          return Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BookDetails(
+                                        bookId: snapshot.data![index].pk,
+                                        request: request),
+                                  ),
+                                );
+                              },
+                              child: Card(
+                                margin:
+                                    EdgeInsets.fromLTRB(32.0, 20.0, 25.0, 20.0),
+                                color: Colors.brown.shade100,
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24),
-                                  gradient: LinearGradient(
-                                      colors: [
-                                        Colors.brown.shade300,
-                                        Colors.brown.shade200
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.brown,
-                                      blurRadius: 12,
-                                      offset: Offset(0, 6),
-                                    ),
-                                  ],
                                 ),
-                              ),
-                              Positioned(
-                                right: 0,
-                                bottom: 0,
-                                top: 0,
-                                child: CustomPaint(
-                                  size: Size(100, 150),
-                                  painter: CustomCardShapePainter(
-                                      10,
-                                      Colors.brown.shade300,
-                                      Colors.brown.shade200),
-                                ),
-                              ),
-                              Positioned.fill(
-                                child: Row(
+                                child: Stack(
                                   children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: CachedNetworkImage(
-                                          imageUrl: book_cover_link,
-                                          placeholder: (context, url) =>
-                                              const CircularProgressIndicator(),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                        ),
+                                    Container(
+                                      height: 150.0,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(24),
+                                        gradient: LinearGradient(
+                                            colors: [
+                                              Colors.brown.shade300,
+                                              Colors.brown.shade200
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.brown,
+                                            blurRadius: 12,
+                                            offset: Offset(0, 6),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Expanded(
-                                      flex: 4,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                    Positioned(
+                                      right: 0,
+                                      bottom: 0,
+                                      top: 0,
+                                      child: CustomPaint(
+                                        size: Size(100, 150),
+                                        painter: CustomCardShapePainter(
+                                            10,
+                                            Colors.brown.shade300,
+                                            Colors.brown.shade200),
+                                      ),
+                                    ),
+                                    Positioned.fill(
+                                      child: Row(
                                         children: [
-                                          Text(
-                                            book_title,
-                                            style: TextStyle(
-                                                color: Colors.brown.shade700,
-                                                fontWeight: FontWeight.w700),
-                                            overflow: TextOverflow.fade,
-                                          ),
-                                          Text(
-                                            description,
-                                            style: TextStyle(
-                                              color:
-                                                  Colors.brown.withOpacity(0.8),
-                                              fontSize: 13.0,
+                                          Expanded(
+                                            flex: 2,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: CachedNetworkImage(
+                                                imageUrl: book_cover_link,
+                                                placeholder: (context, url) =>
+                                                    const CircularProgressIndicator(),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        const Icon(Icons.error),
+                                              ),
                                             ),
-                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                          SizedBox(height: 20),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star_rate_rounded,
-                                                color: Colors.yellow.shade100,
-                                                size: 16,
-                                              ),
-                                              SizedBox(width: 8),
-                                              Text(
-                                                rating.toString(),
-                                                style: TextStyle(
-                                                  color: Colors.brown,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 14.0,
+                                          Expanded(
+                                            flex: 4,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  book_title,
+                                                  style: TextStyle(
+                                                      color:
+                                                          Colors.brown.shade700,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                  overflow: TextOverflow.fade,
                                                 ),
-                                              ),
-                                            ],
+                                                Text(
+                                                  description,
+                                                  style: TextStyle(
+                                                    color: Colors.brown
+                                                        .withOpacity(0.8),
+                                                    fontSize: 13.0,
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                SizedBox(height: 20),
+                                                Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.star_rate_rounded,
+                                                      color: Colors
+                                                          .yellow.shade100,
+                                                      size: 16,
+                                                    ),
+                                                    SizedBox(width: 8),
+                                                    Text(
+                                                      rating.toString(),
+                                                      style: TextStyle(
+                                                        color: Colors.brown,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 14.0,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -189,16 +250,16 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  });
-            } else {
-              return const Text('nothing');
-            }
-          }),
+                            ),
+                          );
+                        }),
+                  );
+                } else {
+                  return const Text('nothing');
+                }
+              }),
+        ],
+      ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 45),
         child: FloatingActionButton(

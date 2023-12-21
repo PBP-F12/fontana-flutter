@@ -55,7 +55,7 @@ class _EventPageState extends State<EventPage> {
                 height: 200, // Set the desired height
                 width: double.infinity,
                 child: Image.asset(
-                  'assets/images/library_bg.jpg', // Replace with your image path
+                  'images/event.jpg', // Replace with your image path
                   fit: BoxFit.cover,
                 ),
               ),
@@ -78,7 +78,7 @@ class _EventPageState extends State<EventPage> {
                           fontSize: 40,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 234, 198, 150),
-                          fontFamily: GoogleFonts.merriweather().fontFamily,
+                          fontFamily: GoogleFonts.dmSerifDisplay().fontFamily,
                         ),
                       ),
                       SizedBox(

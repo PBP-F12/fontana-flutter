@@ -76,7 +76,7 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
                             fontSize: 40,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 234, 198, 150),
-                            fontFamily: GoogleFonts.merriweather().fontFamily,
+                            fontFamily: GoogleFonts.dmSerifDisplay().fontFamily,
                           ),
                         ),
                         SizedBox(

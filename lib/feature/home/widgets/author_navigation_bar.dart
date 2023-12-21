@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/constant/color.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -27,10 +28,11 @@ class _AuthorNavigationBarState extends State<AuthorNavigationBar> {
     return CurvedNavigationBar(
       index: index,
       items: const [
-        Icon(Icons.home_filled, color: Color(0xff66461f)),
-        Icon(Icons.event, color: Color(0xff66461f)),
-        Icon(Icons.forum_outlined, color: Color(0xff66461f)),
-        Icon(Icons.auto_stories_outlined, color: Color(0xff66461f)),
+        Icon(Icons.home_filled, color: FontanaColor.brown2),
+        Icon(Icons.event, color: FontanaColor.brown2),
+        Icon(Icons.forum_outlined, color: FontanaColor.brown2),
+        Icon(Icons.auto_stories_outlined, color: FontanaColor.brown2),
+        Icon(Icons.person, color: FontanaColor.brown2)
       ],
       onTap: (int index) {
         onTap(index);

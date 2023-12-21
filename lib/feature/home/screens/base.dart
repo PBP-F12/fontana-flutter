@@ -5,6 +5,7 @@ import 'package:bookshelve_flutter/feature/forum/screens/forum_page.dart';
 import 'package:bookshelve_flutter/feature/home/screens/home.dart';
 import 'package:bookshelve_flutter/feature/home/widgets/custom_navigation_bar.dart';
 import 'package:bookshelve_flutter/feature/home/widgets/left_drawer.dart';
+import 'package:bookshelve_flutter/feature/profile/screens/dashboard_page.dart';
 import 'package:bookshelve_flutter/feature/publish/screens/author_book_page.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
@@ -24,18 +25,24 @@ class _BasePageState extends State<BasePage> {
   Widget build(BuildContext context) {
     CookieRequest request = context.watch<CookieRequest>();
 
-    final List<Widget> adminPages = [HomePage(request), EventPage(request)];
+    final List<Widget> adminPages = [
+      HomePage(request),
+      EventPage(request),
+      const DashboardPage()
+    ];
     final List<Widget> authorPages = [
       HomePage(request),
       EventPage(request),
       ForumMainPage(request: request),
-      AuthorBookPage(request)
+      AuthorBookPage(request),
+      const DashboardPage()
     ];
     final List<Widget> readerPages = [
       HomePage(request),
       EventPage(request),
       ForumMainPage(request: request),
-      MyBookmarkPage(request)
+      MyBookmarkPage(request),
+      const DashboardPage()
     ];
 
     List<Widget> userPages;

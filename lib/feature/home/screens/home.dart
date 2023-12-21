@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 234, 198, 150),
                                 fontFamily:
-                                    GoogleFonts.merriweather().fontFamily,
+                                    GoogleFonts.dmSerifDisplay().fontFamily,
                               ),
                             ),
                             SizedBox(
