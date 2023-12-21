@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/constant/color.dart';
 import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -175,16 +176,20 @@ class _EventPageState extends State<EventPage> {
         ],
       ),
       floatingActionButton: request.isAdmin()
-          ? FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CreateEventPage(request),
-                  ),
-                );
-              },
-              child: const Icon(Icons.add),
+          ? Padding(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: FloatingActionButton(
+                backgroundColor: FontanaColor.brown2,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateEventPage(request),
+                    ),
+                  );
+                },
+                child: const Icon(Icons.add, color: FontanaColor.creamy0),
+              ),
             )
           : SizedBox(height: 0),
     );
