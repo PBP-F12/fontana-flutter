@@ -42,7 +42,6 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 200, 174, 125),
-      drawer: LeftDrawer(request),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -96,50 +95,44 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
                 ),
               ],
             ),
-            Container(
-              child: Container(
-                color: Color.fromARGB(255, 200, 174, 125),
-                // Warna latar belakang body
-                child: FutureBuilder(
-                  future: bookmarkedBooks,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasError) {
-                        return const Center(child: Text('Error'));
-                      }
+            FutureBuilder(
+              future: bookmarkedBooks,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('Error'));
+                  }
 
-                      if (!snapshot.hasData) {
-                        return const Center(child: Text('No data'));
-                      }
+                  if (!snapshot.hasData) {
+                    return const Center(child: Text('No data'));
+                  }
 
-                      List<dynamic> bookmarks = snapshot.data;
+                  List<dynamic> bookmarks = snapshot.data;
 
-                      return Column(children: [
-                        for (var bookmark in bookmarks) _buildBookItem(bookmark)
-                      ]
-                          // [
-                          //   ListView.builder(
-                          //       itemCount: bookmarks.length,
-                          //       itemBuilder: (context, index) {
-                          //         final bookmark = bookmarks[index];
-                          //         return _buildBookItem(bookmark);
-                          //       },
-                          //   ),
-                          // ],
-                          );
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                  return Column(children: [
+                    for (var bookmark in bookmarks) _buildBookItem(bookmark)
+                  ]
+                      // [
+                      //   ListView.builder(
+                      //       itemCount: bookmarks.length,
+                      //       itemBuilder: (context, index) {
+                      //         final bookmark = bookmarks[index];
+                      //         return _buildBookItem(bookmark);
+                      //       },
+                      //   ),
+                      // ],
                       );
-                    } else {
-                      return const Center(
-                        child: Text('Failed to fetch'),
-                      );
-                    }
-                  },
-                ),
-              ),
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return const Center(
+                    child: Text('Failed to fetch'),
+                  );
+                }
+              },
             ),
           ],
         ),
