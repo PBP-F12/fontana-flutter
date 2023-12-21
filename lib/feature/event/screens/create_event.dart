@@ -51,6 +51,9 @@ class _CreateEventPageState extends State<CreateEventPage> {
     return Scaffold(
       backgroundColor: Color(0xffc8ae7d),
       appBar: AppBar(
+        leading: BackButton(onPressed: () {
+          Navigator.pop(context);
+        }),
         title: Text('Create Event',
             style: TextStyle(
                 color: Color.fromARGB(255, 255, 255, 255),
