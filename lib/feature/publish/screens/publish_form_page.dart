@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/constant/color.dart';
 import 'package:bookshelve_flutter/feature/auth/widgets/custom_text_field.dart';
 import 'package:bookshelve_flutter/feature/publish/utils/publish_author_book.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _PublishFormPageState extends State<PublishFormPage> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        backgroundColor: Color.fromARGB(255, 200, 174, 125),
+        backgroundColor: FontanaColor.creamy0,
       ),
       backgroundColor: Color.fromARGB(255, 200, 174, 125),
       body: Padding(

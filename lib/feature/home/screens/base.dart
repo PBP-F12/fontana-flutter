@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/constant/color.dart';
 import 'package:bookshelve_flutter/feature/bookmark/screens/bookmark_page.dart';
 import 'package:bookshelve_flutter/feature/event/screens/event_page.dart';
 import 'package:bookshelve_flutter/feature/forum/screens/forum_page.dart';
@@ -54,7 +55,7 @@ class _BasePageState extends State<BasePage> {
       extendBody: true,
       backgroundColor: const Color.fromARGB(255, 200, 174, 125),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(74, 255, 255, 255),
+        backgroundColor: FontanaColor.creamy0,
         flexibleSpace: FlexibleSpaceBar(
           centerTitle: true,
           title: Padding(

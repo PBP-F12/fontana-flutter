@@ -36,11 +36,11 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 200, 174, 125),
+      backgroundColor: FontanaColor.creamy2,
       appBar: AppBar(
         title: const Text('My Books',
             style: TextStyle(fontWeight: FontWeight.w600)),
-        backgroundColor: const Color.fromARGB(255, 200, 174, 125),
+        backgroundColor: FontanaColor.creamy0,
       ),
       body: FutureBuilder(
           future: authorBooks,
