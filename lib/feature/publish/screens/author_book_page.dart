@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 
+import 'package:bookshelve_flutter/constant/color.dart';
 import 'package:bookshelve_flutter/feature/details/screens/details.dart';
 import 'package:bookshelve_flutter/feature/event/models/book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -198,24 +199,28 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
               return const Text('nothing');
             }
           }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // Navigate to the forum creation page and wait for the result
-          await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PublishFormPage(request),
-            ),
-          );
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 45),
+        child: FloatingActionButton(
+          onPressed: () async {
+            // Navigate to the forum creation page and wait for the result
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PublishFormPage(request),
+              ),
+            );
 
-          setState(() {
-            authorBooks = fetchAuthorBook(request);
-          });
-        },
-        child: Icon(
-          Icons.add,
+            setState(() {
+              authorBooks = fetchAuthorBook(request);
+            });
+          },
+          child: Icon(
+            Icons.add,
+            color: FontanaColor.creamy0,
+          ),
+          backgroundColor: Colors.brown.shade200,
         ),
-        backgroundColor: Colors.brown.shade200,
       ),
     );
   }
