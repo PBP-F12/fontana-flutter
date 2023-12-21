@@ -44,12 +44,6 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffc8ae7d),
-      appBar: AppBar(
-          title: Text('Events',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  fontFamily: GoogleFonts.merriweather().fontFamily)),
-          backgroundColor: Color.fromARGB(255, 132, 112, 73)),
       drawer: LeftDrawer(request),
       body: Column(
         children: [
