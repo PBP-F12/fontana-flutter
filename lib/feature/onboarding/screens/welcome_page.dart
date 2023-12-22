@@ -1,8 +1,10 @@
 import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
 import 'package:bookshelve_flutter/feature/auth/screens/register.dart';
 import 'package:bookshelve_flutter/feature/onboarding/widgets/custom_text_button.dart';
+import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -10,6 +12,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    CookieRequest request = context.watch<CookieRequest>();
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -87,7 +90,8 @@ class WelcomePage extends StatelessWidget {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: ((context) => const RegisterPage())));
+                                builder: ((context) =>
+                                    RegisterPage(request: request))));
                       },
                       variant: 'secondary',
                     )

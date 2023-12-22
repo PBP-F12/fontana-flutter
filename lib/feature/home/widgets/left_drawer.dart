@@ -138,8 +138,7 @@ class LeftDrawer extends StatelessWidget {
                     fontSize: 16,
                     fontFamily: GoogleFonts.merriweather().fontFamily)),
             onTap: () async {
-              final response =
-                  await request.logout('${Urls.backendUrl}/auth/api/logout');
+              final response = await request.logout();
 
               if (response['status'] == 200) {
                 Navigator.pushReplacement(

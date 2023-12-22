@@ -3,6 +3,7 @@ import 'package:bookshelve_flutter/feature/auth/screens/register.dart';
 import 'package:bookshelve_flutter/feature/auth/widgets/custom_text_field.dart';
 import 'package:bookshelve_flutter/feature/home/screens/base.dart';
 import 'package:bookshelve_flutter/feature/onboarding/widgets/custom_text_button.dart';
+import 'package:bookshelve_flutter/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -54,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 CustomTextField(
                     _usernameController, 'Username', const Icon(Icons.person_2),
-                    hintText: 'jk.rowling'),
+                    hintText: 'j.k.rowling'),
                 const SizedBox(height: 16.0),
                 CustomTextField(_passwordController, 'Password',
                     const Icon(Icons.fingerprint),
@@ -70,10 +71,11 @@ class _LoginPageState extends State<LoginPage> {
                         String username = _usernameController.text;
                         String password = _passwordController.text;
 
-                        await request.login('${Urls.backendUrl}/auth/api/login',
+                        final response = await request.login(
+                            '${Urls.backendUrl}/auth/api/login',
                             {'username': username, 'password': password});
 
-                        if (request.loggedIn) {
+                        if (response['status'] == 200) {
                           // If successful, navigate to the home page
                           Navigator.pushReplacement(
                             context,
@@ -81,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                                 builder: (context) => const BasePage()),
                           );
                         } else {
-                          print('failed to login');
+                          showToast(context, response['message']);
                         }
                       } else {
                         // Show an error message or handle authentication failure
@@ -98,7 +100,8 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const RegisterPage()),
+                            builder: (context) =>
+                                RegisterPage(request: request)),
                       );
                     }),
               ],

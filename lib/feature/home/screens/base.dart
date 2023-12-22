@@ -28,21 +28,21 @@ class _BasePageState extends State<BasePage> {
     final List<Widget> adminPages = [
       HomePage(request),
       EventPage(request),
-      const DashboardPage()
+      DashboardPage(request: request)
     ];
     final List<Widget> authorPages = [
       HomePage(request),
       EventPage(request),
       ForumMainPage(request: request),
       AuthorBookPage(request),
-      const DashboardPage()
+      DashboardPage(request: request)
     ];
     final List<Widget> readerPages = [
       HomePage(request),
       EventPage(request),
       ForumMainPage(request: request),
       MyBookmarkPage(request),
-      const DashboardPage()
+      DashboardPage(request: request)
     ];
 
     List<Widget> userPages;

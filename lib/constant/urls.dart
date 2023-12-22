@@ -1,3 +1,3 @@
 class Urls {
-  static const backendUrl = 'https://fontana.my.id';
+  static const backendUrl = 'http://localhost:8000';
 }

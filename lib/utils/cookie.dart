@@ -1,6 +1,7 @@
 import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/feature/details/models/book_details.dart';
 import 'package:bookshelve_flutter/feature/forum/models/forum.dart';
+import 'package:bookshelve_flutter/feature/profile/models/profile.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -75,30 +76,6 @@ class CookieRequest {
 
   Future persist(String cookies) async {
     local.setString("cookies", cookies);
-  }
-
-  Future<dynamic> login(String url, dynamic data) async {
-    await init();
-    if (kIsWeb) {
-      dynamic c = _client;
-      c.withCredentials = true;
-    }
-
-    http.Response response =
-        await _client.post(Uri.parse(url), body: data, headers: headers);
-
-    await _updateCookie(response);
-
-    if (response.statusCode == 200) {
-      loggedIn = true;
-      jsonData = json.decode(response.body);
-      role = jsonData['role'];
-      username = jsonData['username'];
-    } else {
-      loggedIn = false;
-    }
-
-    return json.decode(response.body);
   }
 
   Map<String, dynamic> getJsonData() {
@@ -263,7 +240,9 @@ class CookieRequest {
     return cookie;
   }
 
-  Future<dynamic> logout(String url) async {
+  // FETCH AREA =======================================================
+
+  Future<dynamic> login(String url, dynamic data) async {
     await init();
     if (kIsWeb) {
       dynamic c = _client;
@@ -271,7 +250,32 @@ class CookieRequest {
     }
 
     http.Response response =
-        await _client.post(Uri.parse(url), headers: headers);
+        await _client.post(Uri.parse(url), body: data, headers: headers);
+
+    await _updateCookie(response);
+
+    if (response.statusCode == 200) {
+      loggedIn = true;
+      jsonData = json.decode(response.body);
+      role = jsonData['role'];
+      username = jsonData['username'];
+    } else {
+      loggedIn = false;
+    }
+
+    return json.decode(response.body);
+  }
+
+  Future<dynamic> logout() async {
+    await init();
+    if (kIsWeb) {
+      dynamic c = _client;
+      c.withCredentials = true;
+    }
+
+    http.Response response = await _client.post(
+        Uri.parse('${Urls.backendUrl}/auth/api/logout'),
+        headers: headers);
 
     if (response.statusCode == 200) {
       loggedIn = false;
@@ -287,7 +291,29 @@ class CookieRequest {
     return json.decode(response.body);
   }
 
-  // FETCH AREA =======================================================
+  Future<dynamic> registerAs(
+      {required String role,
+      required String fullName,
+      required String username,
+      required String password,
+      required String confirmationPassword}) async {
+    Map<String, dynamic> body = {
+      "full_name": fullName,
+      "username": username,
+      "password1": password,
+      "password2": confirmationPassword
+    };
+
+    final uri = role == 'AUTHOR'
+        ? Uri.parse("${Urls.backendUrl}/auth/api/register/author")
+        : Uri.parse("${Urls.backendUrl}/auth/api/register/reader");
+    final response = await http.post(uri, body: body);
+
+    var responseJson = json.decode(response.body);
+    responseJson['message'] = response.statusCode;
+
+    return responseJson;
+  }
 
   Future<List<Forum>> getForums() async {
     final responseBody = await get('$backendUrl/forum/api');
@@ -315,6 +341,18 @@ class CookieRequest {
       return book;
     } else {
       throw 'Failed';
+    }
+  }
+
+  Future<Profile> getProfileData() async {
+    final responseBody = await get('$backendUrl/auth/api/user');
+
+    if (responseBody['status'] == 200) {
+      Profile profile = Profile.fromJson(responseBody['user']);
+
+      return profile;
+    } else {
+      throw 'Failed to fetch';
     }
   }
 
