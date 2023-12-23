@@ -2,6 +2,7 @@ import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/feature/details/models/book_details.dart';
 import 'package:bookshelve_flutter/feature/forum/models/forum.dart';
 import 'package:bookshelve_flutter/feature/profile/models/profile.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -34,6 +35,7 @@ class CookieRequest {
 
   String? role;
   String? username;
+  int? userId;
   final String backendUrl = '${Urls.backendUrl}';
 
   late SharedPreferences local;
@@ -259,6 +261,7 @@ class CookieRequest {
       jsonData = json.decode(response.body);
       role = jsonData['role'];
       username = jsonData['username'];
+      userId = jsonData['userId'];
     } else {
       loggedIn = false;
     }
@@ -282,6 +285,7 @@ class CookieRequest {
       jsonData = {};
       role = null;
       username = null;
+      userId = null;
     } else {
       loggedIn = true;
     }
@@ -353,6 +357,28 @@ class CookieRequest {
       return profile;
     } else {
       throw 'Failed to fetch';
+    }
+  }
+
+  NetworkImage getProfilePicture() {
+    return NetworkImage('$backendUrl/auth/api/user/picture?id=$userId');
+  }
+
+  Future<bool> uploadProfilePicture(String imagePath) async {
+    var request = http.MultipartRequest('POST',
+        Uri.parse('${Urls.backendUrl}/auth/api/user/picture?id=$userId'));
+
+    // Add the image file to the request
+    var file = await http.MultipartFile.fromPath('profile_picture', imagePath);
+    request.files.add(file);
+
+    // Send the request
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 

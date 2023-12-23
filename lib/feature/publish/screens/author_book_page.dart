@@ -46,7 +46,7 @@ class _AuthorBookPageState extends State<AuthorBookPage> {
                   height: 200, // Set the desired height
                   width: double.infinity,
                   child: Image.asset(
-                    'images/book_collection_bg.jpg', // Replace with your image path
+                    'assets/images/book_collection_bg.jpg', // Replace with your image path
                     fit: BoxFit.cover,
                   ),
                 ),
