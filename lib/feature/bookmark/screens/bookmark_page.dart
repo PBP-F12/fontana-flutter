@@ -52,7 +52,7 @@ class _MyBookmarkPageState extends State<MyBookmarkPage> {
                   height: 200, // Set the desired height
                   width: double.infinity,
                   child: Image.asset(
-                    'images/bookshelve.png', // Replace with your image path
+                    'assets/images/bookshelve.png', // Replace with your image path
                     fit: BoxFit.cover,
                   ),
                 ),

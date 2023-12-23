@@ -2,7 +2,7 @@ name: bookshelve_flutter
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.5 <4.0.0'
+  sdk: ">=3.1.5 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,7 +30,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -43,7 +42,8 @@ dependencies:
   google_fonts: ^6.1.0
   cached_network_image: ^3.3.0
   curved_navigation_bar: ^1.0.3
-
+  image_picker: ^1.0.5
+  file_picker: ^6.1.1
 
 dev_dependencies:
   flutter_test:
@@ -61,10 +61,16 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   assets:
-    - assets/images/
-    - assets/
+    - assets/images/blank_profile.png
+    - assets/images/book_collection_bg.jpg
+    - assets/images/bookshelve.png
+    - assets/images/event.jpg
+    - assets/images/library_bg_2.jpg
+    - assets/images/library_bg.jpg
+    - assets/images/library-bg.jpg
+    - assets/images/logo.png
+    - assets/images/readbook-vector.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

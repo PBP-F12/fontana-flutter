@@ -57,7 +57,7 @@ class _EventPageState extends State<EventPage> {
                   height: 200, // Set the desired height
                   width: double.infinity,
                   child: Image.asset(
-                    'images/event.jpg', // Replace with your image path
+                    'assets/images/event.jpg', // Replace with your image path
                     fit: BoxFit.cover,
                   ),
                 ),

@@ -2,6 +2,8 @@ import 'package:bookshelve_flutter/constant/color.dart';
 import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
 import 'package:bookshelve_flutter/feature/onboarding/widgets/custom_text_button.dart';
 import 'package:bookshelve_flutter/feature/profile/models/profile.dart';
+import 'package:bookshelve_flutter/feature/profile/screens/edit_profile_page.dart';
+import 'package:bookshelve_flutter/feature/profile/utils/upload_profile_image.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -44,7 +46,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     color: Colors.white,
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('images/blank_profile.webp')))),
+                        image: AssetImage('assets/images/blank_profile.png')))),
           ),
           const SizedBox(height: 12),
           FutureBuilder(
@@ -94,20 +96,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           const SizedBox(height: 12),
           CustomTextButton(
-              buttonText: 'Edit Profile Picture',
-              onPressed: () async {
-                final response = await request.logout();
-
-                if (response['status'] == 200) {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
-                      ));
-                } else {
-                  // TODO handle error logout
-                }
-              }),
+              buttonText: 'Edit Profile Picture', onPressed: pickImage),
           const SizedBox(height: 12),
           CustomTextButton(
               buttonText: 'Logout',

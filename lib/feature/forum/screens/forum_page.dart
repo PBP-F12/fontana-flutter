@@ -62,7 +62,7 @@ class _ForumMainPageState extends State<ForumMainPage> {
                   height: 200, // Set the desired height
                   width: double.infinity,
                   child: Image.asset(
-                    'images/library_bg_2.jpg', // Replace with your image path
+                    'assets/images/library_bg_2.jpg', // Replace with your image path
                     fit: BoxFit.cover,
                   ),
                 ),
