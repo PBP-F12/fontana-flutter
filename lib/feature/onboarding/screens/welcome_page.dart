@@ -12,11 +12,13 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     CookieRequest request = context.watch<CookieRequest>();
 
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
+          height: screenHeight,
           decoration: const BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
