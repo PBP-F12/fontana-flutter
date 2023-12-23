@@ -1,3 +1,4 @@
+import 'package:bookshelve_flutter/constant/color.dart';
 import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/feature/auth/screens/login.dart';
 import 'package:bookshelve_flutter/feature/auth/widgets/custom_text_field.dart';
@@ -48,119 +49,121 @@ class _RegisterPageState extends State<RegisterPage> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 200, 174, 125),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Hello There!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  color: const Color(0xFF333333),
-                  fontFamily: GoogleFonts.dmSerifDisplay().fontFamily),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              "Nice to meet you, uhh... who?",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: const Color(0xFF333333),
-                  fontSize: 18,
-                  fontFamily: GoogleFonts.merriweather().fontFamily),
-            ),
-            const SizedBox(height: 16.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Column(
-                children: [
-                  CustomTextField(_fullNameController, 'Full Name',
-                      const Icon(Icons.person_2),
-                      hintText: 'J. K. Rowling'),
-                  const SizedBox(height: 16.0),
-                  CustomTextField(_usernameController, 'Username',
-                      const Icon(Icons.person_2),
-                      hintText: 'j.k.rowling'),
-                  const SizedBox(height: 16.0),
-                  CustomTextField(_passwordController, 'Password',
-                      const Icon(Icons.fingerprint),
-                      isHideText: true, hintText: 'Set a strong password.'),
-                  const SizedBox(height: 16.0),
-                  CustomTextField(_confirmationPasswordController,
-                      'Confirm Password', const Icon(Icons.fingerprint),
-                      isHideText: true,
-                      hintText: 'Be sure to match the password ;)'),
-                  const SizedBox(height: 16.0),
-                  Text('I identify as...',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: const Color(0xff765827),
-                          fontFamily: GoogleFonts.merriweather().fontFamily)),
-                  const SizedBox(height: 8.0),
-                  CupertinoSlidingSegmentedControl(
-                      thumbColor: const Color(0xfff8ede3),
-                      backgroundColor: const Color(0xffeac696),
-                      padding: const EdgeInsets.all(8),
-                      children: roleWidgetsMap,
-                      groupValue: _sliding,
-                      onValueChanged: (int? newValue) {
-                        setState(() {
-                          switchCounter++;
-                          if (switchCounter == 5) {
-                            roles.add('RAWR');
-                            roleWidgetsMap[2] =
-                                RichText(text: const TextSpan(text: '🦁'));
-                          }
-
-                          if (newValue != null) {
-                            if (newValue == 2) {
-                              _sliding = 1;
-                              roles.removeAt(2);
-                              roleWidgetsMap.remove(2);
-                              showToast(context, 'RAWR');
-                            } else {
-                              _sliding = newValue;
-                              selectedRole = roles[newValue];
-                            }
-                          } else {
-                            _sliding = 0;
-                          }
-                        });
-                      }),
-                  const SizedBox(height: 24.0),
-                  CustomTextButton(
-                      buttonText: 'Sign up',
-                      fixedSize:
-                          MaterialStateProperty.all(Size(screenWidth, 60)),
-                      variant: 'primary',
-                      onPressed: () {
-                        // Perform registration logic
-                        if (_fieldsIsNotEmpty()) {
-                          _performRegistration(context);
-                        } else {
-                          _showErrorDialog();
-                        }
-                      }),
-                  const SizedBox(height: 12.0),
-                  CustomTextButton(
-                      buttonText: 'or Sign in?',
-                      fixedSize:
-                          MaterialStateProperty.all(Size(screenWidth, 60)),
-                      variant: 'secondary',
-                      onPressed: () {
-                        // Navigate to the registration page
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()),
-                        );
-                      }),
-                ],
+      backgroundColor: FontanaColor.creamy2,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Hello There!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF333333),
+                    fontFamily: GoogleFonts.dmSerifDisplay().fontFamily),
               ),
-            ),
-          ],
+              const SizedBox(height: 10),
+              Text(
+                "Nice to meet you, uhh... who?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: const Color(0xFF333333),
+                    fontSize: 18,
+                    fontFamily: GoogleFonts.merriweather().fontFamily),
+              ),
+              const SizedBox(height: 16.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Column(
+                  children: [
+                    CustomTextField(_fullNameController, 'Full Name',
+                        const Icon(Icons.person_2),
+                        hintText: 'J. K. Rowling'),
+                    const SizedBox(height: 16.0),
+                    CustomTextField(_usernameController, 'Username',
+                        const Icon(Icons.person_2),
+                        hintText: 'j.k.rowling'),
+                    const SizedBox(height: 16.0),
+                    CustomTextField(_passwordController, 'Password',
+                        const Icon(Icons.fingerprint),
+                        isHideText: true, hintText: 'Set a strong password.'),
+                    const SizedBox(height: 16.0),
+                    CustomTextField(_confirmationPasswordController,
+                        'Confirm Password', const Icon(Icons.fingerprint),
+                        isHideText: true,
+                        hintText: 'Be sure to match the password ;)'),
+                    const SizedBox(height: 16.0),
+                    Text('I identify as...',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: const Color(0xff765827),
+                            fontFamily: GoogleFonts.merriweather().fontFamily)),
+                    const SizedBox(height: 8.0),
+                    CupertinoSlidingSegmentedControl(
+                        thumbColor: const Color(0xfff8ede3),
+                        backgroundColor: const Color(0xffeac696),
+                        padding: const EdgeInsets.all(8),
+                        children: roleWidgetsMap,
+                        groupValue: _sliding,
+                        onValueChanged: (int? newValue) {
+                          setState(() {
+                            switchCounter++;
+                            if (switchCounter == 5) {
+                              roles.add('RAWR');
+                              roleWidgetsMap[2] =
+                                  RichText(text: const TextSpan(text: '🦁'));
+                            }
+
+                            if (newValue != null) {
+                              if (newValue == 2) {
+                                _sliding = 1;
+                                roles.removeAt(2);
+                                roleWidgetsMap.remove(2);
+                                showToast(context, 'RAWR');
+                              } else {
+                                _sliding = newValue;
+                                selectedRole = roles[newValue];
+                              }
+                            } else {
+                              _sliding = 0;
+                            }
+                          });
+                        }),
+                    const SizedBox(height: 24.0),
+                    CustomTextButton(
+                        buttonText: 'Sign up',
+                        fixedSize:
+                            MaterialStateProperty.all(Size(screenWidth, 60)),
+                        variant: 'primary',
+                        onPressed: () {
+                          // Perform registration logic
+                          if (_fieldsIsNotEmpty()) {
+                            _performRegistration(context);
+                          } else {
+                            _showErrorDialog();
+                          }
+                        }),
+                    const SizedBox(height: 12.0),
+                    CustomTextButton(
+                        buttonText: 'or Sign in?',
+                        fixedSize:
+                            MaterialStateProperty.all(Size(screenWidth, 60)),
+                        variant: 'secondary',
+                        onPressed: () {
+                          // Navigate to the registration page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          );
+                        }),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
