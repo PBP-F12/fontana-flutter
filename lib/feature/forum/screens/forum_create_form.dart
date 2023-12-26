@@ -41,6 +41,9 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Forum'),
+        leading: BackButton(onPressed: () {
+          Navigator.pop(context);
+        }),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

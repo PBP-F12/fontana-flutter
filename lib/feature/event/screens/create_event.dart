@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bookshelve_flutter/constant/color.dart';
 import 'package:bookshelve_flutter/constant/urls.dart';
 import 'package:bookshelve_flutter/feature/event/models/book.dart';
 import 'package:bookshelve_flutter/feature/event/screens/event_page.dart';
@@ -56,7 +57,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
         }),
         title: Text('Create Event',
             style: TextStyle(
-                color: Color.fromARGB(255, 255, 255, 255),
+                color: FontanaColor.creamy0,
                 fontFamily: GoogleFonts.merriweather().fontFamily)),
         backgroundColor: Color.fromARGB(255, 132, 112, 73),
       ),
