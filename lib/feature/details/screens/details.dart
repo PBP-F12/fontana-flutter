@@ -234,38 +234,42 @@ class _BookDetailsState extends State<BookDetails> {
                                     ),
                                   ),
                                   SizedBox(height: 16),
-                                  FloatingActionButton.extended(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(16)),
-                                    backgroundColor: const Color(0xFF765827),
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => AddReview(
-                                              bookDetail: bookData,
-                                              request: request),
-                                        ),
-                                      );
-                                    },
-                                    label: Text(
-                                      'Add Review',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        fontFamily: GoogleFonts.merriweather()
-                                            .fontFamily,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    icon: const Icon(
-                                      Icons.add,
-                                      color: Colors.white,
-                                      size: 24.0,
-                                    ),
-                                  ),
+                                  !bookData.isRequesterIsTheAuthor
+                                      ? FloatingActionButton.extended(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16)),
+                                          backgroundColor:
+                                              const Color(0xFF765827),
+                                          onPressed: () {
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => AddReview(
+                                                    bookDetail: bookData,
+                                                    request: request),
+                                              ),
+                                            );
+                                          },
+                                          label: Text(
+                                            'Add Review',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Color.fromARGB(
+                                                  255, 255, 255, 255),
+                                              fontFamily:
+                                                  GoogleFonts.merriweather()
+                                                      .fontFamily,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                          icon: const Icon(
+                                            Icons.add,
+                                            color: Colors.white,
+                                            size: 24.0,
+                                          ),
+                                        )
+                                      : const SizedBox(),
                                 ],
                               );
                             } else {
@@ -286,40 +290,45 @@ class _BookDetailsState extends State<BookDetails> {
 
                                   // Add Review button
                                   SizedBox(height: 16),
-                                  Center(
-                                    child: FloatingActionButton.extended(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16)),
-                                      backgroundColor: const Color(0xFF765827),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => AddReview(
-                                                bookDetail: bookData,
-                                                request: request),
+                                  !bookData.isRequesterIsTheAuthor
+                                      ? Center(
+                                          child: FloatingActionButton.extended(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(16)),
+                                            backgroundColor:
+                                                const Color(0xFF765827),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AddReview(
+                                                          bookDetail: bookData,
+                                                          request: request),
+                                                ),
+                                              );
+                                            },
+                                            label: Text(
+                                              'Add Review',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color.fromRGBO(
+                                                    255, 255, 255, 1),
+                                                fontFamily:
+                                                    GoogleFonts.merriweather()
+                                                        .fontFamily,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                            icon: const Icon(
+                                              Icons.add,
+                                              color: Colors.white,
+                                              size: 24.0,
+                                            ),
                                           ),
-                                        );
-                                      },
-                                      label: Text(
-                                        'Add Review',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color:
-                                              Color.fromRGBO(255, 255, 255, 1),
-                                          fontFamily: GoogleFonts.merriweather()
-                                              .fontFamily,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                      icon: const Icon(
-                                        Icons.add,
-                                        color: Colors.white,
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                  ),
+                                        )
+                                      : const SizedBox(),
                                 ],
                               );
                             }
@@ -330,14 +339,16 @@ class _BookDetailsState extends State<BookDetails> {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 16.0,
-                right: 16.0,
-                child: BookmarkButton(
-                  request: request,
-                  bookId: bookData.id, // Assuming book.pk is the book ID
-                ),
-              ),
+              request.isReader()
+                  ? Positioned(
+                      bottom: 16.0,
+                      right: 16.0,
+                      child: BookmarkButton(
+                        request: request,
+                        bookId: bookData.id, // Assuming book.pk is the book ID
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {

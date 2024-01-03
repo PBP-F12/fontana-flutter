@@ -16,6 +16,7 @@ class BookDetail {
   double rating;
   String description;
   Author author;
+  bool isRequesterIsTheAuthor;
 
   BookDetail({
     required this.id,
@@ -24,16 +25,17 @@ class BookDetail {
     required this.rating,
     required this.description,
     required this.author,
+    required this.isRequesterIsTheAuthor,
   });
 
   factory BookDetail.fromJson(Map<String, dynamic> json) => BookDetail(
-        id: json['id'],
-        title: json["title"],
-        image: json["image"],
-        rating: json["rating"]?.toDouble(),
-        description: json["description"],
-        author: Author.fromJson(json["author"]),
-      );
+      id: json['id'],
+      title: json["title"],
+      image: json["image"],
+      rating: json["rating"]?.toDouble(),
+      description: json["description"],
+      author: Author.fromJson(json["author"]),
+      isRequesterIsTheAuthor: json['isRequesterIsTheAuthor']);
 
   Map<String, dynamic> toJson() => {
         "title": title,
