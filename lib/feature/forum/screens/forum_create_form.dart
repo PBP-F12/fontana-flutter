@@ -137,29 +137,6 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
                     _showErrorDialog();
                   }
                 }),
-            // ElevatedButton(
-            //   onPressed: () async {
-            //     // Validate input and create a new forum item
-            //     if (_validateInput()) {
-            //       final response = await request.postJson(
-            //           '${Urls.backendUrl}/forum/api/create',
-            //           jsonEncode(<String, String>{
-            //             'title': _titleController.text,
-            //             'bookTopic': _bookTopicController,
-            //             'discussion': _discussionController.text
-            //           }));
-
-            //       if (response['status'] == 200) {
-            //         // Return the new forum item to the main forum page
-            //         Navigator.pop(context);
-            //       }
-            //     } else {
-            //       // Show an error message or handle invalid input
-            //       _showErrorDialog();
-            //     }
-            //   },
-            //   child: const Text('Create Forum'),
-            // ),
           ],
         ),
       ),

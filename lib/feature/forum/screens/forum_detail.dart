@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:bookshelve_flutter/constant/color.dart';
 import 'package:bookshelve_flutter/constant/urls.dart';
+import 'package:bookshelve_flutter/feature/onboarding/widgets/custom_text_button.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ForumDetailPage extends StatefulWidget {
   final CookieRequest request;
@@ -48,9 +51,13 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: FontanaColor.creamy2,
         appBar: AppBar(
-          title: const Text('Forum Detail Page'),
-        ),
+            title: Text('Forum Detail Page',
+                style: TextStyle(
+                    color: FontanaColor.creamy0,
+                    fontFamily: GoogleFonts.merriweather().fontFamily)),
+            backgroundColor: const Color.fromARGB(255, 132, 112, 73)),
         body: FutureBuilder(
             future: forumDetail,
             builder: ((context, snapshot) {
@@ -98,23 +105,22 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
                             const InputDecoration(labelText: 'Add a comment'),
                       ),
                       const SizedBox(height: 8.0),
-                      ElevatedButton(
-                        onPressed: () async {
-                          final requestBody = await request.postJson(
-                              '${Urls.backendUrl}/forum/api/reply/$forumId',
-                              jsonEncode(<String, String>{
-                                'comment': _commentController.text
-                              }));
+                      CustomTextButton(
+                          buttonText: 'Add Comment',
+                          onPressed: () async {
+                            final requestBody = await request.postJson(
+                                '${Urls.backendUrl}/forum/api/reply/$forumId',
+                                jsonEncode(<String, String>{
+                                  'comment': _commentController.text
+                                }));
 
-                          if (requestBody['status'] == 200) {
-                            setState(() {
-                              forumDetail = getForumDetail();
-                              _commentController.clear();
-                            });
-                          }
-                        },
-                        child: const Text('Add Comment'),
-                      ),
+                            if (requestBody['status'] == 200) {
+                              setState(() {
+                                forumDetail = getForumDetail();
+                                _commentController.clear();
+                              });
+                            }
+                          }),
                     ],
                   ),
                 );
