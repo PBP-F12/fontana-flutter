@@ -110,6 +110,7 @@ class _ForumMainPageState extends State<ForumMainPage> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError) {
+                      print(snapshot.error);
                       return const Center(child: Text('error'));
                     }
 

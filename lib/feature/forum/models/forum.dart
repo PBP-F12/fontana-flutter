@@ -15,6 +15,7 @@ class Forum {
   String forumDetailLink;
   String forumTitle;
   Book book;
+  int creatorId;
   String creatorUsername;
   int numberOfComments;
 
@@ -23,6 +24,7 @@ class Forum {
     required this.forumDetailLink,
     required this.forumTitle,
     required this.book,
+    required this.creatorId,
     required this.creatorUsername,
     required this.numberOfComments,
   });
@@ -32,6 +34,7 @@ class Forum {
         forumDetailLink: json["forumDetailLink"],
         forumTitle: json["forumTitle"],
         book: Book.fromJson(json["book"]),
+        creatorId: json['creatorId'],
         creatorUsername: json["creatorUsername"],
         numberOfComments: json["numberOfComments"],
       );

@@ -364,6 +364,10 @@ class CookieRequest {
     return NetworkImage('$backendUrl/auth/api/user/picture?id=$userId');
   }
 
+  NetworkImage getProfilePictureByUserId(int userId) {
+    return NetworkImage('$backendUrl/auth/api/user/picture?id=$userId');
+  }
+
   Future<bool> uploadProfilePicture(String imagePath) async {
     var request = http.MultipartRequest('POST',
         Uri.parse('${Urls.backendUrl}/auth/api/user/picture?id=$userId'));

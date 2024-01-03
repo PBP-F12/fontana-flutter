@@ -65,7 +65,10 @@ class ForumCard extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          ForumProfile(username: forum.creatorUsername),
+                          ForumProfile(
+                              username: forum.creatorUsername,
+                              userId: forum.creatorId,
+                              request: request),
                           Text(forum.forumTitle,
                               style: TextStyle(
                                   fontSize: 20,
