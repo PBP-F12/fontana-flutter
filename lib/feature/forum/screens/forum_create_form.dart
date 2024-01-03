@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:bookshelve_flutter/constant/color.dart';
 import 'package:bookshelve_flutter/constant/urls.dart';
+import 'package:bookshelve_flutter/feature/onboarding/widgets/custom_text_button.dart';
 import 'package:bookshelve_flutter/utils/cookie.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ForumCreationPage extends StatefulWidget {
   final CookieRequest request;
@@ -39,12 +42,16 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FontanaColor.creamy2,
       appBar: AppBar(
-        title: const Text('Create Forum'),
-        leading: BackButton(onPressed: () {
-          Navigator.pop(context);
-        }),
-      ),
+          title: Text('Create Forum',
+              style: TextStyle(
+                  color: FontanaColor.creamy0,
+                  fontFamily: GoogleFonts.merriweather().fontFamily)),
+          leading: BackButton(onPressed: () {
+            Navigator.pop(context);
+          }),
+          backgroundColor: const Color.fromARGB(255, 132, 112, 73)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -108,29 +115,51 @@ class _ForumCreationPageState extends State<ForumCreationPage> {
               decoration: const InputDecoration(labelText: 'Discussion'),
             ),
             const SizedBox(height: 24.0),
-            ElevatedButton(
-              onPressed: () async {
-                // Validate input and create a new forum item
-                if (_validateInput()) {
-                  final response = await request.postJson(
-                      '${Urls.backendUrl}/forum/api/create',
-                      jsonEncode(<String, String>{
-                        'title': _titleController.text,
-                        'bookTopic': _bookTopicController,
-                        'discussion': _discussionController.text
-                      }));
+            CustomTextButton(
+                buttonText: 'Create Forum',
+                onPressed: () async {
+                  // Validate input and create a new forum item
+                  if (_validateInput()) {
+                    final response = await request.postJson(
+                        '${Urls.backendUrl}/forum/api/create',
+                        jsonEncode(<String, String>{
+                          'title': _titleController.text,
+                          'bookTopic': _bookTopicController,
+                          'discussion': _discussionController.text
+                        }));
 
-                  if (response['status'] == 200) {
-                    // Return the new forum item to the main forum page
-                    Navigator.pop(context);
+                    if (response['status'] == 200) {
+                      // Return the new forum item to the main forum page
+                      Navigator.pop(context);
+                    }
+                  } else {
+                    // Show an error message or handle invalid input
+                    _showErrorDialog();
                   }
-                } else {
-                  // Show an error message or handle invalid input
-                  _showErrorDialog();
-                }
-              },
-              child: const Text('Create Forum'),
-            ),
+                }),
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     // Validate input and create a new forum item
+            //     if (_validateInput()) {
+            //       final response = await request.postJson(
+            //           '${Urls.backendUrl}/forum/api/create',
+            //           jsonEncode(<String, String>{
+            //             'title': _titleController.text,
+            //             'bookTopic': _bookTopicController,
+            //             'discussion': _discussionController.text
+            //           }));
+
+            //       if (response['status'] == 200) {
+            //         // Return the new forum item to the main forum page
+            //         Navigator.pop(context);
+            //       }
+            //     } else {
+            //       // Show an error message or handle invalid input
+            //       _showErrorDialog();
+            //     }
+            //   },
+            //   child: const Text('Create Forum'),
+            // ),
           ],
         ),
       ),
